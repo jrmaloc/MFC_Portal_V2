@@ -1,8 +1,7 @@
-@extends('layouts.master-without-nav')
-@section('title')
-    @lang('translation.two-step-verification')
-@endsection
-@section('content')
+<?php $__env->startSection('title'); ?>
+    <?php echo app('translator')->get('translation.two-step-verification'); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
     <!-- auth-page wrapper -->
     <div class="auth-page-wrapper auth-bg-cover py-5 d-flex justify-content-center align-items-center min-vh-100">
         <div class="bg-overlay"></div>
@@ -19,7 +18,7 @@
                                         <div class="position-relative h-100 d-flex flex-column">
                                             <div class="mb-4">
                                                 <a href="index" class="d-block">
-                                                    <img src="{{ URL::asset('build/images/logo-light.png') }}"
+                                                    <img src="<?php echo e(URL::asset('build/images/logo-light.png')); ?>"
                                                         alt="" height="18">
                                                 </a>
                                             </div>
@@ -141,10 +140,10 @@
                                         <div class="mt-3 text-center">
                                             <a class="fw-semibold text-danger text-decoration-underline" href="javascript:void();"
                                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><span
-                                                    key="t-logout">@lang('translation.logout')</span></a>
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                    key="t-logout"><?php echo app('translator')->get('translation.logout'); ?></span></a>
+                                            <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST"
                                                 style="display: none;">
-                                                @csrf
+                                                <?php echo csrf_field(); ?>
                                             </form>
                                         </div>
                                     </div>
@@ -165,10 +164,12 @@
         <!-- end auth page content -->
 
         <!-- footer -->
-        @include('layouts.footer')
+        <?php echo $__env->make('layouts.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <!-- end Footer -->
     </div>
-@endsection
-@section('script')
-    <script src="{{ URL::asset('build/js/pages/two-step-verification.init.js') }}"></script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
+    <script src="<?php echo e(URL::asset('build/js/pages/two-step-verification.init.js')); ?>"></script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master-without-nav', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\GoDesQ3\Downloads\MFC_Portal_V2\resources\views/auth/verify.blade.php ENDPATH**/ ?>

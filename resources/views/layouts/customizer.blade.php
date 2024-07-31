@@ -14,9 +14,15 @@
 
 
 <!--end back-to-top-->
-<div class="customizer-setting d-none d-md-block">
+{{-- <div class="customizer-setting d-none d-md-block">
     <div class="btn-info rounded-pill shadow-lg btn btn-icon btn-lg p-2" data-bs-toggle="offcanvas"
         data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas">
+        <i class='mdi mdi-spin mdi-cog-outline fs-22'></i>
+    </div>
+</div> --}}
+
+<div class="customizer-setting d-none d-md-block">
+    <div class="btn-info rounded-pill shadow-lg btn btn-icon btn-lg p-2">
         <i class='mdi mdi-spin mdi-cog-outline fs-22'></i>
     </div>
 </div>
@@ -40,7 +46,8 @@
                         <div class="form-check card-radio">
                             <input id="customizer-layout01" name="data-layout" type="radio" value="vertical"
                                 class="form-check-input">
-                            <label class="form-check-label p-0 avatar-md w-100" for="customizer-layout01">
+                            <label class="form-check-label p-0 avatar-md w-100 material-shadow"
+                                for="customizer-layout01">
                                 <span class="d-flex gap-1 h-100">
                                     <span class="flex-shrink-0">
                                         <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
@@ -65,7 +72,8 @@
                         <div class="form-check card-radio">
                             <input id="customizer-layout02" name="data-layout" type="radio" value="horizontal"
                                 class="form-check-input">
-                            <label class="form-check-label p-0 avatar-md w-100" for="customizer-layout02">
+                            <label class="form-check-label p-0 avatar-md w-100 material-shadow"
+                                for="customizer-layout02">
                                 <span class="d-flex h-100 flex-column gap-1">
                                     <span class="bg-light d-flex p-1 gap-1 align-items-center">
                                         <span class="d-block p-1 bg-primary-subtle rounded me-1"></span>
@@ -83,7 +91,8 @@
                         <div class="form-check card-radio">
                             <input id="customizer-layout03" name="data-layout" type="radio" value="twocolumn"
                                 class="form-check-input">
-                            <label class="form-check-label p-0 avatar-md w-100" for="customizer-layout03">
+                            <label class="form-check-label p-0 avatar-md w-100 material-shadow"
+                                for="customizer-layout03">
                                 <span class="d-flex gap-1 h-100">
                                     <span class="flex-shrink-0">
                                         <span class="bg-light d-flex h-100 flex-column gap-1">
@@ -118,7 +127,8 @@
                         <div class="form-check card-radio">
                             <input id="customizer-layout04" name="data-layout" type="radio" value="semibox"
                                 class="form-check-input">
-                            <label class="form-check-label p-0 avatar-md w-100" for="customizer-layout04">
+                            <label class="form-check-label p-0 avatar-md w-100 material-shadow"
+                                for="customizer-layout04">
                                 <span class="d-flex gap-1 h-100">
                                     <span class="flex-shrink-0 p-1">
                                         <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
@@ -142,6 +152,141 @@
                     <!-- end col -->
                 </div>
 
+                {{-- <div class="form-check form-switch form-switch-md mb-3 mt-4">
+                    <input type="checkbox" class="form-check-input" id="sidebarUserProfile">
+                    <label class="form-check-label" for="sidebarUserProfile">Sidebar User Profile Avatar</label>
+                </div> --}}
+
+                <h6 class="mt-4 mb-0 fw-semibold text-uppercase">Theme</h6>
+                <p class="text-muted">Choose your suitable Theme.</p>
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-check card-radio">
+                            <input id="customizer-theme01" name="data-theme" type="radio" value="default"
+                                class="form-check-input">
+                            <label class="form-check-label p-0" for="customizer-theme01">
+                                <img src="https://themesbrand.com/velzon/assets/images/demo/default.png"
+                                    alt="" class="img-fluid">
+                            </label>
+                        </div>
+                        <h5 class="fs-13 text-center fw-medium mt-2">Default</h5>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-check card-radio">
+                            <input id="customizer-theme02" name="data-theme" type="radio" value="saas"
+                                class="form-check-input">
+                            <label class="form-check-label p-0" for="customizer-theme02">
+                                <img src="https://themesbrand.com/velzon/assets/images/demo//saas.png" alt=""
+                                    class="img-fluid">
+                            </label>
+                        </div>
+                        <h5 class="fs-13 text-center fw-medium mt-2">Sass</h5>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-check card-radio">
+                            <input id="customizer-theme03" name="data-theme" type="radio" value="corporate"
+                                class="form-check-input">
+                            <label class="form-check-label p-0" for="customizer-theme03">
+                                <img src="https://themesbrand.com/velzon/assets/images/demo//corporate.png"
+                                    alt="" class="img-fluid">
+                            </label>
+                        </div>
+                        <h5 class="fs-13 text-center fw-medium mt-2">Corporate</h5>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-check card-radio">
+                            <input id="customizer-theme04" name="data-theme" type="radio" value="galaxy"
+                                class="form-check-input">
+                            <label class="form-check-label p-0" for="customizer-theme04">
+                                <img src="https://themesbrand.com/velzon/assets/images/demo//galaxy.png"
+                                    alt="" class="img-fluid">
+                            </label>
+                        </div>
+                        <h5 class="fs-13 text-center fw-medium mt-2">Galaxy</h5>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-check card-radio">
+                            <input id="customizer-theme05" name="data-theme" type="radio" value="material"
+                                class="form-check-input">
+                            <label class="form-check-label p-0" for="customizer-theme05">
+                                <img src="https://themesbrand.com/velzon/assets/images/demo//material.png"
+                                    alt="" class="img-fluid">
+                            </label>
+                        </div>
+                        <h5 class="fs-13 text-center fw-medium mt-2">Material</h5>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-check card-radio">
+                            <input id="customizer-theme06" name="data-theme" type="radio" value="creative"
+                                class="form-check-input">
+                            <label class="form-check-label p-0" for="customizer-theme06">
+                                <img src="https://themesbrand.com/velzon/assets/images/demo/creative.png"
+                                    alt="" class="img-fluid">
+                            </label>
+                        </div>
+                        <h5 class="fs-13 text-center fw-medium mt-2">Creative</h5>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-check card-radio">
+                            <input id="customizer-theme07" name="data-theme" type="radio" value="minimal"
+                                class="form-check-input">
+                            <label class="form-check-label p-0" for="customizer-theme07">
+                                <img src="https://themesbrand.com/velzon/assets/images/demo/minimal.png"
+                                    alt="" class="img-fluid">
+                            </label>
+                        </div>
+                        <h5 class="fs-13 text-center fw-medium mt-2">Minimal</h5>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-check card-radio">
+                            <input id="customizer-theme08" name="data-theme" type="radio" value="modern"
+                                class="form-check-input">
+                            <label class="form-check-label p-0" for="customizer-theme08">
+                                <img src="https://themesbrand.com/velzon/assets/images/demo/modern.png" alt=""
+                                    class="img-fluid">
+                            </label>
+                        </div>
+                        <h5 class="fs-13 text-center fw-medium mt-2">Modern</h5>
+                    </div>
+                    <!-- end col -->
+                    <div class="col-6">
+                        <div class="form-check card-radio">
+                            <input id="customizer-theme09" name="data-theme" type="radio" value="interactive"
+                                class="form-check-input">
+                            <label class="form-check-label p-0" for="customizer-theme09">
+                                <img src="https://themesbrand.com/velzon/assets/images/demo/interactive.png"
+                                    alt="" class="img-fluid">
+                            </label>
+                        </div>
+                        <h5 class="fs-13 text-center fw-medium mt-2">Interactive</h5>
+                    </div><!-- end col -->
+
+                    <div class="col-6">
+                        <div class="form-check card-radio">
+                            <input id="customizer-theme10" name="data-theme" type="radio" value="classic"
+                                class="form-check-input">
+                            <label class="form-check-label p-0" for="customizer-theme10">
+                                <img src="https://themesbrand.com/velzon/assets/images/demo/classic.png"
+                                    alt="" class="img-fluid">
+                            </label>
+                        </div>
+                        <h5 class="fs-13 text-center fw-medium mt-2">Classic</h5>
+                    </div><!-- end col -->
+
+                    <div class="col-6">
+                        <div class="form-check card-radio">
+                            <input id="customizer-theme11" name="data-theme" type="radio" value="vintage"
+                                class="form-check-input">
+                            <label class="form-check-label p-0" for="customizer-theme11">
+                                <img src="https://themesbrand.com/velzon/assets/images/demo/vintage.png"
+                                    alt="" class="img-fluid">
+                            </label>
+                        </div>
+                        <h5 class="fs-13 text-center fw-medium mt-2">Vintage</h5>
+                    </div><!-- end col -->
+                </div>
+
                 <h6 class="mt-4 mb-0 fw-semibold text-uppercase">Color Scheme</h6>
                 <p class="text-muted">Choose Light or Dark Scheme.</p>
 
@@ -151,7 +296,8 @@
                             <div class="form-check card-radio">
                                 <input class="form-check-input" type="radio" name="data-bs-theme"
                                     id="layout-mode-light" value="light">
-                                <label class="form-check-label p-0 avatar-md w-100" for="layout-mode-light">
+                                <label class="form-check-label p-0 avatar-md w-100 material-shadow"
+                                    for="layout-mode-light">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0">
                                             <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
@@ -177,7 +323,8 @@
                             <div class="form-check card-radio dark">
                                 <input class="form-check-input" type="radio" name="data-bs-theme"
                                     id="layout-mode-dark" value="dark">
-                                <label class="form-check-label p-0 avatar-md w-100 bg-dark" for="layout-mode-dark">
+                                <label class="form-check-label p-0 avatar-md w-100 material-shadow bg-dark"
+                                    for="layout-mode-dark">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0">
                                             <span class="bg-white bg-opacity-10 d-flex h-100 flex-column gap-1 p-1">
@@ -211,7 +358,8 @@
                             <div class="form-check card-radio">
                                 <input class="form-check-input" type="radio" name="data-sidebar-visibility"
                                     id="sidebar-visibility-show" value="show">
-                                <label class="form-check-label p-0 avatar-md w-100" for="sidebar-visibility-show">
+                                <label class="form-check-label p-0 avatar-md w-100 material-shadow"
+                                    for="sidebar-visibility-show">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0 p-1">
                                             <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
@@ -236,7 +384,7 @@
                             <div class="form-check card-radio">
                                 <input class="form-check-input" type="radio" name="data-sidebar-visibility"
                                     id="sidebar-visibility-hidden" value="hidden">
-                                <label class="form-check-label p-0 avatar-md w-100 px-2"
+                                <label class="form-check-label p-0 avatar-md w-100 material-shadow px-2"
                                     for="sidebar-visibility-hidden">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-grow-1">
@@ -262,7 +410,8 @@
                             <div class="form-check card-radio">
                                 <input class="form-check-input" type="radio" name="data-layout-width"
                                     id="layout-width-fluid" value="fluid">
-                                <label class="form-check-label p-0 avatar-md w-100" for="layout-width-fluid">
+                                <label class="form-check-label p-0 avatar-md w-100 material-shadow"
+                                    for="layout-width-fluid">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0">
                                             <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
@@ -287,7 +436,8 @@
                             <div class="form-check card-radio">
                                 <input class="form-check-input" type="radio" name="data-layout-width"
                                     id="layout-width-boxed" value="boxed">
-                                <label class="form-check-label p-0 avatar-md w-100 px-2" for="layout-width-boxed">
+                                <label class="form-check-label p-0 avatar-md w-100 material-shadow px-2"
+                                    for="layout-width-boxed">
                                     <span class="d-flex gap-1 h-100 border-start border-end">
                                         <span class="flex-shrink-0">
                                             <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
@@ -333,7 +483,8 @@
                         <div class="form-check card-radio">
                             <input class="form-check-input" type="radio" name="data-topbar"
                                 id="topbar-color-light" value="light">
-                            <label class="form-check-label p-0 avatar-md w-100" for="topbar-color-light">
+                            <label class="form-check-label p-0 avatar-md w-100 material-shadow"
+                                for="topbar-color-light">
                                 <span class="d-flex gap-1 h-100">
                                     <span class="flex-shrink-0">
                                         <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
@@ -358,7 +509,8 @@
                         <div class="form-check card-radio">
                             <input class="form-check-input" type="radio" name="data-topbar" id="topbar-color-dark"
                                 value="dark">
-                            <label class="form-check-label p-0 avatar-md w-100" for="topbar-color-dark">
+                            <label class="form-check-label p-0 avatar-md w-100 material-shadow"
+                                for="topbar-color-dark">
                                 <span class="d-flex gap-1 h-100">
                                     <span class="flex-shrink-0">
                                         <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
@@ -390,7 +542,8 @@
                             <div class="form-check sidebar-setting card-radio">
                                 <input class="form-check-input" type="radio" name="data-sidebar-size"
                                     id="sidebar-size-default" value="lg">
-                                <label class="form-check-label p-0 avatar-md w-100" for="sidebar-size-default">
+                                <label class="form-check-label p-0 avatar-md w-100 material-shadow"
+                                    for="sidebar-size-default">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0">
                                             <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
@@ -417,7 +570,8 @@
                             <div class="form-check sidebar-setting card-radio">
                                 <input class="form-check-input" type="radio" name="data-sidebar-size"
                                     id="sidebar-size-compact" value="md">
-                                <label class="form-check-label p-0 avatar-md w-100" for="sidebar-size-compact">
+                                <label class="form-check-label p-0 avatar-md w-100 material-shadow"
+                                    for="sidebar-size-compact">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0">
                                             <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
@@ -443,7 +597,8 @@
                             <div class="form-check sidebar-setting card-radio">
                                 <input class="form-check-input" type="radio" name="data-sidebar-size"
                                     id="sidebar-size-small" value="sm">
-                                <label class="form-check-label p-0 avatar-md w-100" for="sidebar-size-small">
+                                <label class="form-check-label p-0 avatar-md w-100 material-shadow"
+                                    for="sidebar-size-small">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0">
                                             <span class="bg-light d-flex h-100 flex-column gap-1">
@@ -469,7 +624,8 @@
                             <div class="form-check sidebar-setting card-radio">
                                 <input class="form-check-input" type="radio" name="data-sidebar-size"
                                     id="sidebar-size-small-hover" value="sm-hover">
-                                <label class="form-check-label p-0 avatar-md w-100" for="sidebar-size-small-hover">
+                                <label class="form-check-label p-0 avatar-md w-100 material-shadow"
+                                    for="sidebar-size-small-hover">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0">
                                             <span class="bg-light d-flex h-100 flex-column gap-1">
@@ -502,7 +658,8 @@
                             <div class="form-check sidebar-setting card-radio">
                                 <input class="form-check-input" type="radio" name="data-layout-style"
                                     id="sidebar-view-default" value="default">
-                                <label class="form-check-label p-0 avatar-md w-100" for="sidebar-view-default">
+                                <label class="form-check-label p-0 avatar-md w-100 material-shadow"
+                                    for="sidebar-view-default">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0">
                                             <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
@@ -527,7 +684,8 @@
                             <div class="form-check sidebar-setting card-radio">
                                 <input class="form-check-input" type="radio" name="data-layout-style"
                                     id="sidebar-view-detached" value="detached">
-                                <label class="form-check-label p-0 avatar-md w-100" for="sidebar-view-detached">
+                                <label class="form-check-label p-0 avatar-md w-100 material-shadow"
+                                    for="sidebar-view-detached">
                                     <span class="d-flex h-100 flex-column">
                                         <span class="bg-light d-flex p-1 gap-1 align-items-center px-2">
                                             <span class="d-block p-1 bg-primary-subtle rounded me-1"></span>
@@ -561,7 +719,8 @@
                                 data-bs-target="#collapseBgGradient.show">
                                 <input class="form-check-input" type="radio" name="data-sidebar"
                                     id="sidebar-color-light" value="light">
-                                <label class="form-check-label p-0 avatar-md w-100" for="sidebar-color-light">
+                                <label class="form-check-label p-0 avatar-md w-100 material-shadow"
+                                    for="sidebar-color-light">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0">
                                             <span class="bg-white border-end d-flex h-100 flex-column gap-1 p-1">
@@ -587,7 +746,8 @@
                                 data-bs-target="#collapseBgGradient.show">
                                 <input class="form-check-input" type="radio" name="data-sidebar"
                                     id="sidebar-color-dark" value="dark">
-                                <label class="form-check-label p-0 avatar-md w-100" for="sidebar-color-dark">
+                                <label class="form-check-label p-0 avatar-md w-100 material-shadow"
+                                    for="sidebar-color-dark">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0">
                                             <span class="bg-primary d-flex h-100 flex-column gap-1 p-1">
@@ -725,6 +885,34 @@
                     </div>
                 </div>
 
+                <div id="sidebar-color">
+                    <h6 class="mt-4 mb-0 fw-semibold text-uppercase">Primary Color</h6>
+                    <p class="text-muted">Choose a color of Primary.</p>
+
+                    <div class="d-flex flex-wrap gap-2">
+                        <div class="form-check sidebar-setting card-radio">
+                            <input class="form-check-input" type="radio" name="data-theme-colors"
+                                id="themeColor-01" value="default">
+                            <label class="form-check-label avatar-xs p-0" for="themeColor-01"></label>
+                        </div>
+                        <div class="form-check sidebar-setting card-radio">
+                            <input class="form-check-input" type="radio" name="data-theme-colors"
+                                id="themeColor-02" value="green">
+                            <label class="form-check-label avatar-xs p-0" for="themeColor-02"></label>
+                        </div>
+                        <div class="form-check sidebar-setting card-radio">
+                            <input class="form-check-input" type="radio" name="data-theme-colors"
+                                id="themeColor-03" value="purple">
+                            <label class="form-check-label avatar-xs p-0" for="themeColor-03"></label>
+                        </div>
+                        <div class="form-check sidebar-setting card-radio">
+                            <input class="form-check-input" type="radio" name="data-theme-colors"
+                                id="themeColor-04" value="blue">
+                            <label class="form-check-label avatar-xs p-0" for="themeColor-04"></label>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="preloader-menu">
                     <h6 class="mt-4 mb-0 fw-semibold text-uppercase">Preloader</h6>
                     <p class="text-muted">Choose a preloader.</p>
@@ -734,7 +922,8 @@
                             <div class="form-check sidebar-setting card-radio">
                                 <input class="form-check-input" type="radio" name="data-preloader"
                                     id="preloader-view-custom" value="enable">
-                                <label class="form-check-label p-0 avatar-md w-100" for="preloader-view-custom">
+                                <label class="form-check-label p-0 avatar-md w-100 material-shadow"
+                                    for="preloader-view-custom">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0">
                                             <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
@@ -766,7 +955,8 @@
                             <div class="form-check sidebar-setting card-radio">
                                 <input class="form-check-input" type="radio" name="data-preloader"
                                     id="preloader-view-none" value="disable">
-                                <label class="form-check-label p-0 avatar-md w-100" for="preloader-view-none">
+                                <label class="form-check-label p-0 avatar-md w-100 material-shadow"
+                                    for="preloader-view-none">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0">
                                             <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
@@ -791,6 +981,77 @@
 
                 </div>
                 <!-- end preloader-menu -->
+
+                <div id="body-img" style="display: none;">
+                    <h6 class="mt-4 mb-0 fw-semibold text-uppercase">Background Image</h6>
+                    <p class="text-muted">Choose a body background image.</p>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-check sidebar-setting card-radio">
+                                <input class="form-check-input" type="radio" name="data-body-image"
+                                    id="body-img-none" value="none">
+                                <label class="form-check-label p-0 avatar-md w-100" data-body-image="none"
+                                    for="body-img-none">
+                                    <span class="d-flex gap-1 h-100">
+                                        <span class="flex-shrink-0">
+                                            <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
+                                                <span class="d-block p-1 px-2 bg-primary-subtle rounded mb-2"></span>
+                                                <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                            </span>
+                                        </span>
+                                        <span class="flex-grow-1">
+                                            <span class="d-flex h-100 flex-column">
+                                                <span class="bg-light d-block p-1"></span>
+                                                <span class="bg-light d-block p-1 mt-auto"></span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </label>
+                            </div>
+                            <h5 class="fs-13 text-center mt-2">None</h5>
+                        </div>
+                        <!-- end col -->
+                        <div class="col-4">
+                            <div class="form-check sidebar-setting card-radio">
+                                <input class="form-check-input" type="radio" name="data-body-image"
+                                    id="body-img-one" value="img-1">
+                                <label class="form-check-label p-0 avatar-md w-100" data-body-image="img-1"
+                                    for="body-img-one">
+                                </label>
+                            </div>
+                            <h5 class="fs-13 text-center mt-2">One</h5>
+                        </div>
+                        <!-- end col -->
+
+                        <div class="col-4">
+                            <div class="form-check sidebar-setting card-radio">
+                                <input class="form-check-input" type="radio" name="data-body-image"
+                                    id="body-img-two" value="img-2">
+                                <label class="form-check-label p-0 avatar-md w-100" data-body-image="img-2"
+                                    for="body-img-two">
+                                </label>
+                            </div>
+                            <h5 class="fs-13 text-center mt-2">Two</h5>
+                        </div>
+                        <!-- end col -->
+
+                        <div class="col-4">
+                            <div class="form-check sidebar-setting card-radio">
+                                <input class="form-check-input" type="radio" name="data-body-image"
+                                    id="body-img-three" value="img-3">
+                                <label class="form-check-label p-0 avatar-md w-100" data-body-image="img-3"
+                                    for="body-img-three">
+                                </label>
+                            </div>
+                            <h5 class="fs-13 text-center mt-2">Three</h5>
+                        </div>
+                        <!-- end col -->
+                    </div>
+                    <!-- end row -->
+                </div>
 
             </div>
         </div>

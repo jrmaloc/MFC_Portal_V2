@@ -9,6 +9,7 @@
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ URL::asset('build/images/favicon.ico')}}">
+    @vite('resources/css/app.css')
     @include('layouts.head-css')
 </head>
 
