@@ -1,7 +1,14 @@
 <?php
 
+use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TithesController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,16 +18,31 @@ use Illuminate\Support\Facades\Auth;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
-Auth::routes();
-//Language Translation
-Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
+Route::middleware(['guest', 'nocache'])->group(function () {
+    Route::redirect('/', '/login');
+    Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+    Route::get('/forgot-password', [AuthenticatedSessionController::class, 'reset_password'])->name('password.update');
+});
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
+Route::middleware(['auth', 'verified'])->group(function () {
+    //Language Translation
+    Route::get('/index/{locale}', [HomeController::class, 'lang']);
+    Route::get('/', [HomeController::class, 'root'])->name('root');
 
-//Update User Details
-Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
-Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
+    Route::resource('/dashboards', DashboardController::class)->middleware('nocache');
 
-Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+    Route::prefix('dashboard')->group(function () {
+        Route::resource('/announcements', AnnouncementController::class);
+        Route::resource('/users', UserController::class);
+        Route::resource('/events', EventController::class);
+        Route::resource('/tithes', TithesController::class);
+    });
+
+    //Update User Details
+    Route::post('/update-profile/{id}', [HomeController::class, 'updateProfile'])->name('updateProfile');
+    Route::post('/update-password/{id}', [HomeController::class, 'updatePassword'])->name('updatePassword');
+});
+
+require __DIR__ . '/auth.php';
