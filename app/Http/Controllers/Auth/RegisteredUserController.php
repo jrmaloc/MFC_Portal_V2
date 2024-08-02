@@ -3,19 +3,19 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Section;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         return view('auth.register');
     }
     /**
@@ -26,12 +26,20 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $name = $request->firstname . ' ' . $request->lastname;
+        $section = Section::where('name', $request->section)->first();
+
+        // dd($request->all(), $section->id);
 
         $user = User::create([
             'name' => $name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make('mfc_portal123'),
+            'section_id' => $section->id,
+            'contact_number' => $request->contact_number,
+            'role_id' => 3,
         ]);
+
+        $user->assignRole('member');
 
         event(new Registered($user));
 

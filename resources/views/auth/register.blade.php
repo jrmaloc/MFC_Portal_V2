@@ -56,49 +56,16 @@
                                         <x-input_fields.email id="useremail" name="email"
                                             value="{{ old('email') }}"></x-input_fields.email>
 
-                                        <x-input_fields.contact-number id="usercontact" name="contact_number" formId="registerForm"></x-input_fields.contact-number>
-
-                                        <div class="mb-3">
-                                            <label class="form-label" for="userpassword">Password <span
-                                                    class="text-danger">*</span></label>
-                                            <div class="position-relative auth-pass-inputgroup mb-3">
-                                                <input type="password"
-                                                    class="form-control password-input pe-5 @error('password') is-invalid @enderror"
-                                                    name="password" placeholder="Enter password" id="userpassword"
-                                                    value="" oninput="validatePassword(this.value, 'userpassword')"
-                                                    required>
-                                                <button
-                                                    class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
-                                                    type="button" id="password-addon"><i
-                                                        class="ri-eye-fill align-middle"></i></button>
-                                                @error('password')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-
-                                            <label class="form-label" for="confirmuserpassword">Confirm Password <span
-                                                    class="text-danger">*</span></label>
-                                            <div class="position-relative auth-pass-inputgroup mb-3">
-                                                <input type="password"
-                                                    class="form-control password-input pe-5 @error('password_confirmation') is-invalid @enderror"
-                                                    name="password_confirmation" placeholder="Enter password"
-                                                    id="confirmuserpassword" value=""
-                                                    oninput="validatePassword(this.value, 'confirmuserpassword')" required>
-                                                <button
-                                                    class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
-                                                    type="button" id="password-addon"><i
-                                                        class="ri-eye-fill align-middle"></i></button>
-                                                @error('password_confirmation')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
+                                        <x-input_fields.contact-number id="usercontact" name="contact_number"
+                                            formId="registerForm"></x-input_fields.contact-number>
+                                        <x-input_fields.choices label="MFC Section" id="mfc_section" formId="registerForm" name="section">
+                                            <option value="kids" class="text-capitalize">kids</option>
+                                            <option value="youth" class="text-capitalize">youth</option>
+                                            <option value="singles" class="text-capitalize">singles</option>
+                                            <option value="handmaids" class="text-capitalize">handmaids</option>
+                                            <option value="servants" class="text-capitalize">servants</option>
+                                            <option value="couples" class="text-capitalize">couples</option>
+                                        </x-input_fields.choices>
 
                                         <div class="mb-3">
                                             <p class="mb-0 fs-12 text-muted fst-italic d-flex gap-1">By registering you
@@ -177,4 +144,6 @@
     <script src="{{ URL::asset('build/js/pages/particles.app.js') }}"></script>
     <script src="{{ URL::asset('build/js/pages/password-addon.init.js') }}"></script>
     <script src="{{ URL::asset('build/js/pages/form-validation.init.js') }}"></script>
+    <script src="{{ URL::asset('build/libs/prismjs/prism.js') }}"></script>
+    <script src="{{ URL::asset('build/js/app.js') }}"></script>
 @endsection

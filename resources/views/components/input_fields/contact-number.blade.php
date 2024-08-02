@@ -7,7 +7,7 @@
 
 
 <div class="mb-3">
-    <label for='{{ $id }}' class="form-label">Contact Number<span class="text-danger">*</span></label>
+    <label for='{{ $id }}' class="form-label">Contact Number <span class="text-danger">*</span></label>
     <div class="form-icon">
         <input name={{ $name }} type="text" class="form-control form-control-icon" id='{{ $id }}'
             required oninput="validateContactNumber(this);" pattern="^9\d{2} \d{3} \d{4}$" value="{{ $value }}" placeholder="912 345 6789" style="padding-left: 55px;">

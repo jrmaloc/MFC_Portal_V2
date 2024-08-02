@@ -1,9 +1,31 @@
-@props([
+<?php $attributes ??= new \Illuminate\View\ComponentAttributeBag; ?>
+<?php foreach($attributes->onlyProps([
     'label' => '',
     'id' => 'choices',
     'name' => 'choices',
     'formId' => '',
-])
+]) as $__key => $__value) {
+    $$__key = $$__key ?? $__value;
+} ?>
+<?php $attributes = $attributes->exceptProps([
+    'label' => '',
+    'id' => 'choices',
+    'name' => 'choices',
+    'formId' => '',
+]); ?>
+<?php foreach (array_filter(([
+    'label' => '',
+    'id' => 'choices',
+    'name' => 'choices',
+    'formId' => '',
+]), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
+    $$__key = $$__key ?? $__value;
+} ?>
+<?php $__defined_vars = get_defined_vars(); ?>
+<?php foreach ($attributes as $__key => $__value) {
+    if (array_key_exists($__key, $__defined_vars)) unset($$__key);
+} ?>
+<?php unset($__defined_vars); ?>
 
 <style>
     .hide-after::after {
@@ -22,11 +44,13 @@
 </style>
 
 <div class="mb-3">
-    <label for="{{ $label }}select" class="form-label"><span class="text-capitalize">{{ $label }}
+    <label for="<?php echo e($label); ?>select" class="form-label"><span class="text-capitalize"><?php echo e($label); ?>
+
         </span><span class="text-danger">*</span></label>
-    <select class="form-control" name="{{ $name }}" id="{{ $id }}" data-choices required>
-        <option value="">Select {{ $label }}</option>
-        {{ $slot }}
+    <select class="form-control" name="<?php echo e($name); ?>" id="<?php echo e($id); ?>" data-choices required>
+        <option value="">Select <?php echo e($label); ?></option>
+        <?php echo e($slot); ?>
+
     </select>
     <div class="invalid-feedback">Please select an option.</div>
 </div>
@@ -35,22 +59,22 @@
     document.addEventListener('DOMContentLoaded', function() {
         const choices = new Choices('[data-choices]', {
             placeholder: true,
-            placeholderValue: 'Select {{ $label }}',
+            placeholderValue: 'Select <?php echo e($label); ?>',
             searchEnabled: false,
         });
         // Add a custom event listener for validation on change
-        document.getElementById('{{ $id }}').addEventListener('change', function() {
+        document.getElementById('<?php echo e($id); ?>').addEventListener('change', function() {
             validateSelect(this);
 
             console.log('weew');
         });
 
-        document.getElementById('{{ $formId }}').addEventListener('submit', function(event) {
+        document.getElementById('<?php echo e($formId); ?>').addEventListener('submit', function(event) {
             validateForm();
         });
 
         function validateForm() {
-            const selectElement = document.getElementById('{{ $id }}');
+            const selectElement = document.getElementById('<?php echo e($id); ?>');
             if (validateSelect(selectElement)) {
                 // Form is valid
                 return true;
@@ -91,3 +115,4 @@
         }
     });
 </script>
+<?php /**PATH C:\Users\GoDesQ3\Downloads\MFC_Portal_V2\resources\views/components/input_fields/choices.blade.php ENDPATH**/ ?>

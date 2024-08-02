@@ -29,7 +29,7 @@
 
 
 <div class="mb-3">
-    <label for='<?php echo e($id); ?>' class="form-label">Contact Number<span class="text-danger">*</span></label>
+    <label for='<?php echo e($id); ?>' class="form-label">Contact Number <span class="text-danger">*</span></label>
     <div class="form-icon">
         <input name=<?php echo e($name); ?> type="text" class="form-control form-control-icon" id='<?php echo e($id); ?>'
             required oninput="validateContactNumber(this);" pattern="^9\d{2} \d{3} \d{4}$" value="<?php echo e($value); ?>" placeholder="912 345 6789" style="padding-left: 55px;">

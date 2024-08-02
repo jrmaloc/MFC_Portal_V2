@@ -18,16 +18,21 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('username')->unique()->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->bigInteger('otp_code')->nullable();
+            $table->string('username')->unique()->nullable();
             $table->string('password');
             $table->text('avatar')->nullable();
+            $table->string('contact_number')->unique()->nullable();
+            $table->string('area')->nullable();
+            $table->enum('chapter', User::$chapter)->nullable();
+            $table->enum('gender', User::$gender)->nullable();
+            $table->enum('status', User::$status)->nullable()->default('Active');
             $table->rememberToken();
             $table->timestamps();
+
         });
-        User::create(['name' => 'admin','email' => 'admin@themesbrand.com','password' => Hash::make('12345678'),'email_verified_at'=>'2022-01-02 17:04:58','avatar' => 'avatar-1.jpg','created_at' => now(),]);
+        User::create(['name' => 'admin', 'email' => 'admin@themesbrand.com', 'password' => Hash::make('12345678'), 'avatar' => 'avatar-1.jpg', 'created_at' => now()]);
     }
     /**
      * Reverse the migrations.

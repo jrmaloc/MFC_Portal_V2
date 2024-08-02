@@ -10756,7 +10756,7 @@ div.dtr-modal div.dtr-modal-close:hover {
 }
 .choices__list--dropdown {
     visibility: hidden;
-    z-index: 1;
+    z-index: 10;
     position: absolute;
     width: 100%;
     background-color: var(--vz-secondary-bg);

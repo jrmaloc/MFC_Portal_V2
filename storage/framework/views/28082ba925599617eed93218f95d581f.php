@@ -123,76 +123,32 @@
 <?php $component = $__componentOriginal687a99f5f3aa9fa378ae81914e61734f; ?>
 <?php unset($__componentOriginal687a99f5f3aa9fa378ae81914e61734f); ?>
 <?php endif; ?>
-
-                                        <div class="mb-3">
-                                            <label class="form-label" for="userpassword">Password <span
-                                                    class="text-danger">*</span></label>
-                                            <div class="position-relative auth-pass-inputgroup mb-3">
-                                                <input type="password"
-                                                    class="form-control password-input pe-5 <?php $__errorArgs = ['password'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>"
-                                                    name="password" placeholder="Enter password" id="userpassword"
-                                                    value="" oninput="validatePassword(this.value, 'userpassword')"
-                                                    required>
-                                                <button
-                                                    class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
-                                                    type="button" id="password-addon"><i
-                                                        class="ri-eye-fill align-middle"></i></button>
-                                                <?php $__errorArgs = ['password'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong><?php echo e($message); ?></strong>
-                                                    </span>
-                                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-
-                                            <label class="form-label" for="confirmuserpassword">Confirm Password <span
-                                                    class="text-danger">*</span></label>
-                                            <div class="position-relative auth-pass-inputgroup mb-3">
-                                                <input type="password"
-                                                    class="form-control password-input pe-5 <?php $__errorArgs = ['password_confirmation'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>"
-                                                    name="password_confirmation" placeholder="Enter password"
-                                                    id="confirmuserpassword" value=""
-                                                    oninput="validatePassword(this.value, 'confirmuserpassword')" required>
-                                                <button
-                                                    class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
-                                                    type="button" id="password-addon"><i
-                                                        class="ri-eye-fill align-middle"></i></button>
-                                                <?php $__errorArgs = ['password_confirmation'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong><?php echo e($message); ?></strong>
-                                                    </span>
-                                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                            </div>
-                                        </div>
+                                        <?php if (isset($component)) { $__componentOriginalc4147c8a32244764de5df52bbb10c56c = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalc4147c8a32244764de5df52bbb10c56c = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input_fields.choices','data' => ['label' => 'MFC Section','id' => 'mfc_section','formId' => 'registerForm','name' => 'section']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('input_fields.choices'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['label' => 'MFC Section','id' => 'mfc_section','formId' => 'registerForm','name' => 'section']); ?>
+                                            <option value="kids" class="text-capitalize">kids</option>
+                                            <option value="youth" class="text-capitalize">youth</option>
+                                            <option value="singles" class="text-capitalize">singles</option>
+                                            <option value="handmaids" class="text-capitalize">handmaids</option>
+                                            <option value="servants" class="text-capitalize">servants</option>
+                                            <option value="couples" class="text-capitalize">couples</option>
+                                         <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalc4147c8a32244764de5df52bbb10c56c)): ?>
+<?php $attributes = $__attributesOriginalc4147c8a32244764de5df52bbb10c56c; ?>
+<?php unset($__attributesOriginalc4147c8a32244764de5df52bbb10c56c); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc4147c8a32244764de5df52bbb10c56c)): ?>
+<?php $component = $__componentOriginalc4147c8a32244764de5df52bbb10c56c; ?>
+<?php unset($__componentOriginalc4147c8a32244764de5df52bbb10c56c); ?>
+<?php endif; ?>
 
                                         <div class="mb-3">
                                             <p class="mb-0 fs-12 text-muted fst-italic d-flex gap-1">By registering you
@@ -271,6 +227,8 @@ unset($__errorArgs, $__bag); ?>
     <script src="<?php echo e(URL::asset('build/js/pages/particles.app.js')); ?>"></script>
     <script src="<?php echo e(URL::asset('build/js/pages/password-addon.init.js')); ?>"></script>
     <script src="<?php echo e(URL::asset('build/js/pages/form-validation.init.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/libs/prismjs/prism.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.master-without-nav', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\GoDesQ3\Downloads\MFC_Portal_V2\resources\views/auth/register.blade.php ENDPATH**/ ?>
