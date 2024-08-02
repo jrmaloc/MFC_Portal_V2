@@ -38,6 +38,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('/users', UserController::class);
         Route::resource('/events', EventController::class);
         Route::resource('/tithes', TithesController::class);
+        Route::resource('/announcements', AnnouncementController::class);
 
         //Update User Details
         Route::post('/update-profile/{id}', [HomeController::class, 'updateProfile'])->name('updateProfile');
