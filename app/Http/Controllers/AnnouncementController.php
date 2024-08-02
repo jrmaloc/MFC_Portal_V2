@@ -19,6 +19,7 @@ class AnnouncementController extends Controller
     {
         // dd(Announcement::all());
         $announcements = Announcement::all();
+        $services = Service::all();
 
         if ($request->ajax()) {
             $data = $announcements;
@@ -58,7 +59,7 @@ class AnnouncementController extends Controller
                 ->make(true);
         }
 
-        return view('pages.announcements.index', compact('announcements'));
+        return view('pages.announcements.index', compact('announcements', 'services'));
     }
 
     /**
@@ -153,7 +154,7 @@ class AnnouncementController extends Controller
 
         $send_to = $service->name . ' - ' . $section->name;
 
-        return view('pages.announcement.show', compact('title', 'announcement', 'content', 'service', 'section', 'send_to', 'created_at', 'updated_at'));
+        return view('pages.announcements.show', compact('title', 'announcement', 'content', 'service', 'section', 'send_to', 'created_at', 'updated_at'));
     }
 
     /**
@@ -175,22 +176,22 @@ class AnnouncementController extends Controller
         if (is_null($section) && is_null($service)) {
             $send_to = 'Everyone';
 
-            return view('pages.announcement.edit', compact('title', 'announcement', 'content', 'service', 'section', 'send_to', 'created_at', 'updated_at'));
+            return view('pages.announcements.edit', compact('title', 'announcement', 'content', 'service', 'section', 'send_to', 'created_at', 'updated_at'));
         }
 
         if ($section === null) {
             $send_to = $service->name;
-            return view('pages.announcement.edit', compact('title', 'announcement', 'content', 'service', 'section', 'send_to', 'created_at', 'updated_at'));
+            return view('pages.announcements.edit', compact('title', 'announcement', 'content', 'service', 'section', 'send_to', 'created_at', 'updated_at'));
         }
 
         if ($service === null) {
             $send_to = $section->name;
-            return view('pages.announcement.edit', compact('title', 'announcement', 'content', 'service', 'section', 'send_to', 'created_at', 'updated_at'));
+            return view('pages.announcements.edit', compact('title', 'announcement', 'content', 'service', 'section', 'send_to', 'created_at', 'updated_at'));
         }
 
         $send_to = $service->name . ' - ' . $section->name;
 
-        return view('pages.announcement.edit', compact('title', 'announcement', 'content', 'service', 'section', 'send_to', 'created_at', 'updated_at'));
+        return view('pages.announcements.edit', compact('title', 'announcement', 'content', 'service', 'section', 'send_to', 'created_at', 'updated_at'));
 
     }
 

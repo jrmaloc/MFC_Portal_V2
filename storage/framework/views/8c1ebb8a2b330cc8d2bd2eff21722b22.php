@@ -79,12 +79,11 @@
                             <div class="col-lg-6 d-none" id="who_group">
                                 <label for="service" class="form-label">Who?</label>
                                 <select class="form-control" data-plugin="choices" name="service" id="service"
-                                    data-choices data-choices-search-false data-choices-removeItem>
+                                    data-choices>
                                     <option value="">Service</option>
-                                    <option value="1">Area Servants</option>
-                                    <option value="2">Chapter Servants</option>
-                                    <option value="3">Unit Servants</option>
-                                    <option value="4">Household Servants</option>
+                                    <?php $__currentLoopData = $services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($service->id); ?>"><?php echo e($service->name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
 
@@ -159,7 +158,7 @@
                         message: 'Deleting this announcement will remove all of the information from our database.',
                         deleteFunction: function() {
                             $.ajax({
-                                url: '/announcements/' + id,
+                                url: '/dashboard/announcements/' + id,
                                 type: 'DELETE',
                                 data: {
                                     _token: $('meta[name="csrf-token"]').attr(
@@ -167,6 +166,7 @@
                                 },
                                 success: function(response) {
                                     showSuccessMessage(response.message);
+                                    $('#announcement_datatables').DataTable().draw(false);
                                 },
                                 error: function(xhr, response, error) {
                                     showErrorMessage(xhr.statusText);
@@ -231,7 +231,7 @@
 
                 let table = $("#announcement_datatables").DataTable({
                     processing: true,
-                    pageLength: 25,
+                    pageLength: 10,
                     responsive: true,
                     serverSide: true,
                     ajax: {

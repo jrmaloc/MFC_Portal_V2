@@ -16,7 +16,7 @@
         text-transform: capitalize;
     }
 
-    .form-control.is-valid{
+    .form-control.is-valid {
         border-color: var(--vz-form-valid-border-color) !important;
     }
 </style>
@@ -37,6 +37,12 @@
             placeholder: true,
             placeholderValue: 'Select {{ $label }}',
             searchEnabled: false,
+            shouldSort: true,
+            searchEnabled: true,
+            searchChoices: true,
+            searchFloor: 1,
+            searchResultLimit: 4,
+            searchFields: ['label', 'value'],
         });
         // Add a custom event listener for validation on change
         document.getElementById('{{ $id }}').addEventListener('change', function() {
