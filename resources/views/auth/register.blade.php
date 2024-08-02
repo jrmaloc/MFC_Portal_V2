@@ -3,7 +3,6 @@
     @lang('translation.signup')
 @endsection
 @section('content')
-
     <div class="auth-page-wrapper pt-5">
         <!-- auth page bg -->
         <div class="auth-one-bg-position auth-one-bg" id="auth-particles">
@@ -25,7 +24,8 @@
                         <div class="text-center mt-sm-5 mb-4 text-white-50">
                             <div>
                                 <a href="index" class="d-inline-block auth-logo">
-                                    <img src="{{ URL::asset('build/images/logo-light.png') }}" alt="" height="20">
+                                    <img src="{{ URL::asset('build/images/logo-light.png') }}" alt=""
+                                        height="20">
                                 </a>
                             </div>
                             <p class="mt-3 fs-15 fw-medium">Premium Admin & Dashboard Template</p>
@@ -44,82 +44,65 @@
                                     <p class="text-muted">Get your free velzon account now</p>
                                 </div>
                                 <div class="p-2 mt-4">
-                                    <form class="needs-validation" novalidate method="POST"
+                                    <form class="needs-validation" novalidate method="POST" id="registerForm"
                                         action="{{ route('register') }}" enctype="multipart/form-data">
                                         @csrf
+                                        <x-input_fields.name id="userFirstName" label="First Name" name="firstname"
+                                            value="{{ old('firstname') }}"
+                                            feedback="Please enter your first name"></x-input_fields.name>
+                                        <x-input_fields.name id="userLastName" label="Last Name" name="lastname"
+                                            value="{{ old('lastname') }}"
+                                            feedback="Please enter your last name"></x-input_fields.name>
+                                        <x-input_fields.email id="useremail" name="email"
+                                            value="{{ old('email') }}"></x-input_fields.email>
+
+                                        <x-input_fields.contact-number id="usercontact" name="contact_number" formId="registerForm"></x-input_fields.contact-number>
+
                                         <div class="mb-3">
-                                            <label for="useremail" class="form-label">Email <span
+                                            <label class="form-label" for="userpassword">Password <span
                                                     class="text-danger">*</span></label>
-                                            <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                                name="email" value="{{ old('email') }}" id="useremail"
-                                                placeholder="Enter email address" required>
-                                            @error('email')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                            <div class="invalid-feedback">
-                                                Please enter email
+                                            <div class="position-relative auth-pass-inputgroup mb-3">
+                                                <input type="password"
+                                                    class="form-control password-input pe-5 @error('password') is-invalid @enderror"
+                                                    name="password" placeholder="Enter password" id="userpassword"
+                                                    value="" oninput="validatePassword(this.value, 'userpassword')"
+                                                    required>
+                                                <button
+                                                    class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
+                                                    type="button" id="password-addon"><i
+                                                        class="ri-eye-fill align-middle"></i></button>
+                                                @error('password')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="username" class="form-label">Username <span
+
+                                            <label class="form-label" for="confirmuserpassword">Confirm Password <span
                                                     class="text-danger">*</span></label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                                name="name" value="{{ old('name') }}" id="username"
-                                                placeholder="Enter username" required>
-                                            @error('name')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                            <div class="invalid-feedback">
-                                                Please enter username
+                                            <div class="position-relative auth-pass-inputgroup mb-3">
+                                                <input type="password"
+                                                    class="form-control password-input pe-5 @error('password_confirmation') is-invalid @enderror"
+                                                    name="password_confirmation" placeholder="Enter password"
+                                                    id="confirmuserpassword" value=""
+                                                    oninput="validatePassword(this.value, 'confirmuserpassword')" required>
+                                                <button
+                                                    class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
+                                                    type="button" id="password-addon"><i
+                                                        class="ri-eye-fill align-middle"></i></button>
+                                                @error('password_confirmation')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="userpassword" class="form-label">Password <span
-                                                    class="text-danger">*</span></label>
-                                            <input type="password"
-                                                class="form-control @error('password') is-invalid @enderror" name="password"
-                                                id="userpassword" placeholder="Enter password" required>
-                                            @error('password')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                            <div class="invalid-feedback">
-                                                Please enter password
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="input-password">Confirm Password <span class="text-danger">*</span></label>
-                                            <input type="password"
-                                                class="form-control @error('password_confirmation') is-invalid @enderror"
-                                                name="password_confirmation" id="input-password"
-                                                placeholder="Enter Confirm Password" required>
-
-                                            <div class="form-floating-icon">
-                                                <i data-feather="lock"></i>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="input-avatar">Avatar <span class="text-danger">*</span></label>
-                                            <input type="file" class="form-control @error('avatar') is-invalid @enderror"
-                                                name="avatar" id="input-avatar" required>
-                                            @error('avatar')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                            <div class="">
-                                                <i data-feather="file"></i>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <p class="mb-0 fs-12 text-muted fst-italic">By registering you agree to the
+                                            <p class="mb-0 fs-12 text-muted fst-italic d-flex gap-1">By registering you
+                                                agree to the
                                                 Velzon <a href="#"
                                                     class="text-primary text-decoration-underline fst-normal fw-medium">Terms
                                                     of Use</a></p>
@@ -158,8 +141,8 @@
                         <!-- end card -->
 
                         <div class="mt-4 text-center">
-                            <p class="mb-0">Already have an account ? <a href="{{ route('login') }}"
-                                    class="fw-semibold text-primary text-decoration-underline"> Signin </a> </p>
+                            <p class="mb-0">Already have an account? <a href="{{ route('login') }}"
+                                    class="fw-semibold text-primary text-decoration-underline"> Sign In </a> </p>
                         </div>
 
                     </div>
@@ -178,8 +161,8 @@
                         <div class="text-center">
                             <script>
                                 document.write(new Date().getFullYear())
-                            </script> Velzon. Crafted with <i
-                                    class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                            </script> Velzon. Crafted with <i class="mdi mdi-heart text-danger"></i> by
+                            Themesbrand</p>
                         </div>
                     </div>
                 </div>
@@ -192,5 +175,6 @@
 @section('script')
     <script src="{{ URL::asset('build/libs/particles.js/particles.js') }}"></script>
     <script src="{{ URL::asset('build/js/pages/particles.app.js') }}"></script>
+    <script src="{{ URL::asset('build/js/pages/password-addon.init.js') }}"></script>
     <script src="{{ URL::asset('build/js/pages/form-validation.init.js') }}"></script>
 @endsection

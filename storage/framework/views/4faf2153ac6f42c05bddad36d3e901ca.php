@@ -5,7 +5,9 @@
     <meta charset="utf-8" />
     <title><?php echo $__env->yieldContent('title'); ?> | Velzon - Admin & Dashboard Template</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <?php echo app('Illuminate\Foundation\Vite')('build/css/app.min.css'); ?>
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="<?php echo e(URL::asset('build/images/favicon.ico')); ?>">

@@ -3,34 +3,58 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\OTP;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Verified;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class VerifyEmailController extends Controller
 {
     /**
      * Mark the authenticated user's email address as verified.
      */
-    public function __invoke(EmailVerificationRequest $request): RedirectResponse
+    public function __invoke(Request $request): RedirectResponse
     {
+        // dd($request->all());
+
         if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->intended(
-                config('app.frontend_url').RouteServiceProvider::HOME.'?verified=1'
-            );
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }
+
+        $user = Auth::user();
+
+        $otp = OTP::where('user_id', $user->id)
+            ->where('otp_code', $request->otp)
+            ->where('is_used', false)
+            ->where('expires_at', '>', Carbon::now())
+            ->first();
+
+        if ($otp) {
+            $otp->is_used = 1;
+            $otp->save();
+
+            $user->email_verified_at = Carbon::now();
+            $user->save();
+
+            return redirect()->intended(RouteServiceProvider::HOME);
         }
 
         if ($request->user()->markEmailAsVerified()) {
             event(new Verified($request->user()));
         }
 
-        return redirect()->intended(
-            config('app.frontend_url').RouteServiceProvider::HOME.'?verified=1'
-        );
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
-    public function notice() {
+    public function notice()
+    {
+        if (Auth::user()->hasVerifiedEmail()) {
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }
+        
         return view('auth.verify');
     }
 }

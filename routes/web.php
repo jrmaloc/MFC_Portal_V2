@@ -31,18 +31,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/index/{locale}', [HomeController::class, 'lang']);
     Route::get('/', [HomeController::class, 'root'])->name('root');
 
-    Route::resource('/dashboards', DashboardController::class)->middleware('nocache');
+    Route::resource('/dashboards', DashboardController::class)->middleware(['auth', 'verified', 'nocache']);
 
-    Route::prefix('dashboard')->group(function () {
+    Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () {
         Route::resource('/announcements', AnnouncementController::class);
         Route::resource('/users', UserController::class);
         Route::resource('/events', EventController::class);
         Route::resource('/tithes', TithesController::class);
-    });
 
-    //Update User Details
-    Route::post('/update-profile/{id}', [HomeController::class, 'updateProfile'])->name('updateProfile');
-    Route::post('/update-password/{id}', [HomeController::class, 'updatePassword'])->name('updatePassword');
+        //Update User Details
+        Route::post('/update-profile/{id}', [HomeController::class, 'updateProfile'])->name('updateProfile');
+        Route::post('/update-password/{id}', [HomeController::class, 'updatePassword'])->name('updatePassword');
+
+    });
 });
 
 require __DIR__ . '/auth.php';
