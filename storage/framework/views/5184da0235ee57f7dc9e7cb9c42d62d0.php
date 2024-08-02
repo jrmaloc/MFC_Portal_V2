@@ -72,11 +72,13 @@
                                         <div class="text-muted text-center mx-lg-3">
                                             <h4 class="">Verify Your Email</h4>
                                             <p>Please enter the 4 digit code sent to <span
-                                                    class="fw-semibold">example@abc.com</span></p>
+                                                    class="fw-semibold"><?php echo e(Auth::user()->email); ?></span></p>
                                         </div>
 
                                         <div class="mt-4">
-                                            <form autocomplete="off">
+                                            <form autocomplete="off" action="<?php echo e(route('verification.verify')); ?>"
+                                                method="POST">
+                                                <?php echo csrf_field(); ?>
                                                 <div class="row">
                                                     <div class="col-3">
                                                         <div class="mb-3">
@@ -123,22 +125,89 @@
                                                     </div><!-- end col -->
                                                 </div>
 
+                                                <input type="text" name="otp" id="otp_input" hidden>
+
+                                                <script>
+                                                    document.addEventListener('DOMContentLoaded', function() {
+                                                        var digitInputs = document.querySelectorAll('.form-control');
+                                                        var otpInput = document.getElementById('otp_input');
+                                                        var value = "";
+
+                                                        digitInputs.forEach(input => {
+                                                            input.addEventListener('input', function() {
+                                                                value += input.value;
+                                                                otpInput.value = value;
+
+                                                                console.log(otpInput.value);
+
+                                                            });
+                                                        });
+
+                                                    });
+                                                </script>
+
                                                 <div class="mt-3">
-                                                    <button type="button" class="btn btn-success w-100">Confirm</button>
+                                                    <button type="submit" class="btn btn-success w-100">Confirm</button>
                                                 </div>
 
                                             </form>
 
                                         </div>
 
-                                        <div class="mt-5 text-center">
-                                            <p class="mb-0">Didn't receive a code ? <a href="auth-pass-reset-cover"
-                                                    class="fw-semibold text-primary text-decoration-underline">Resend</a>
+                                        <div class="mt-3 text-center">
+                                            <div class="alert alert-success alert-dismissible fade show material-shadow text-center mb-3 d-none"
+                                                id="alert_success" role="alert">
+                                                <strong>Success!</strong> Verification code has been sent to
+                                                <span class="fw-semibold"><?php echo e(Auth::user()->email); ?></span>.
+                                                <button type="button" class="btn-close"
+                                                    data-bs-dismiss="alert"></button>
+                                            </div>
+                                            <p class="mb-0 d-flex justify-content-center align-items-center gap-1">Didn't
+                                                receive a code ? <a href="javascript:void(0);" id="resend"
+                                                    class="fw-semibold text-primary text-decoration-underline"><span
+                                                        class="" id="resend-text">Resend</span></a>
+                                                <span class="d-none" id="spinner">
+                                                    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+                                                    <lord-icon src="https://cdn.lordicon.com/gkryirhd.json" trigger="loop"
+                                                        state="loop-snake" style="width:25px;height:25px">
+                                                    </lord-icon>
+                                                </span>
+
+                                                <script>
+                                                    $(document).ready(function() {
+                                                        $('#resend').on('click', function() {
+                                                            $('#resend-text').addClass('d-none');
+                                                            $('#spinner').removeClass('d-none');
+
+                                                            $.ajax({
+                                                                headers: {
+                                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                },
+                                                                url: "<?php echo e(route('verification.send')); ?>",
+                                                                type: 'POST',
+                                                                success: function(response) {
+                                                                    console.log('success');
+
+                                                                    $('#resend-text').removeClass('d-none');
+                                                                    $('#spinner').addClass('d-none');
+
+                                                                    $('#alert_success').removeClass('d-none');
+                                                                },
+                                                                error: function(error) {
+                                                                    console.log(error.responseJSON.message);
+                                                                    $('#resend-text').removeClass('d-none');
+                                                                    $('#spinner').addClass('d-none');
+                                                                }
+                                                            })
+                                                        })
+                                                    })
+                                                </script>
                                             </p>
                                         </div>
 
                                         <div class="mt-3 text-center">
-                                            <a class="fw-semibold text-danger text-decoration-underline" href="javascript:void();"
+                                            <a class="fw-semibold text-danger text-decoration-underline"
+                                                href="javascript:void();"
                                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><span
                                                     key="t-logout"><?php echo app('translator')->get('translation.logout'); ?></span></a>
                                             <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST"

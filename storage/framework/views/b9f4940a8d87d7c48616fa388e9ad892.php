@@ -125,7 +125,7 @@ unset($__errorArgs, $__bag); ?>
                     <!-- end card -->
 
                     <div class="mt-4 text-center">
-                        <p class="mb-0">Don't have an account ? <a href="<?php echo e(route('register')); ?>" class="fw-semibold text-primary text-decoration-underline"> Signup </a> </p>
+                        <p class="mb-0">Don't have an account? <a href="<?php echo e(route('register')); ?>" class="fw-semibold text-primary text-decoration-underline"> Sign Up </a> </p>
                     </div>
 
                 </div>

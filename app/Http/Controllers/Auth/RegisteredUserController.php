@@ -3,40 +3,50 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Section;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
 {
+    public function index()
+    {
+        return view('auth.register');
+    }
     /**
      * Handle an incoming registration request.
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): Response
+    public function store(Request $request): RedirectResponse
     {
-        dd($request->all());
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        $name = $request->firstname . ' ' . $request->lastname;
+        $section = Section::where('name', $request->section)->first();
+
+        // dd($request->all(), $section->id);
 
         $user = User::create([
-            'name' => $request->name,
+            'name' => $name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make('mfc_portal123'),
+            'section_id' => $section->id,
+            'contact_number' => $request->contact_number,
+            'role_id' => 3,
         ]);
+
+        $user->assignRole('member');
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return response()->noContent();
+        $user->sendEmailVerificationNotification();
+
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 }
