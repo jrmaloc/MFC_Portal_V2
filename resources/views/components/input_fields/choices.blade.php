@@ -22,33 +22,27 @@
 </style>
 
 <div class="mb-3">
-    <label for="{{ $label }}select" class="form-label"><span class="text-capitalize">{{ $label }}
+    <label for="{{ $id }}" class="form-label"><span class="text-capitalize">{{ $label }}
         </span><span class="text-danger">*</span></label>
-    <select class="form-control" name="{{ $name }}" id="{{ $id }}" data-choices required>
+    <select class="form-control" name="{{ $name }}" id="{{ $id }}" required>
         <option value="">Select {{ $label }}</option>
         {{ $slot }}
     </select>
-    <div class="invalid-feedback">Please select an option.</div>
+    <div class="invalid-feedback">Please select atleast one.</div>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const choices = new Choices('[data-choices]', {
-            placeholder: true,
-            placeholderValue: 'Select {{ $label }}',
+        var selectInput = document.getElementById('{{ $id }}');
+
+        new Choices(selectInput, {
             searchEnabled: false,
-            shouldSort: true,
-            searchEnabled: true,
-            searchChoices: true,
-            searchFloor: 1,
-            searchResultLimit: 4,
-            searchFields: ['label', 'value'],
+            shouldSort: false,
         });
+
         // Add a custom event listener for validation on change
         document.getElementById('{{ $id }}').addEventListener('change', function() {
             validateSelect(this);
-
-            console.log('weew');
         });
 
         document.getElementById('{{ $formId }}').addEventListener('submit', function(event) {

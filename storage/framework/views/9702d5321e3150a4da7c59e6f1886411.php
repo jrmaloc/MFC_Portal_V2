@@ -1,22 +1,40 @@
-@props([
+<?php $attributes ??= new \Illuminate\View\ComponentAttributeBag; ?>
+<?php foreach($attributes->onlyProps([
     'color' => '',
     'route' => '',
-])
+]) as $__key => $__value) {
+    $$__key = $$__key ?? $__value;
+} ?>
+<?php $attributes = $attributes->exceptProps([
+    'color' => '',
+    'route' => '',
+]); ?>
+<?php foreach (array_filter(([
+    'color' => '',
+    'route' => '',
+]), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
+    $$__key = $$__key ?? $__value;
+} ?>
+<?php $__defined_vars = get_defined_vars(); ?>
+<?php foreach ($attributes as $__key => $__value) {
+    if (array_key_exists($__key, $__defined_vars)) unset($$__key);
+} ?>
+<?php unset($__defined_vars); ?>
 
 <div class="modal fade" id="addmemberModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0">
             <div class="modal-body">
-                <form autocomplete="off" id="memberlist-form" class="novalidate" novalidate action="{{ $route }}"
+                <form autocomplete="off" id="memberlist-form" class="novalidate" novalidate action="<?php echo e($route); ?>"
                     method="POST">
-                    @csrf
+                    <?php echo csrf_field(); ?>
                     <div class="row">
                         <div class="col-lg-12">
                             <input type="hidden" id="memberid-input" class="form-control" value="">
                             <div class="px-1 pt-1">
                                 <div
                                     class="modal-team-cover position-relative mb-0 mt-n4 mx-n4 rounded-top overflow-hidden">
-                                    <img src="{{ URL::asset('build/images/small/img-9.jpg') }}" alt=""
+                                    <img src="<?php echo e(URL::asset('build/images/small/img-9.jpg')); ?>" alt=""
                                         id="cover-img" class="img-fluid">
 
                                     <div class="d-flex position-absolute start-0 end-0 top-0 p-3">
@@ -66,42 +84,42 @@
                                     </div>
                                     <div class="avatar-lg">
                                         <div class="avatar-title bg-light rounded-circle">
-                                            <img src="{{ URL::asset('build/images/users/user-dummy-img.jpg') }}"
+                                            <img src="<?php echo e(URL::asset('build/images/users/user-dummy-img.jpg')); ?>"
                                                 id="member-img" class="avatar-md rounded-circle h-auto" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            @component('components.input_fields.name')
-                                @slot('id')
+                            <?php $__env->startComponent('components.input_fields.name'); ?>
+                                <?php $__env->slot('id'); ?>
                                     name
-                                @endslot
-                                @slot('name')
+                                <?php $__env->endSlot(); ?>
+                                <?php $__env->slot('name'); ?>
                                     name
-                                @endslot
-                            @endcomponent
+                                <?php $__env->endSlot(); ?>
+                            <?php echo $__env->renderComponent(); ?>
 
-                            @component('components.input_fields.username')
-                                @slot('id')
+                            <?php $__env->startComponent('components.input_fields.username'); ?>
+                                <?php $__env->slot('id'); ?>
                                     username
-                                @endslot
-                                @slot('name')
+                                <?php $__env->endSlot(); ?>
+                                <?php $__env->slot('name'); ?>
                                     username
-                                @endslot
-                            @endcomponent
+                                <?php $__env->endSlot(); ?>
+                            <?php echo $__env->renderComponent(); ?>
 
-                            @component('components.input_fields.email')
-                                @slot('id')
+                            <?php $__env->startComponent('components.input_fields.email'); ?>
+                                <?php $__env->slot('id'); ?>
                                     email
-                                @endslot
-                                @slot('name')
+                                <?php $__env->endSlot(); ?>
+                                <?php $__env->slot('name'); ?>
                                     email
-                                @endslot
-                            @endcomponent
+                                <?php $__env->endSlot(); ?>
+                            <?php echo $__env->renderComponent(); ?>
 
                             <div class="hstack gap-2 justify-content-end">
                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn {{ $color }}" id="addNewMember">Add
+                                <button type="submit" class="btn <?php echo e($color); ?>" id="addNewMember">Add
                                     Member</button>
                             </div>
                         </div>
@@ -113,3 +131,4 @@
     </div>
     <!--end modal-dialog-->
 </div>
+<?php /**PATH C:\Users\GoDesQ3\Downloads\MFC_Portal_V2\resources\views/components/new-user-modal.blade.php ENDPATH**/ ?>

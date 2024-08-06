@@ -33,6 +33,7 @@
     --vz-info: #299cdb;
     --vz-warning: #f7b84b;
     --vz-danger: #f06548;
+    --vz-red: #ed2d2d;
     --vz-light: #f3f6f9;
     --vz-dark: #212529;
     --vz-primary-rgb: 64, 81, 137;
@@ -49,6 +50,7 @@
     --vz-info-text-emphasis: #2385ba;
     --vz-warning-text-emphasis: #d29c40;
     --vz-danger-text-emphasis: #cc563d;
+    --vz-red-text-emphasis: #c22424;
     --vz-light-text-emphasis: #ced4da;
     --vz-dark-text-emphasis: #343a40;
     --vz-primary-bg-subtle: #e2e5ed;
@@ -57,6 +59,7 @@
     --vz-info-bg-subtle: #dff0fa;
     --vz-warning-bg-subtle: #fef4e4;
     --vz-danger-bg-subtle: #fde8e4;
+    --vz-red-bg-subtle: #f7e5e5;
     --vz-light-bg-subtle: #f9fbfc;
     --vz-dark-bg-subtle: #e9ebec;
     --vz-primary-border-subtle: #b3b9d0;
@@ -65,6 +68,7 @@
     --vz-info-border-subtle: #a9d7f1;
     --vz-warning-border-subtle: #fce3b7;
     --vz-danger-border-subtle: #f9c1b6;
+    --vz-red-border-subtle: #fdb0b0;
     --vz-light-border-subtle: #eff2f7;
     --vz-dark-border-subtle: #adb5bd;
     --vz-white-rgb: 255, 255, 255;
@@ -2953,6 +2957,22 @@ fieldset:disabled .btn {
     --vz-btn-disabled-bg: #299cdb;
     --vz-btn-disabled-border-color: #299cdb;
 }
+.btn-red{
+    --vz-btn-color: #fff;
+    --vz-btn-bg: #ed2d2d;
+    --vz-btn-border-color: #ed2d2d;
+    --vz-btn-hover-color: #fff;
+    --vz-btn-hover-bg: #c22424;
+    --vz-btn-hover-border-color: #ed2d2d;
+    --vz-btn-focus-shadow-rgb: 240, 101, 72;
+    --vz-btn-active-color: #fff;
+    --vz-btn-active-bg: #ed2d2d;
+    --vz-btn-active-border-color: #ed2d2d;
+    --vz-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --vz-btn-disabled-color: #fff;
+    --vz-btn-disabled-bg: #aa4c4c;
+    --vz-btn-disabled-border-color: #aa4c4c;
+}
 .btn-warning {
     --vz-btn-color: #fff;
     --vz-btn-bg: #f7b84b;
@@ -5465,7 +5485,6 @@ fieldset:disabled .btn {
     --vz-tooltip-arrow-height: 0.4rem;
     z-index: var(--vz-tooltip-zindex);
     display: block;
-    margin: var(--vz-tooltip-margin);
     font-family: var(--vz-font-sans-serif);
     font-style: normal;
     font-weight: 400;

@@ -38,35 +38,35 @@
         text-transform: capitalize;
     }
 
-    .form-control.is-valid{
+    .form-control.is-valid {
         border-color: var(--vz-form-valid-border-color) !important;
     }
 </style>
 
 <div class="mb-3">
-    <label for="<?php echo e($label); ?>select" class="form-label"><span class="text-capitalize"><?php echo e($label); ?>
+    <label for="<?php echo e($id); ?>" class="form-label"><span class="text-capitalize"><?php echo e($label); ?>
 
         </span><span class="text-danger">*</span></label>
-    <select class="form-control" name="<?php echo e($name); ?>" id="<?php echo e($id); ?>" data-choices required>
+    <select class="form-control" name="<?php echo e($name); ?>" id="<?php echo e($id); ?>" required>
         <option value="">Select <?php echo e($label); ?></option>
         <?php echo e($slot); ?>
 
     </select>
-    <div class="invalid-feedback">Please select an option.</div>
+    <div class="invalid-feedback">Please select atleast one.</div>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const choices = new Choices('[data-choices]', {
-            placeholder: true,
-            placeholderValue: 'Select <?php echo e($label); ?>',
+        var selectInput = document.getElementById('<?php echo e($id); ?>');
+
+        new Choices(selectInput, {
             searchEnabled: false,
+            shouldSort: false,
         });
+
         // Add a custom event listener for validation on change
         document.getElementById('<?php echo e($id); ?>').addEventListener('change', function() {
             validateSelect(this);
-
-            console.log('weew');
         });
 
         document.getElementById('<?php echo e($formId); ?>').addEventListener('submit', function(event) {

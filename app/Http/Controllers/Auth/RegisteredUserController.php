@@ -25,18 +25,19 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $name = $request->firstname . ' ' . $request->lastname;
         $section = Section::where('name', $request->section)->first();
+        $mfc_id = random_int(1000000, 99999999);
 
-        // dd($request->all(), $section->id);
 
         $user = User::create([
-            'name' => $name,
+            'first_name' => $request->firstname,
+            'last_name' => $request->lastname,
             'email' => $request->email,
             'password' => Hash::make('mfc_portal123'),
             'section_id' => $section->id,
             'contact_number' => $request->contact_number,
             'role_id' => 3,
+            'mfc_id_number' => $mfc_id,
         ]);
 
         $user->assignRole('member');
@@ -45,7 +46,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        $user->sendEmailVerificationNotification();
+        // $user->sendEmailVerificationNotification();
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

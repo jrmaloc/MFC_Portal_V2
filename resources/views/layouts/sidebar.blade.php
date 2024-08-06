@@ -89,80 +89,80 @@
                 <li class="menu-title"><span>@lang('translation.menu')</span></li>
                 {{-- <li class="menu-title"><span>@lang('translation.menu')</span></li> --}}
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ preg_match('/^dashboard/', Request::path()) ? 'active' : '' }}"
+                    <a class="nav-link menu-link {{ preg_match('/^dashboards$/', Request::path()) ? 'active' : '' }}"
                         href="{{ route('dashboards.index') }}">
                         <i class="ri-dashboard-2-line"></i> <span>@lang('translation.dashboards')</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ preg_match('/^announcement/', Request::path()) ? 'active' : '' }}"
+                    <a class="nav-link menu-link {{ preg_match('/^dashboard\/announcement/', Request::path()) ? 'active' : '' }}"
                         href="{{ route('announcements.index') }}">
                         <i class="ri-megaphone-line"></i> <span>@lang('translation.announcements')</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ preg_match('/^directory\/users/', Request::path()) ? 'active' : '' }}"
+                    <a class="nav-link menu-link {{ preg_match('/^dashboard\/directory/', Request::path()) ? 'active' : 'false' }}"
                         href="#directory" data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="directory">
                         <i class="ri-map-pin-user-line"></i><span>@lang('translation.directory')</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ preg_match('/^directory\/users/', Request::path()) ? 'show' : '' }}"
+                    <div class="collapse menu-dropdown {{ preg_match('/^dashboard\/directory/', Request::path()) ? 'show' : '' }}"
                         id="directory">
                         <ul class="nav nav-sm flex-column">
                             <li
-                                class="nav-item {{ preg_match('/^directory\/users/', Request::path()) ? 'active' : '' }}">
+                                class="nav-item {{ preg_match('/^dashboard\/directory\/kids/', Request::path()) ? 'active' : '' }}">
                                 <a href="{{ route('users.index', ['section' => 'kids']) }}"
-                                    class="nav-link {{ preg_match('/^directory\/users\/kids/', Request::path()) ? 'active' : '' }}">@lang('translation.kids')</a>
+                                    class="nav-link {{ preg_match('/^dashboard\/directory\/kids/', Request::path()) ? 'active' : '' }}">@lang('translation.kids')</a>
                             </li>
                             <li
-                                class="nav-item {{ preg_match('/^directory\/youth/', Request::path()) ? 'active' : '' }}">
+                                class="nav-item {{ preg_match('/^dashboard\/directory\/youth/', Request::path()) ? 'active' : '' }}">
                                 <a href="{{ route('users.index', ['section' => 'youth']) }}"
-                                    class="nav-link {{ preg_match('/^directory\/users\/youth/', Request::path()) ? 'active' : '' }}">@lang('translation.youth')</a>
+                                    class="nav-link {{ preg_match('/^dashboard\/directory\/youth/', Request::path()) ? 'active' : '' }}">@lang('translation.youth')</a>
                             </li>
                             <li
-                                class="nav-item {{ preg_match('/^directory\/singles/', Request::path()) ? 'active' : '' }}">
+                                class="nav-item {{ preg_match('/^dashboard\/directory\/singles/', Request::path()) ? 'active' : '' }}">
                                 <a href="{{ route('users.index', ['section' => 'singles']) }}"
-                                    class="nav-link {{ preg_match('/^directory\/users\/singles/', Request::path()) ? 'active' : '' }}">@lang('translation.singles')</a>
+                                    class="nav-link {{ preg_match('/^dashboard\/directory\/singles/', Request::path()) ? 'active' : '' }}">@lang('translation.singles')</a>
                             </li>
                             <li
-                                class="nav-item {{ preg_match('/^directory\/servants/', Request::path()) ? 'active' : '' }}">
+                                class="nav-item {{ preg_match('/^dashboard\/directory\/servants/', Request::path()) ? 'active' : '' }}">
                                 <a href="{{ route('users.index', ['section' => 'servants']) }}"
-                                    class="nav-link {{ preg_match('/^directory\/users\/servants/', Request::path()) ? 'active' : '' }}">@lang('translation.servants')</a>
+                                    class="nav-link {{ preg_match('/^dashboard\/directory\/servants/', Request::path()) ? 'active' : '' }}">@lang('translation.servants')</a>
                             </li>
                             <li
-                                class="nav-item {{ preg_match('/^directory\/handmaids/', Request::path()) ? 'active' : '' }}">
+                                class="nav-item {{ preg_match('/^dashboard\/directory\/handmaids/', Request::path()) ? 'active' : '' }}">
                                 <a href="{{ route('users.index', ['section' => 'handmaids']) }}"
-                                    class="nav-link {{ preg_match('/^directory\/users\/handmaids/', Request::path()) ? 'active' : '' }}">@lang('translation.handmaids')</a>
+                                    class="nav-link {{ preg_match('/^dashboard\/directory\/handmaids/', Request::path()) ? 'active' : '' }}">@lang('translation.handmaids')</a>
                             </li>
                             <li
-                                class="nav-item {{ preg_match('/^directory\/couples/', Request::path()) ? 'active' : '' }}">
+                                class="nav-item {{ preg_match('/^dashboard\/directory\/couples/', Request::path()) ? 'active' : '' }}">
                                 <a href="{{ route('users.index', ['section' => 'couples']) }}"
-                                    class="nav-link {{ preg_match('/^directory\/users\/couples/', Request::path()) ? 'active' : '' }}">@lang('translation.couples')</a>
+                                    class="nav-link {{ preg_match('/^dashboard\/directory\/couples/', Request::path()) ? 'active' : '' }}">@lang('translation.couples')</a>
                             </li>
                         </ul>
                     </div>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ preg_match('/^directory\/events/', Request::path()) ? 'active' : '' }}"
+                    <a class="nav-link menu-link {{ preg_match('/^dashboard\/events/', Request::path()) ? 'active' : '' }}"
                         href="#events" data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="events">
-                        <i class="ri-calendar-check-line"></i> <span>@lang('translation.events')</span>
+                        <i class="ri-calendar-check-line"></i> <span>@lang('translation.event_management')</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ preg_match('/^directory\/events/', Request::path()) ? 'show' : '' }}"
+                    <div class="collapse menu-dropdown {{ preg_match('/^dashboard\/events/', Request::path()) ? 'show' : '' }}"
                         id="events">
                         <ul class="nav nav-sm flex-column">
                             <li
-                                class="nav-item {{ preg_match('/^directory\/list/', Request::path()) ? 'active' : '' }}">
-                                <a href="{{ route('events.index', ['section' => 'list']) }}"
-                                    class="nav-link {{ preg_match('/^directory\/events\/list/', Request::path()) ? 'active' : '' }}">@lang('translation.list')</a>
+                                class="nav-item {{ preg_match('/^dashboard\/events/', Request::path()) ? 'active' : '' }}">
+                                <a href="{{ route('events.index') }}"
+                                    class="nav-link {{ preg_match('/^dashboard\/events/', Request::path()) ? 'active' : '' }}">@lang('translation.list')</a>
                             </li>
                             <li
-                                class="nav-item {{ preg_match('/^directory\/calendar/', Request::path()) ? 'active' : '' }}">
+                                class="nav-item {{ preg_match('/^dashboard\/calendar/', Request::path()) ? 'active' : '' }}">
                                 <a href="{{ route('events.index', ['section' => 'calendar']) }}"
-                                    class="nav-link {{ preg_match('/^directory\/events\/calendar/', Request::path()) ? 'active' : '' }}">@lang('translation.calendar')</a>
+                                    class="nav-link {{ preg_match('/^dashboard\/events\/calendar/', Request::path()) ? 'active' : '' }}">@lang('translation.calendar')</a>
                             </li>
                         </ul>
                     </div>

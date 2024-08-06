@@ -35,7 +35,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () {
         Route::resource('/announcements', AnnouncementController::class);
-        Route::resource('/users', UserController::class);
+        Route::resource('/users', UserController::class)->except(['index']);
+        Route::get('/directory/{section}', [UserController::class, 'index'])->name('users.index');
+        Route::get('/profile/{user}', [UserController::class, 'profile'])->name('users.profile');
         Route::resource('/events', EventController::class);
         Route::resource('/tithes', TithesController::class);
         Route::resource('/announcements', AnnouncementController::class);

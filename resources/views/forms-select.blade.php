@@ -235,8 +235,6 @@
                                 <div class="col-lg-4 col-md-6">
                                     <div class="mb-3">
                                         <label for="choices-single-default" class="form-label text-muted">Default</label>
-                                        <p class="text-muted">Set <code>data-choices</code> attribute to set a default
-                                            single select.</p>
                                         <select class="form-control" data-choices name="choices-single-default"
                                             id="choices-single-default">
                                             <option value="">This is a placeholder</option>

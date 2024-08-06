@@ -17,7 +17,7 @@
                 <div class="d-flex align-items-center justify-content-end">
                     <div class="flex-shrink-0">
                         <div class="d-flex flex-wrap gap-2">
-                            <button type="button" class="btn btn-danger add-btn" data-bs-toggle="modal"
+                            <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal"
                                 data-bs-target="#createModal">
                                 <i class="ri-add-line align-bottom me-1"></i><?php echo app('translator')->get('translation.create_announcement'); ?></button>
                         </div>

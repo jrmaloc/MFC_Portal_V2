@@ -17,7 +17,9 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->bigInteger('mfc_id_number')->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('username')->unique()->nullable();
@@ -32,7 +34,9 @@ class CreateUsersTable extends Migration
             $table->timestamps();
 
         });
-        User::create(['name' => 'admin', 'email' => 'admin@themesbrand.com', 'password' => Hash::make('12345678'), 'avatar' => 'avatar-1.jpg', 'created_at' => now()]);
+
+        $number = random_int('1000000', '9999999');
+        User::create(['firs_name' => 'Anna', 'last_name' => 'Adame', 'email' => 'admin@themesbrand.com', 'mfc_id_number' => $number, 'password' => Hash::make('12345678'), 'avatar' => 'avatar-1.jpg', 'created_at' => now(), 'email_verified_at' => now()],);
     }
     /**
      * Reverse the migrations.

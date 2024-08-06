@@ -359,26 +359,25 @@
                                 alt="Header Avatar">
                             <span class="text-start ms-xl-2">
                                 <span
-                                    class="d-none d-xl-inline-block ms-1 fw-medium user-name-text"><?php echo e(Auth::user()->name); ?></span>
-                                <span class="d-none d-xl-block ms-1 fs-12 user-name-sub-text">Founder</span>
+                                    class="d-none d-xl-inline-block ms-1 fw-medium user-name-text text-capitalize"><?php echo e(Auth::user()->first_name . ' ' . Auth::user()->last_name); ?></span>
+                                    <?php
+                                        $role = Spatie\Permission\Models\Role::find(1);
+                                    ?>
+                                <span class="d-none d-xl-block ms-1 fs-12 user-name-sub-text text-capitalize"><?php echo e($role->name == 'super_admin' ? 'Super Admin' : $role->name); ?></span>
                             </span>
                         </span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
                         <!-- item-->
-                        <h6 class="dropdown-header">Welcome Anna!</h6>
-                        <a class="dropdown-item" href="pages-profile"><i
+                        <h6 class="dropdown-header text-capitalize">Welcome <?php echo e(Auth::user()->first_name); ?>!</h6>
+                        <a class="dropdown-item" href="<?php echo e(route('users.profile', ['user' => Auth::user()->id])); ?>"><i
                                 class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
                                 class="align-middle">Profile</span></a>
-                        
-                        
                         <div class="dropdown-divider"></div>
-                        
                         <a class="dropdown-item" href="pages-profile-settings"><span
                                 class="badge bg-success-subtle text-success mt-1 float-end">New</span><i
                                 class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span
                                 class="align-middle">Settings</span></a>
-                        
                         <a class="dropdown-item " href="javascript:void();"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
                                 class="bx bx-power-off font-size-16 align-middle me-1"></i> <span

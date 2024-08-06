@@ -26,6 +26,7 @@ return [
     "roles" => "Roles",
     "permissions" => "Permissions",
     "add_new_user" => "Add New User",
+    "event_management" => "Event Management",
 
     "crm" => "CRM",
     "ecommerce" => "Ecommerce",
