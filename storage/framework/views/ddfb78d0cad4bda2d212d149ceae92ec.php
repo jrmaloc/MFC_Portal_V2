@@ -34,7 +34,7 @@
             </div>
             <div class="card" id="ticketsList">
                 <div class="card-body">
-                    <table id="users_datatables" class="table nowrap align-middle" style="width:100%">
+                    <table id="users_datatables" class="table nowrap align-middle table-striped" style="width:100%">
                         <thead>
                             <tr>
                                 <th class="" data-sort="id">ID</th>
@@ -78,9 +78,9 @@
 
     <script>
         $(document).ready(function() {
-
             // make sure that the table is loaded correctly
             $('#users_datatables').on('draw.dt', function() {
+
                 $('[data-bs-toggle="tooltip"]').tooltip();
 
                 $('.remove-btn').click(function() {
@@ -136,14 +136,41 @@
                         }
                     },
                     {
-                        data: "section_id",
-                        name: "section_id",
+                        data: "section",
+                        name: "section",
                         render: function(data) {
                             if (data == null) {
                                 return '<span class="text-capitalize">N/A</span>';
                             }
 
-                            return '<span class="text-capitalize">' + data + '</span>';;
+                            switch (data) {
+                                case 'kids':
+                                    return '<span class="text-capitalize badge bg-danger" style="font-size: 12px;">' +
+                                        data + '</span>';
+                                    break;
+                                case 'youth':
+                                    return '<span class="text-capitalize badge bg-primary" style="font-size: 12px;">' +
+                                        data + '</span>';
+                                    break;
+                                case 'singles':
+                                    return '<span class="text-capitalize badge bg-success" style="font-size: 12px;">' +
+                                        data + '</span>';
+                                    break;
+                                case 'handmaids':
+                                    return '<span class="text-capitalize badge bg-red" style="font-size: 12px;">' +
+                                        data + '</span>';
+                                    break;
+                                case 'servants':
+                                    return '<span class="text-capitalize badge bg-warning" style="font-size: 12px;">' +
+                                        data + '</span>';
+                                    break;
+                                case 'couples':
+                                    return '<span class="text-capitalize badge bg-info" style="font-size: 12px;">' +
+                                        data + '</span>';
+                                    break;
+                            }
+
+                            return '<span class="text-capitalize">' + data + '</span>';
                         }
                     },
                     {
@@ -202,6 +229,16 @@
                     order: [
                         [0, "desc"],
                     ],
+                });
+
+                $('#addEventModal').on('hidden.bs.modal', function() {
+                    if ($(this).attr('data-id') == 1) {
+                        table.destroy();
+
+                        initializeTables();
+
+                        $(this).attr('data-id', 0);
+                    }
                 });
             }
 

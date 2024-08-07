@@ -20,8 +20,8 @@
     if (array_key_exists($__key, $__defined_vars)) unset($$__key);
 } ?>
 <?php unset($__defined_vars); ?>
-<div class="modal fade" id="addEventModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+<div class="modal fade" id="addEventModal" data-id="0" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" data-simplebar>
         <div class="modal-content border-0">
             <div class="modal-body">
                 <form autocomplete="off" id="createEvent-form" class="needs-validation" novalidate
@@ -209,13 +209,13 @@
                                 </div>
                             </div>
 
-
-
                             <div class="hstack gap-2 justify-content-end">
                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary" id="addNewEvent">Create
                                     Event</button>
                             </div>
+
+                            <input type="text" hidden id="success_or_fail" value="0">
                         </div>
                     </div>
                 </form>
@@ -225,10 +225,62 @@
     </div>
     <!--end modal-dialog-->
 </div>
+<!-- Warning Toast -->
+<div style="z-index: 9999999; position: absolute; top: 20px; right: 20px;">
+    <div id="warningToast" class="toast toast-border-warning overflow-hidden mt-3" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="toast-body">
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0 me-2">
+                    <i class="ri-notification-off-line align-middle"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <h6 class="mb-0">Please fill out the required fields.</h6>
+                </div>
+                <div class="flex-shrink-0 me-2 close" style="cursor: pointer;">
+                    <i class="ri-close-fill align-middle"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success Toast -->
+<div style="z-index: 9999999; position: absolute; top: 20px; right: 20px;">
+    <div id="successToast" class="toast toast-border-success overflow-hidden mt-3" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="toast-body">
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0 me-2">
+                    <i class="ri-checkbox-circle-fill align-middle"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <h6 class="mb-0">Yey! Registration Successful.</h6>
+                </div>
+                <div class="flex-shrink-0 me-2 close" style="cursor: pointer;">
+                    <i class="ri-close-fill align-middle"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const addEventModal = document.getElementById('addEventModal');
+        var warningToastEl = document.getElementById('warningToast');
+        var warningToast = new bootstrap.Toast(warningToastEl);
+
+        $('.close').on('click', function() {
+            warningToast.hide();
+        });
+
+        var successToastEl = document.getElementById('successToast');
+        var successToast = new bootstrap.Toast(successToastEl);
+
+        $('.close').on('click', function() {
+            successToast.hide();
+        });
+
         let tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
 
         var dateInput = document.getElementById('event_date');
@@ -346,9 +398,10 @@
 
             // Create a FormData object
             const formData = new FormData(this);
-            formData.append('event_poster', files[0].file);
 
-
+            if (files.length > 0) {
+                formData.append('event_poster', files[0].file);
+            }
 
             $.ajax({
                 url: "<?php echo e(route('events.store')); ?>",
@@ -361,13 +414,22 @@
                 data: formData,
                 success: function(data) {
                     $('#addEventModal').modal('hide');
-                    console.log(data);
+
+                    $('#addEventModal').attr('data-id', 1);
+                    $('#createEvent-form')[0].reset();
+
+                    if ($('#createEvent-form')[0].reset()) {
+                        console.log('reset');
+                    }
+                    successToast.show();
                     // Handle the response as needed
                 },
                 error: function(xhr, textStatus, errorThrown, response) {
                     if (xhr.status === 422) {
                         // Handle validation errors
                         const errors = xhr.responseJSON.errors;
+
+                        warningToast.show();
 
                         if (errors.event_date[0]) {
                             console.log(errors.event_date[0]);

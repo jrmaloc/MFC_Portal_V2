@@ -30,6 +30,13 @@ class EventController extends Controller
 
                     return $actions;
                 })
+                ->addColumn('section', function ($event) {
+                    $section = Section::find($event->section_id);
+
+                    // Return 'N/A' if no section is found
+                    return $section ? $section->name : 'N/A';
+
+                })
                 ->rawColumns(['actions'])
                 ->make(true);
         }
@@ -50,6 +57,9 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        // return response()->json([
+        //     'success' => true,
+        // ]);
         try {
             if ($request->ajax()) {
                 $filename = '';
@@ -73,12 +83,11 @@ class EventController extends Controller
                 ]);
 
                 $event_category = $request->event_category == 1 ? 'Open for Non-Community' : 'Enable Event Registration';
-                $section = Section::find($request->event_section);
 
                 $data = [
                     'title' => $request->event_title,
                     'type' => $request->event_type,
-                    'section' => $section->name,
+                    'section_id' => $request->event_section,
                     'date' => $request->event_date,
                     'time' => $request->event_time,
                     'location' => $request->event_location,

@@ -42,6 +42,7 @@
     --vz-info-rgb: 41, 156, 219;
     --vz-warning-rgb: 247, 184, 75;
     --vz-danger-rgb: 240, 101, 72;
+    --vz-red-rgb: 237, 45, 45;
     --vz-light-rgb: 243, 246, 249;
     --vz-dark-rgb: 33, 37, 41;
     --vz-primary-text-emphasis: #364574;
@@ -8378,6 +8379,13 @@ fieldset:disabled .btn {
     --vz-bg-opacity: 1;
     background-color: rgba(
         var(--vz-primary-rgb),
+        var(--vz-bg-opacity)
+    ) !important;
+}
+.bg-red {
+    --vz-bg-opacity: 1;
+    background-color: rgba(
+        var(--vz-red-rgb),
         var(--vz-bg-opacity)
     ) !important;
 }
