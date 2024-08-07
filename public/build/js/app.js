@@ -3446,6 +3446,25 @@ function showDeleteMessage(options) {
 /********************* form validation ************************/
 //
 
+function validateInput(value, inputId) {
+    const inputPattern = /^.{3,}$/;
+    const inputElement = document.getElementById(inputId);
+
+    if (!inputPattern.test(value)) {
+        inputElement.classList.add("is-invalid");
+    } else {
+        inputElement.classList.remove("is-invalid");
+        inputElement.classList.add("is-valid");
+    }
+
+    if (value == "") {
+        inputElement.classList.remove("is-invalid");
+        inputElement.classList.remove("is-valid");
+    }
+
+    return value;
+}
+
 function validateSelect(inputElement) {
     if (!inputElement.checkValidity()) {
         console.log("wew");
@@ -3552,7 +3571,7 @@ function validateEmail(value, inputId) {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailPattern.test(value)) {
-        emailInput.classList.remove('is-valid');
+        emailInput.classList.remove("is-valid");
         emailInput.classList.add("is-invalid");
     } else {
         emailInput.classList.remove("is-invalid");
@@ -3590,4 +3609,10 @@ function imageInput(options) {
                 }
             });
     }
+}
+
+function editProfile(inputId) {
+    const input = document.querySelector("#" + inputId);
+
+    input.focus();
 }

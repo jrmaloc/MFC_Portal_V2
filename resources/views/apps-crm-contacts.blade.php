@@ -138,36 +138,6 @@
                                                         <i class="ri-question-answer-line fs-16"></i>
                                                     </a>
                                                 </li>
-                                                <li class="list-inline-item">
-                                                    <div class="dropdown">
-                                                        <button
-                                                            class="btn btn-soft-secondary btn-sm dropdown"
-                                                            type="button" data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                            <i class="ri-more-fill align-middle"></i>
-                                                        </button>
-                                                        <ul class="dropdown-menu dropdown-menu-end">
-                                                            <li><a class="dropdown-item view-item-btn"
-                                                                    href="javascript:void(0);"><i
-                                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i>
-                                                                    View</a></li>
-                                                            <li><a class="dropdown-item edit-item-btn"
-                                                                    href="#showModal"
-                                                                    data-bs-toggle="modal"><i
-                                                                        class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                                    Edit</a></li>
-                                                            <li>
-                                                                <a class="dropdown-item remove-item-btn"
-                                                                    data-bs-toggle="modal"
-                                                                    href="#deleteRecordModal">
-                                                                    <i
-                                                                        class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                                    Delete
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </li>
                                             </ul>
                                         </td>
                                     </tr>

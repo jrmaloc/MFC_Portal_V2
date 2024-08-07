@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-    <?php echo app('Illuminate\Foundation\Vite')('build/css/app.min.css'); ?>
+    <?php echo app('Illuminate\Foundation\Vite')('resources/css/app.css'); ?>
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="<?php echo e(URL::asset('build/images/favicon.ico')); ?>">

@@ -16,42 +16,82 @@ class ServiceSeeder extends Seeder
 
         Service::create([
             'name' => 'Servant Council',
+            'type' => 'MFC',
         ]);
 
         Service::create([
             'name' => 'National Coordinator',
+            'type' => 'MFC',
         ]);
 
         Service::create([
             'name' => 'Section Coordinator',
+            'type' => 'MFC',
         ]);
 
         Service::create([
             'name' => 'Provincial Coordinator',
+            'type' => 'MFC',
         ]);
 
         Service::create([
             'name' => 'Area Servant',
+            'type' => 'MFC',
         ]);
 
         Service::create([
             'name' => 'Chapter Servant',
+            'type' => 'MFC',
         ]);
 
         Service::create([
             'name' => 'Unit Servant',
+            'type' => 'MFC',
         ]);
 
         Service::create([
             'name' => 'Household Servant',
+            'type' => 'MFC',
         ]);
 
         Service::create([
             'name' => 'Mission Volunteer',
+            'type' => 'MFC',
         ]);
 
         Service::create([
             'name' => 'Full Time',
+            'type' => 'MFC',
+        ]);
+
+        Service::create([
+            'name' => 'LCSC Coordinator',
+            'type' => 'LCSC',
+        ]);
+
+        Service::create([
+            'name' => 'Pillar Head',
+            'type' => 'LCSC',
+        ]);
+
+        Service::create([
+            'name' => 'Area Coordinator',
+            'type' => 'LCSC',
+        ]);
+
+        Service::create([
+            'name' => 'Provincial Coordinator',
+            'type' => 'LCSC',
+        ]);
+
+        Service::create([
+            'name' => 'Full Time',
+            'type' => 'LCSC',
+        ]);
+
+        Service::create([
+            'name' => 'Mission Volunteer',
+            'type' => 'LCSC',
         ]);
 
     }

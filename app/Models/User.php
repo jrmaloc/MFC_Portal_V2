@@ -38,6 +38,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'section_id',
         'servant_id',
         'description',
+        'mfc_id_number',
+        'first_name',
+        'last_name',
     ];
 
     public static array $status = ['Inactive', 'Active'];
