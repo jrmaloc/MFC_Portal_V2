@@ -2,14 +2,6 @@
     'color' => '',
     'route' => '',
 ])
-
-<head>
-
-    <link rel="stylesheet" href="{{ URL::asset('build/libs/filepond/filepond.min.css') }}" type="text/css" />
-    <link rel="stylesheet"
-        href="{{ URL::asset('build/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css') }}">
-</head>
-
 <div class="modal fade" id="addEventModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
         <div class="modal-content border-0">
@@ -117,10 +109,9 @@
                                         <label class="form-label" for="event_date">Event Date <span
                                                 class="text-danger">*</span></label>
                                         <div class="form-icon right">
-                                            <input class="form-control" type="text" name="event_date" id="event_date"
-                                                data-provider="flatpickr" data-date-format="Y-m-d"
-                                                data-range-date="true" data-altFormat="F j, Y"
-                                                placeholder="Select Date..." data-minDate="">
+                                            <input class="form-control event_date" type="text" name="event_date"
+                                                id="event_date" data-provider="flatpickr" data-date-format="Y-m-d"
+                                                data-range-date="true" placeholder="Select Date...">
                                             <i class='bx bx-calendar'></i>
                                         </div>
                                     </div>
@@ -130,9 +121,9 @@
                                     <div class="mb-3">
                                         <label for="event_time" class="form-label">Event Time</label>
                                         <div class="form-icon right">
-                                            <input type="text" name="event_time" id="event_time" class="form-control"
-                                                placeholder="Select Time..." data-provider="timepickr"
-                                                data-time-basic="true">
+                                            <input type="text" name="event_time" id="event_time"
+                                                class="form-control event_time" placeholder="Select Time..."
+                                                data-provider="timepickr" data-time-basic="true">
                                             <i class="ri-time-line"></i>
                                         </div>
                                     </div>
@@ -143,7 +134,8 @@
                                 <div class="mb-3">
                                     <label for="event_location" class="form-label">Location <span
                                             class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" placeholder="Event Location..." required>
+                                    <input type="text" class="form-control" name="event_location"
+                                        placeholder="Event Location..." required>
                                 </div>
                             </div>
 
@@ -153,7 +145,7 @@
                                         <label for="event_location" class="form-label">Registration Fee</label>
                                         <div class="form-icon">
                                             <input type="text" oninput="validateDigit(this)" id="event_location"
-                                                class="form-control form-control-icon"
+                                                class="form-control form-control-icon" name="event_reg_fee"
                                                 placeholder="Leave blank if free...">
                                             <i class="fst-normal">₱</i>
                                         </div>
@@ -164,14 +156,14 @@
                                             class="text-danger">*</span></label>
                                     <div class="d-flex gap-5 mt-2">
                                         <div class="form-check form-radio-primary">
-                                            <input type="radio" class="form-check-input" name="category"
-                                                id="open">
+                                            <input type="radio" class="form-check-input" name="event_category"
+                                                id="open" value="1" required>
                                             <label for="open" class="form-check-label">Open for
                                                 Non-Community</label>
                                         </div>
                                         <div class="form-check form-radio-secondary">
-                                            <input type="radio" class="form-check-input" name="category"
-                                                id="enable">
+                                            <input type="radio" class="form-check-input" name="event_category"
+                                                id="enable" value="2" required>
                                             <label for="enable" class="form-check-label">Enable Event
                                                 Registration</label>
                                         </div>
@@ -181,9 +173,11 @@
 
                             <div class="col-lg-12">
                                 <div class="mb-3">
-                                    <label for="event_poster" class="form-label">Poster <span class="text-danger">*</span></label>
-                                    <input type="file" class="filepond filepond-input-multiple" id="event_poster" name="event_poster"
-                                        data-allow-reorder="true" data-max-file-size="3MB" required>
+                                    <label for="event_poster" class="form-label">Poster <span
+                                            class="text-danger">*</span></label>
+                                    <input type="file" class="filepond filepond-input-multiple" id="event_poster"
+                                        name="event_poster" data-max-file-size="3MB" required>
+                                    <input type="hidden" id="image_input" name="image_input">
                                 </div>
                             </div> <!-- end col -->
 
@@ -191,9 +185,9 @@
                                 <div class="mb-3">
                                     <label for="event_description" class="form-label">Description <span
                                             class="text-danger">*</span></label>
-                                    <input name="event_description" id="event_description"
-                                        class="form-control" type="file" accept="image/png, image/gif, image/jpeg" hidden>
-                                    <div class="snow-editor" style="height: 300px;"></div> <!-- end Snow-editor-->
+                                    <textarea name="event_description" id="event_description_input" hidden></textarea>
+                                    <div class="" id="event_description" style="height: 300px;"></div>
+                                    <!-- end Snow-editor-->
                                 </div>
                             </div>
 
@@ -201,7 +195,7 @@
 
                             <div class="hstack gap-2 justify-content-end">
                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" id="addNewMember">Create
+                                <button type="submit" class="btn btn-primary" id="addNewEvent">Create
                                     Event</button>
                             </div>
                         </div>
@@ -214,20 +208,9 @@
     <!--end modal-dialog-->
 </div>
 
-<script src="{{ URL::asset('build/libs/filepond/filepond.min.js') }}"></script>
-<script src="{{ URL::asset('build/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js') }}">
-</script>
-<script
-    src="{{ URL::asset('build/libs/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js') }}">
-</script>
-<script
-    src="{{ URL::asset('build/libs/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js') }}">
-</script>
-<script src="{{ URL::asset('build/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/form-file-upload.init.js') }}"></script>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const addEventModal = document.getElementById('addEventModal');
         let tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
 
         var dateInput = document.getElementById('event_date');
@@ -235,17 +218,157 @@
 
         flatpickr(dateInput, {
             minDate: tomorrow,
+            altInput: true,
+            altFormat: "F j, Y",
+            dateFormat: 'Y-m-d',
         })
+
 
         flatpickr(timeInput, {
             noCalendar: true,
             enableTime: true,
             minuteIncrements: 5,
-            dateFormat: "h:i K"
+            altInput: true,
+            altFormat: "h:i K",
+            dateFormat: "h:i",
         })
 
+        var snowEditorData = {};
+
+        snowEditorData.theme = 'snow',
+            snowEditorData.modules = {
+                'toolbar': [
+                    [{
+                        'font': []
+                    }, {
+                        'size': []
+                    }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{
+                        'color': []
+                    }, {
+                        'background': []
+                    }],
+                    [{
+                        'script': 'super'
+                    }, {
+                        'script': 'sub'
+                    }],
+                    [{
+                        'header': [false, 1, 2, 3, 4, 5, 6]
+                    }, 'blockquote', 'code-block'],
+                    [{
+                        'list': 'ordered'
+                    }, {
+                        'list': 'bullet'
+                    }, {
+                        'indent': '-1'
+                    }, {
+                        'indent': '+1'
+                    }],
+                    ['direction', {
+                        'align': []
+                    }],
+                    ['link', 'image', 'video'],
+                    ['clean']
+                ]
+            }
 
 
+        var quill = new Quill('#event_description', snowEditorData);
+
+        // Configure FilePond
+        const inputElement = document.querySelector('#event_poster');
+
+        const pond = FilePond.create(inputElement, {
+            acceptedFileTypes: ['image/*'],
+            allowMultiple: false,
+        });
+
+        var form = document.getElementById('createEvent-form');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            var editorContent = quill.root.innerHTML;
+            var desc = document.getElementById('event_description_input');
+            desc.value = editorContent;
+
+            if (!dateInput.value) {
+                $('input.form-control.event_date.form-control.input').removeClass('border-success');
+                $('input.form-control.event_date.form-control.input').addClass('border-danger');
+            } else {
+                $('input.form-control.event_date.form-control.input').removeClass('border-danger');
+                $('input.form-control.event_date.form-control.input').addClass('border-success');
+            }
+
+            $('input.form-control.event_time.form-control.input').addClass('border-success');
+
+
+            const files = pond.getFiles();
+            if (files.length === 0) {
+                $('.filepond--drop-label').addClass('border-dashed border-danger rounded border-2');
+            }
+
+
+            if (editorContent == '<p><br></p>') {
+                $('.ql-snow.ql-container').removeClass('border-success', 'border-top-0');
+                $('.ql-snow.ql-toolbar').removeClass('border-success');
+
+                $('.ql-snow.ql-container').addClass('border-danger', 'border-top-0');
+                $('.ql-snow.ql-toolbar').addClass('border-danger');
+            } else {
+                $('.ql-snow.ql-container').removeClass('border-danger', 'border-top-0');
+                $('.ql-snow.ql-toolbar').removeClass('border-danger');
+
+                $('.ql-snow.ql-container').addClass('border-success', 'border-top-0');
+                $('.ql-snow.ql-toolbar').addClass('border-success');
+            }
+
+            // const editorContent = document.querySelector('.ql-editor').innerHTML;
+
+            // Create a FormData object
+            const formData = new FormData(this);
+            formData.append('event_poster', files[0].file);
+
+
+
+            $.ajax({
+                url: "{{ route('events.store') }}",
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function(data) {
+                    $('#addEventModal').modal('hide');
+                    console.log(data);
+                    // Handle the response as needed
+                },
+                error: function(xhr, textStatus, errorThrown, response) {
+                    if (xhr.status === 422) {
+                        // Handle validation errors
+                        const errors = xhr.responseJSON.errors;
+
+                        if (errors.event_date[0]) {
+                            console.log(errors.event_date[0]);
+
+                            $('input.form-control.event_date.input').addClass(
+                                'border-danger');
+                        } else {
+                            $('input.form-control.event_date.input').removeClass(
+                                'border-danger');
+                            $('input.form-control.event_date.input').addClass(
+                                'border-success');
+                        }
+                    }
+                    console.error('Error:', textStatus, errorThrown);
+                }
+            });
+
+            // this.submit();
+        });
 
     });
 </script>

@@ -1,6 +1,11 @@
 <?php $__env->startSection('title'); ?>
     <?php echo app('translator')->get('translation.starter'); ?>
 <?php $__env->stopSection(); ?>
+<?php $__env->startSection('css'); ?>
+    <link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/filepond/filepond.min.css')); ?>" type="text/css" />
+    <link rel="stylesheet"
+        href="<?php echo e(URL::asset('build/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css')); ?>">
+<?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
     <?php $__env->startComponent('components.breadcrumb'); ?>
         <?php $__env->slot('li_1'); ?>
@@ -41,7 +46,6 @@
                             </tr>
                         </thead>
                     </table>
-
                 </div>
                 <!--end card-body-->
             </div>
@@ -52,13 +56,24 @@
 
     <!-- Create Modal -->
     <?php $__env->startComponent('components.new_events_modal'); ?>
-    <?php $__env->slot('route'); ?>
-        <?php echo e(route('events.store')); ?>
+        <?php $__env->slot('route'); ?>
+            <?php echo e(route('events.store')); ?>
 
-    <?php $__env->endSlot(); ?>
+        <?php $__env->endSlot(); ?>
     <?php echo $__env->renderComponent(); ?>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
+    <script src="<?php echo e(URL::asset('build/libs/filepond/filepond.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js')); ?>">
+    </script>
+    <script
+        src="<?php echo e(URL::asset('build/libs/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js')); ?>">
+    </script>
+    <script
+        src="<?php echo e(URL::asset('build/libs/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js')); ?>">
+    </script>
+    <script src="<?php echo e(URL::asset('build/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/form-file-upload.init.js')); ?>"></script>
     <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
 
     <script>
@@ -121,8 +136,8 @@
                         }
                     },
                     {
-                        data: "section",
-                        name: "section",
+                        data: "section_id",
+                        name: "section_id",
                         render: function(data) {
                             if (data == null) {
                                 return '<span class="text-capitalize">N/A</span>';

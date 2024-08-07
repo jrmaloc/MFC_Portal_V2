@@ -1050,8 +1050,6 @@ File: Main Js File
                           "sm"
                       );
             } else if (windowSize > 1025) {
-                console.log(document.body);
-
                 document.body.classList.remove("vertical-sidebar-enable");
                 document.documentElement.getAttribute("data-sidebar-size") ==
                 "lg"

@@ -39,6 +39,10 @@
 @tailwind components;
 @tailwind utilities;
 
+div#event_poster, .filepond--drop-label>label{
+    cursor: pointer !important;
+}
+
 #page-topbar {
     position: fixed;
     top: 0;

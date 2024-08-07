@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('location')->nullable();
             $table->decimal('reg_fee')->nullable();
             $table->string('description')->nullable();
-            $table->string('options')->nullable();
+            $table->string('category')->nullable();
             $table->string('poster')->nullable();
             $table->enum('status', User::$status)->nullable()->default('Active');
 

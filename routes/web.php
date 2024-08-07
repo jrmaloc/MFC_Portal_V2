@@ -33,7 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('/dashboards', DashboardController::class)->middleware(['auth', 'verified', 'nocache']);
 
-    Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () {
+    Route::prefix('dashboard')->middleware(['auth', 'verified', 'checkSession'])->group(function () {
         Route::resource('/announcements', AnnouncementController::class);
         Route::resource('/users', UserController::class)->except(['index']);
         Route::get('/directory/{section}', [UserController::class, 'index'])->name('users.index');
@@ -45,8 +45,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         //Update User Details
         Route::post('/update-profile/{id}', [HomeController::class, 'updateProfile'])->name('updateProfile');
         Route::post('/update-password/{id}', [HomeController::class, 'updatePassword'])->name('updatePassword');
-
     });
+});
+
+Route::fallback( function() {
+    return redirect()->route('root');
 });
 
 require __DIR__ . '/auth.php';

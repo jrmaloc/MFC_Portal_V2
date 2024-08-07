@@ -2,6 +2,11 @@
 @section('title')
     @lang('translation.starter')
 @endsection
+@section('css')
+    <link rel="stylesheet" href="{{ URL::asset('build/libs/filepond/filepond.min.css') }}" type="text/css" />
+    <link rel="stylesheet"
+        href="{{ URL::asset('build/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css') }}">
+@endsection
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1')
@@ -41,7 +46,6 @@
                             </tr>
                         </thead>
                     </table>
-
                 </div>
                 <!--end card-body-->
             </div>
@@ -52,12 +56,23 @@
 
     <!-- Create Modal -->
     @component('components.new_events_modal')
-    @slot('route')
-        {{ route('events.store') }}
-    @endslot
+        @slot('route')
+            {{ route('events.store') }}
+        @endslot
     @endcomponent
 @endsection
 @section('script')
+    <script src="{{ URL::asset('build/libs/filepond/filepond.min.js') }}"></script>
+    <script src="{{ URL::asset('build/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js') }}">
+    </script>
+    <script
+        src="{{ URL::asset('build/libs/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js') }}">
+    </script>
+    <script
+        src="{{ URL::asset('build/libs/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js') }}">
+    </script>
+    <script src="{{ URL::asset('build/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js') }}"></script>
+    <script src="{{ URL::asset('build/js/pages/form-file-upload.init.js') }}"></script>
     <script src="{{ URL::asset('build/js/app.js') }}"></script>
 
     <script>
@@ -120,8 +135,8 @@
                         }
                     },
                     {
-                        data: "section",
-                        name: "section",
+                        data: "section_id",
+                        name: "section_id",
                         render: function(data) {
                             if (data == null) {
                                 return '<span class="text-capitalize">N/A</span>';
