@@ -12,6 +12,8 @@ var timepicker1 = document.getElementById("timepicker1");
 var timepicker2 = document.getElementById("timepicker2");
 var date_range = null;
 var T_check = null;
+var defaultEvents = [];
+
 document.addEventListener("DOMContentLoaded", function () {
     flatPickrInit();
     var addEvent = new bootstrap.Modal(document.getElementById('event-modal'), {
@@ -29,211 +31,21 @@ document.addEventListener("DOMContentLoaded", function () {
     var m = date.getMonth();
     var y = date.getFullYear();
     var Draggable = FullCalendar.Draggable;
-    var externalEventContainerEl = document.getElementById('external-events');
-    var defaultEvents = [{
-            id: 1,
-            title: "World Braille Day",
-            start: "2022-01-04",
-            className: "bg-info-subtle",
-            allDay: true
-
-        },
-        {
-            id: 2,
-            title: "World Leprosy Day",
-            start: "2022-01-30",
-            className: "bg-info-subtle",
-            allDay: true
-        },
-
-        {
-            id: 3,
-            title: "International Mother Language Day",
-            start: "2022-02-21",
-            className: "bg-info-subtle",
-            allDay: true
-        },
-
-        {
-            id: 4,
-            title: "International Women's Day",
-            start: "2022-03-08",
-            className: "bg-info-subtle",
-            allDay: true
-        },
-
-        {
-            id: 5,
-            title: "World Thinking Day",
-            start: "2022-02-22",
-            className: "bg-info-subtle",
-            allDay: true
-        },
-
-        {
-            id: 6,
-            title: "International Mother Language Day",
-            start: "2022-03-21",
-            className: "bg-info-subtle",
-            allDay: true
-        },
-
-        {
-            id: 7,
-            title: "World Water Day",
-            start: "2022-03-22",
-            className: "bg-info-subtle",
-            allDay: true
-        },
-
-        {
-            id: 8,
-            title: "World Health Day",
-            start: "2022-04-07",
-            className: "bg-info-subtle",
-            allDay: true
-        },
-
-
-        {
-            id: 9,
-            title: "International Special Librarians Day",
-            start: "2022-04-16",
-            className: "bg-info-subtle",
-            allDay: true
-        },
-
-        {
-            id: 10,
-            title: "Earth Day",
-            start: "2022-04-22",
-            className: "bg-info-subtle",
-            allDay: true
-        },
-        {
-            id: 153,
-            title: 'All Day Event',
-            start: new Date(y, m, 1),
-            className: 'bg-primary-subtle',
-            location: 'San Francisco, US',
-            allDay: true,
-            extendedProps: {
-                department: 'All Day Event'
-            },
-            description: 'An all-day event is an event that lasts an entire day or longer'
-        },
-        {
-            id: 136,
-            title: 'Visit Online Course',
-            start: new Date(y, m, d - 5),
-            end: new Date(y, m, d - 2),
-            allDay: true,
-            className: 'bg-warning-subtle',
-            extendedProps: {
-                department: 'Long Event'
-            },
-            description: 'Long Term Event means an incident that last longer than 12 hours.'
-        },
-        {
-            id: 999,
-            title: 'Client Meeting with Alexis',
-            start: new Date(y, m, d + 22, 20, 0),
-            end: new Date(y, m, d + 24, 16, 0),
-            allDay: true,
-            className: 'bg-danger-subtle',
-            location: 'California, US',
-            extendedProps: {
-                department: 'Meeting with Alexis'
-            },
-            description: 'A meeting is a gathering of two or more people that has been convened for the purpose of achieving a common goal through verbal interaction, such as sharing information or reaching agreement.'
-        },
-        {
-            id: 991,
-            title: 'Repeating Event',
-            start: new Date(y, m, d + 4, 16, 0),
-            end: new Date(y, m, d + 9, 16, 0),
-            allDay: true,
-            className: 'bg-primary-subtle',
-            location: 'Las Vegas, US',
-            extendedProps: {
-                department: 'Repeating Event'
-            },
-            description: 'A recurring or repeating event is simply any event that you will occur more than once on your calendar. ',
-        },
-        {
-            id: 112,
-            title: 'Meeting With Designer',
-            start: new Date(y, m, d, 12, 30),
-            allDay: true,
-            className: 'bg-success-subtle',
-            location: 'Head Office, US',
-            extendedProps: {
-                department: 'Meeting'
-            },
-            description: 'Tell how to boost website traffic'
-        },
-        {
-            id: 113,
-            title: 'Weekly Strategy Planning',
-            start: new Date(y, m, d + 9),
-            end: new Date(y, m, d + 11),
-            allDay: true,
-            className: 'bg-danger-subtle',
-            location: 'Head Office, US',
-            extendedProps: {
-                department: 'Lunch'
-            },
-            description: 'Strategies for Creating Your Weekly Schedule'
-        },
-        {
-            id: 875,
-            title: 'Birthday Party',
-            start: new Date(y, m, d + 1, 19, 0),
-            allDay: true,
-            className: 'bg-success-subtle',
-            location: 'Los Angeles, US',
-            extendedProps: {
-                department: 'Birthday Party'
-            },
-            description: 'Family slumber party – Bring out the blankets and pillows and have a family slumber party! Play silly party games, share special snacks and wind down the fun with a special movie.'
-        },
-        {
-            id: 783,
-            title: 'Click for Google',
-            start: new Date(y, m, 28),
-            end: new Date(y, m, 29),
-            allDay: true,
-            url: 'http://google.com/',
-            className: 'bg-dark-subtle',
-        },
-        {
-            id: 456,
-            title: 'Velzon Project Discussion with Team',
-            start: new Date(y, m, d + 23, 20, 0),
-            end: new Date(y, m, d + 24, 16, 0),
-            allDay: true,
-            className: 'bg-info-subtle',
-            location: 'Head Office, US',
-            extendedProps: {
-                department: 'Discussion'
-            },
-            description: 'Tell how to boost website traffic'
-        },
-    ];
+    // var externalEventContainerEl = document.getElementById('external-events');
 
     // init draggable
-    new Draggable(externalEventContainerEl, {
-        itemSelector: '.external-event',
-        eventData: function (eventEl) {
-            return {
-                id: Math.floor(Math.random() * 11000),
-                title: eventEl.innerText,
-                allDay: true,
-                start: new Date(),
-                className: eventEl.getAttribute('data-class')
-            };
-        }
-    });
+    // new Draggable(externalEventContainerEl, {
+    //     itemSelector: '.external-event',
+    //     eventData: function (eventEl) {
+    //         return {
+    //             id: Math.floor(Math.random() * 11000),
+    //             title: eventEl.innerText,
+    //             allDay: true,
+    //             start: new Date(),
+    //             className: eventEl.getAttribute('data-class')
+    //         };
+    //     }
+    // });
 
     var calendarEl = document.getElementById('calendar');
 
@@ -298,121 +110,15 @@ document.addEventListener("DOMContentLoaded", function () {
             upcomingEvent(defaultEvents);
         },
         eventClick: function (info) {
-            document.getElementById("edit-event-btn").removeAttribute("hidden");
-            document.getElementById('btn-save-event').setAttribute("hidden", true);
-            document.getElementById("edit-event-btn").setAttribute("data-id", "edit-event");
-            document.getElementById("edit-event-btn").innerHTML = "Edit";
-            eventClicked();
-            flatPickrInit();
-            flatpicekrValueClear();
-            addEvent.show();
-            formEvent.reset();
-            selectedEvent = info.event;
-
-            // First Modal
-            document.getElementById("modal-title").innerHTML = "";
-            document.getElementById("event-location-tag").innerHTML = selectedEvent.extendedProps.location === undefined ? "No Location" : selectedEvent.extendedProps.location;
-            document.getElementById("event-description-tag").innerHTML = selectedEvent.extendedProps.description === undefined ? "No Description" : selectedEvent.extendedProps.description;
-
-            // Edit Modal
-            document.getElementById("event-title").value = selectedEvent.title;
-            document.getElementById("event-location").value = selectedEvent.extendedProps.location === undefined ? "No Location" : selectedEvent.extendedProps.location;
-            document.getElementById("event-description").value = selectedEvent.extendedProps.description === undefined ? "No Description" : selectedEvent.extendedProps.description;
-            document.getElementById("eventid").value = selectedEvent.id;
-
-            if (selectedEvent.classNames[0]) {
-                eventCategoryChoice.destroy();
-                eventCategoryChoice = new Choices("#event-category", {
-                    searchEnabled: false
-                });
-                eventCategoryChoice.setChoiceByValue(selectedEvent.classNames[0]);
-            }
-            var st_date = selectedEvent.start;
-            var ed_date = selectedEvent.end;
-
-            var date_r = function formatDate(date) {
-                var d = new Date(date),
-                    month = '' + (d.getMonth() + 1),
-                    day = '' + d.getDate(),
-                    year = d.getFullYear();
-                if (month.length < 2)
-                    month = '0' + month;
-                if (day.length < 2)
-                    day = '0' + day;
-                return [year, month, day].join('-');
-            };
-            var updateDay = null
-            if(ed_date != null){
-                var endUpdateDay = new Date(ed_date);
-                updateDay = endUpdateDay.setDate(endUpdateDay.getDate() - 1);
-            }
-            
-            var r_date = ed_date == null ? (str_dt(st_date)) : (str_dt(st_date)) + ' to ' + (str_dt(updateDay));
-            var er_date = ed_date == null ? (date_r(st_date)) : (date_r(st_date)) + ' to ' + (date_r(updateDay));
-
-            flatpickr(start_date, {
-                defaultDate: er_date,
-                altInput: true,
-                altFormat: "j F Y",
-                dateFormat: "Y-m-d",
-                mode: ed_date !== null ? "range" : "range",
-                onChange: function (selectedDates, dateStr, instance) {
-                    var date_range = dateStr;
-                    var dates = date_range.split("to");
-                    if (dates.length > 1) {
-                        document.getElementById('event-time').setAttribute("hidden", true);
-                    } else {
-                        document.getElementById("timepicker1").parentNode.classList.remove("d-none");
-                        document.getElementById("timepicker1").classList.replace("d-none", "d-block");
-                        document.getElementById("timepicker2").parentNode.classList.remove("d-none");
-                        document.getElementById("timepicker2").classList.replace("d-none", "d-block");
-                        document.getElementById('event-time').removeAttribute("hidden");
-                    }
-                },
-            });
-            document.getElementById("event-start-date-tag").innerHTML = r_date;
-
-            var gt_time = getTime(selectedEvent.start);
-            var ed_time = getTime(selectedEvent.end);
-
-            if (gt_time == ed_time) {
-                document.getElementById('event-time').setAttribute("hidden", true);
-                flatpickr(document.getElementById("timepicker1"), {
-                    enableTime: true,
-                    noCalendar: true,
-                    dateFormat: "H:i",
-                });
-                flatpickr(document.getElementById("timepicker2"), {
-                    enableTime: true,
-                    noCalendar: true,
-                    dateFormat: "H:i",
-                });
-            } else {
-                document.getElementById('event-time').removeAttribute("hidden");
-                flatpickr(document.getElementById("timepicker1"), {
-                    enableTime: true,
-                    noCalendar: true,
-                    dateFormat: "H:i",
-                    defaultDate: gt_time
-                });
-
-                flatpickr(document.getElementById("timepicker2"), {
-                    enableTime: true,
-                    noCalendar: true,
-                    dateFormat: "H:i",
-                    defaultDate: ed_time
-                });
-                document.getElementById("event-timepicker1-tag").innerHTML = tConvert(gt_time);
-                document.getElementById("event-timepicker2-tag").innerHTML = tConvert(ed_time);
-            }
-            newEventData = null;
-            modalTitle.innerText = selectedEvent.title;
-
-            // formEvent.classList.add("view-event");
-            document.getElementById('btn-delete-event').removeAttribute('hidden');
+            handleEventClicked(info.event);
         },
         dateClick: function (info) {
-            addNewEvent(info);
+            // addNewEvent(info);
+            document.getElementById('btn-new-event').click();
+            flatpickr(document.getElementById("event_date"), {
+                mode: 'range',
+                defaultDate: [info.dateStr, info.dateStr]
+            });
         },
         events: defaultEvents,
         eventReceive: function (info) {
@@ -444,7 +150,144 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    calendar.render();
+    function handleEventClicked(event) {
+        document.getElementById("edit-event-btn").removeAttribute("hidden");
+        document.getElementById('btn-save-event').setAttribute("hidden", true);
+        document.getElementById("edit-event-btn").setAttribute("data-id", "edit-event");
+        document.getElementById("edit-event-btn").innerHTML = "Edit";
+        eventClicked();
+        flatPickrInit();
+        flatpicekrValueClear();
+        addEvent.show();
+        formEvent.reset();
+        selectedEvent = event;
+    
+        // First Modal
+        document.getElementById("modal-title").innerHTML = "";
+        document.getElementById("event-location-tag").innerHTML = selectedEvent.extendedProps.location === undefined ? "No Location" : selectedEvent.extendedProps.location;
+        document.getElementById("event-description-tag").innerHTML = selectedEvent.extendedProps.description === undefined ? "No Description" : selectedEvent.extendedProps.description;
+        document.getElementById("event-registrationfee-tag").innerHTML = selectedEvent.extendedProps.registration_fee === undefined ? "No Registration Fee" : selectedEvent.extendedProps.registration_fee;
+    
+        document.getElementById("register-event-btn").setAttribute('data-event-id', selectedEvent.id);
+        document.getElementById("attendances-btn").setAttribute('data-event-id', selectedEvent.id);
+        // If the event is not available for registration
+        if(!selectedEvent.extendedProps.is_enable_event_registration) {
+            document.getElementById("register-event-btn").style.display = "none";
+        } else {
+            document.getElementById("register-event-btn").style.display = "block";
+        }
+    
+        // Edit Modal
+        document.getElementById("event-title").value = selectedEvent.title;
+        document.getElementById("event-location").value = selectedEvent.extendedProps.location === undefined ? "No Location" : selectedEvent.extendedProps.location;
+        document.getElementById("event-description").value = selectedEvent.extendedProps.description === undefined ? "No Description" : selectedEvent.extendedProps.description;
+        document.getElementById("eventid").value = selectedEvent.id;
+    
+        if (Array.isArray(selectedEvent.classNames) && selectedEvent.classNames[0]) {
+            eventCategoryChoice.destroy();
+            eventCategoryChoice = new Choices("#event-category", {
+                searchEnabled: false
+            });
+            eventCategoryChoice.setChoiceByValue(selectedEvent.classNames[0]);
+        }
+        var st_date = selectedEvent.start;
+        var ed_date = selectedEvent.end;
+    
+        var date_r = function formatDate(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+            return [year, month, day].join('-');
+        };
+        var updateDay = null
+        if(ed_date != null){
+            var endUpdateDay = new Date(ed_date);
+            updateDay = endUpdateDay.setDate(endUpdateDay.getDate() - 1);
+        }
+        
+        var r_date = ed_date == null ? (str_dt(st_date)) : (str_dt(st_date)) + ' to ' + (str_dt(updateDay));
+        var er_date = ed_date == null ? (date_r(st_date)) : (date_r(st_date)) + ' to ' + (date_r(updateDay));
+    
+        flatpickr(start_date, {
+            defaultDate: er_date,
+            altInput: true,
+            altFormat: "j F Y",
+            dateFormat: "Y-m-d",
+            mode: ed_date !== null ? "range" : "range",
+            onChange: function (selectedDates, dateStr, instance) {
+                var date_range = dateStr;
+                var dates = date_range.split("to");
+                if (dates.length > 1) {
+                    document.getElementById('event-time').setAttribute("hidden", true);
+                } else {
+                    document.getElementById("timepicker1").parentNode.classList.remove("d-none");
+                    document.getElementById("timepicker1").classList.replace("d-none", "d-block");
+                    document.getElementById("timepicker2").parentNode.classList.remove("d-none");
+                    document.getElementById("timepicker2").classList.replace("d-none", "d-block");
+                    document.getElementById('event-time').removeAttribute("hidden");
+                }
+            },
+        });
+        document.getElementById("event-start-date-tag").innerHTML = r_date;
+        var gt_time = selectedEvent.extendedProps.time;
+        var ed_time = selectedEvent.extendedProps.time;
+    
+        document.getElementById("event-timepicker1-tag").innerHTML = tConvert(gt_time);
+        document.getElementById("event-timepicker2-tag").innerHTML = tConvert(ed_time);
+    
+        if (gt_time == ed_time) {
+            document.getElementById('event-time').setAttribute("hidden", true);
+            flatpickr(document.getElementById("timepicker1"), {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+            });
+            flatpickr(document.getElementById("timepicker2"), {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+            });
+        } else {
+            document.getElementById('event-time').removeAttribute("hidden");
+            flatpickr(document.getElementById("timepicker1"), {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                defaultDate: gt_time
+            });
+    
+            flatpickr(document.getElementById("timepicker2"), {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                defaultDate: ed_time
+            });
+            
+        }
+        newEventData = null;
+        modalTitle.innerText = selectedEvent.title;
+    
+        // formEvent.classList.add("view-event");
+        document.getElementById('btn-delete-event').removeAttribute('hidden');
+    }
+
+    const fetchAllEvents = async () => {
+        const response = await fetch(`/dashboard/events/full-calendar`);
+        const data = await response.json();
+        defaultEvents = data.events;
+        upcomingEvent(defaultEvents);
+        calendar.addEventSource(data.events);
+        calendar.render();
+
+    }
+
+    fetchAllEvents();
+    // calendar.render();
 
     upcomingEvent(defaultEvents);
     /*Add new event*/
@@ -540,16 +383,97 @@ document.addEventListener("DOMContentLoaded", function () {
             addEvent.hide();
         }
     });
-    document.getElementById("btn-new-event").addEventListener("click", function (e) {
-        flatpicekrValueClear();
-        flatPickrInit();
-        addNewEvent();
-        document.getElementById("edit-event-btn").setAttribute("data-id", "new-event");
-        document.getElementById('edit-event-btn').click();
-        document.getElementById("edit-event-btn").setAttribute("hidden", true);
-    });
-});
 
+    // Register in the event
+    document.getElementById("register-event-btn").addEventListener("click", function (e) {
+        let event_id = $(this).data('event-id');
+        window.location.href = `/dashboard/events/${event_id}/register`;
+    })
+
+    // upcoming Event
+    function upcomingEvent(a) {
+        a.sort(function (o1, o2) {
+            return (new Date(o1.start)) - (new Date(o2.start));
+        });
+        document.getElementById("upcoming-event-list").innerHTML = null;
+        Array.from(a).forEach(function (element) {
+            var title = element.title;
+            if (element.end) {
+                endUpdatedDay = new Date(element.end);
+                var updatedDay = endUpdatedDay.setDate(endUpdatedDay.getDate() - 1);
+            }
+            var e_dt = updatedDay ? updatedDay : undefined;
+            if (e_dt == "Invalid Date" || e_dt == undefined) {
+                e_dt = null;
+            } else {
+                const newDate = new Date(e_dt).toLocaleDateString('en', { year: 'numeric', month: 'numeric', day: 'numeric' });
+                e_dt = new Date(newDate)
+                .toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                })
+                .split(" ")
+                .join(" ");
+            }
+            var st_date = element.start ? str_dt(element.start) : null;
+            var ed_date = updatedDay ? str_dt(updatedDay) : null;
+            if (st_date === ed_date) {
+                e_dt = null;
+            }
+            var startDate = element.start;
+            if (startDate === "Invalid Date" || startDate === undefined) {
+                startDate = null;
+            } else {
+                const newDate = new Date(startDate).toLocaleDateString('en', { year: 'numeric', month: 'numeric', day: 'numeric' });
+                startDate = new Date(newDate)
+                .toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                })
+                .split(" ")
+                .join(" ");
+            }
+
+            var end_dt = (e_dt) ? " to " + e_dt : '';
+            var category = (element.className).split("-");
+            var description = (element.description) ? element.description : "";
+            var e_time_s = tConvert(getTime(element.start));
+            var e_time_e = tConvert(getTime(updatedDay));
+            if (e_time_s == e_time_e) {
+                var e_time_s = "Full day event";
+                var e_time_e = null;
+            }
+            var e_time_e = (e_time_e) ? " to " + e_time_e : "";
+
+            u_event = "<div class='card mb-3 upcoming-event-card' data-event-id='"+ element.id +"'>\
+                            <div class='card-body'>\
+                                <div class='d-flex mb-3'>\
+                                    <div class='flex-grow-1'><i class='mdi mdi-checkbox-blank-circle me-2 text-" + category[1] + "'></i><span class='fw-medium'>" + startDate + end_dt + " </span></div>\
+                                    <div class='flex-shrink-0'><small class='badge bg-primary-subtle text-primary ms-auto'>" + tConvert(element.extendedProps.time) + "</small></div>\
+                                </div>\
+                                <h6 class='card-title fs-16'> " + title + "</h6>\
+                                <p class='text-muted text-truncate-two-lines mb-0'> " + element.extendedProps.location + "</p>\
+                            </div>\
+                        </div>";
+            document.getElementById("upcoming-event-list").innerHTML += u_event;
+
+            let upComingEventCards = document.querySelectorAll('.upcoming-event-card');
+            upComingEventCards.forEach(card => {
+                card.addEventListener('click', handleUpcomingEventClicked);
+            })
+        });
+
+        function handleUpcomingEventClicked(e) {
+            let event_id = $(this).data('event-id');
+            const event = defaultEvents.find(e => e.id == event_id);
+            handleEventClicked(event);
+            console.log(event);
+
+        } 
+    }
+});
 
 function flatPickrInit() {
     var config = {
@@ -648,77 +572,6 @@ function eventTyped() {
     document.getElementById('btn-save-event').removeAttribute("hidden");
 }
 
-// upcoming Event
-function upcomingEvent(a) {
-    a.sort(function (o1, o2) {
-        return (new Date(o1.start)) - (new Date(o2.start));
-    });
-    document.getElementById("upcoming-event-list").innerHTML = null;
-    Array.from(a).forEach(function (element) {
-        var title = element.title;
-        if (element.end) {
-            endUpdatedDay = new Date(element.end);
-            var updatedDay = endUpdatedDay.setDate(endUpdatedDay.getDate() - 1);
-          }
-        var e_dt = updatedDay ? updatedDay : undefined;
-        if (e_dt == "Invalid Date" || e_dt == undefined) {
-            e_dt = null;
-        } else {
-            const newDate = new Date(e_dt).toLocaleDateString('en', { year: 'numeric', month: 'numeric', day: 'numeric' });
-            e_dt = new Date(newDate)
-              .toLocaleDateString("en-GB", {
-                day: "numeric",
-                month: "short",
-                year: "numeric",
-              })
-              .split(" ")
-              .join(" ");
-        }
-        var st_date = element.start ? str_dt(element.start) : null;
-        var ed_date = updatedDay ? str_dt(updatedDay) : null;
-        if (st_date === ed_date) {
-            e_dt = null;
-        }
-        var startDate = element.start;
-        if (startDate === "Invalid Date" || startDate === undefined) {
-            startDate = null;
-        } else {
-            const newDate = new Date(startDate).toLocaleDateString('en', { year: 'numeric', month: 'numeric', day: 'numeric' });
-            startDate = new Date(newDate)
-              .toLocaleDateString("en-GB", {
-                day: "numeric",
-                month: "short",
-                year: "numeric",
-              })
-              .split(" ")
-              .join(" ");
-        }
-
-        var end_dt = (e_dt) ? " to " + e_dt : '';
-        var category = (element.className).split("-");
-        var description = (element.description) ? element.description : "";
-        var e_time_s = tConvert(getTime(element.start));
-        var e_time_e = tConvert(getTime(updatedDay));
-        if (e_time_s == e_time_e) {
-            var e_time_s = "Full day event";
-            var e_time_e = null;
-        }
-        var e_time_e = (e_time_e) ? " to " + e_time_e : "";
-
-        u_event = "<div class='card mb-3'>\
-                        <div class='card-body'>\
-                            <div class='d-flex mb-3'>\
-                                <div class='flex-grow-1'><i class='mdi mdi-checkbox-blank-circle me-2 text-" + category[1] + "'></i><span class='fw-medium'>" + startDate + end_dt + " </span></div>\
-                                <div class='flex-shrink-0'><small class='badge bg-primary-subtle text-primary ms-auto'>" + e_time_s + e_time_e + "</small></div>\
-                            </div>\
-                            <h6 class='card-title fs-16'> " + title + "</h6>\
-                            <p class='text-muted text-truncate-two-lines mb-0'> " + description + "</p>\
-                        </div>\
-                    </div>";
-        document.getElementById("upcoming-event-list").innerHTML += u_event;
-    });
-};
-
 function getTime(params) {
     params = new Date(params);
     if (params.getHours() != null) {
@@ -730,13 +583,14 @@ function getTime(params) {
 
 function tConvert(time) {
     var t = time.split(":");
-    var hours = t[0];
-    var minutes = t[1];
-    var newformat = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12;
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    return (hours + ':' + minutes + ' ' + newformat);
+    var hours = parseInt(t[0], 10); // Convert hours to an integer
+    var minutes = t[1]; // Keep minutes as a string
+
+    var newformat = hours >= 12 ? 'PM' : 'AM'; // Determine AM/PM
+    hours = hours % 12; // Convert to 12-hour format
+    hours = hours ? hours : 12; // The hour '0' should be '12'
+    
+    return hours + ':' + minutes + ' ' + newformat;
 }
 
 var str_dt = function formatDate(date) {

@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('mfc_id_number')->nullable();
+            $table->string('mfc_id_number')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->unique();
@@ -35,8 +35,12 @@ class CreateUsersTable extends Migration
 
         });
 
-        $number = random_int('1000000', '9999999');
-        User::create(['firs_name' => 'Anna', 'last_name' => 'Adame', 'email' => 'admin@themesbrand.com', 'mfc_id_number' => $number, 'password' => Hash::make('12345678'), 'avatar' => 'avatar-1.jpg', 'created_at' => now(), 'email_verified_at' => now()],);
+        $user = User::create(['first_name' => 'Anna', 'last_name' => 'Adame', 'email' => 'admin@themesbrand.com', 'password' => Hash::make('12345678'), 'avatar' => 'avatar-1.jpg', 'created_at' => now(), 'email_verified_at' => now()],);
+        $mfc_id_number = $user->generateNextMfcId();
+
+        $user->update([
+            'mfc_id_number' => $mfc_id_number,
+        ]);
     }
     /**
      * Reverse the migrations.

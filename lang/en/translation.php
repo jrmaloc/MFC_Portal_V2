@@ -224,6 +224,7 @@ return [
     "api-key" => "API Key",
     "privacy-policy" => "Privacy Policy",
     "hot" => "Hot",
+
+    "tithes" => "Tithes",
 ];
-?>
 

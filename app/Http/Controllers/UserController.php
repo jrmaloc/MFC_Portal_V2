@@ -74,6 +74,11 @@ class UserController extends Controller
         return view('pages.profile.index', compact('user'));
     }
 
+    public function updateProfile(Request $request, string $id) {
+        $user = User::findOrFail($id);
+        
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -122,5 +127,20 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function search(Request $request) {
+        $users = User::query();
+
+        if($request->query('mfc_user_id')) {
+            $users = $users->where('mfc_id_number', $request->query('mfc_user_id'));
+        }
+
+        $users = $users->get();
+
+        return response()->json([
+            'status' => 'success',
+            'users' => $users,
+        ]);
     }
 }

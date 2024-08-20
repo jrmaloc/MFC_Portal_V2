@@ -3,6 +3,9 @@
     'route' => '',
 ])
 <div class="modal fade" id="addEventModal" data-id="0" tabindex="-1" aria-hidden="true">
+    <style>
+        .pac-container { z-index: 100000 !important; }
+    </style>
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" data-simplebar>
         <div class="modal-content border-0">
             <div class="modal-body">
@@ -135,7 +138,9 @@
                                     <label for="event_location" class="form-label">Location <span
                                             class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="event_location"
-                                        placeholder="Event Location..." required>
+                                        placeholder="Event Location..." required id="event_location">
+                                    <input type="hidden" name="latitude" id="latitude" value="">
+                                    <input type="hidden" name="longitude" id="longitude" value="">
                                 </div>
                             </div>
 
@@ -144,7 +149,7 @@
                                     <div class="mb-3">
                                         <label for="event_location" class="form-label">Registration Fee</label>
                                         <div class="form-icon">
-                                            <input type="text" oninput="validateDigit(this)" id="event_location"
+                                            <input type="text" oninput="validateDigit(this)" id="event_reg_fee"
                                                 class="form-control form-control-icon" name="event_reg_fee"
                                                 placeholder="Leave blank if free...">
                                             <i class="fst-normal">₱</i>
@@ -156,15 +161,18 @@
                                             class="text-danger">*</span></label>
                                     <div class="d-flex gap-5 mt-2">
                                         <div class="form-check form-radio-primary">
-                                            <input type="radio" class="form-check-input" name="event_category"
-                                                id="open" value="1" required>
-                                            <label for="open" class="form-check-label">Open for
+                                            <input type="checkbox" class="form-check-input"
+                                                name="is_open_for_non_community" id="is_open_for_non_community"
+                                                value="1" checked>
+                                            <label for="is_open_for_non_community" class="form-check-label">Open for
                                                 Non-Community</label>
                                         </div>
                                         <div class="form-check form-radio-secondary">
-                                            <input type="radio" class="form-check-input" name="event_category"
-                                                id="enable" value="2" required>
-                                            <label for="enable" class="form-check-label">Enable Event
+                                            <input type="checkbox" class="form-check-input"
+                                                name="is_enable_event_registration" id="is_enable_event_registration"
+                                                value="1" required>
+                                            <label for="is_enable_event_registration" class="form-check-label">Enable
+                                                Event
                                                 Registration</label>
                                         </div>
                                     </div>
@@ -247,6 +255,52 @@
     </div>
 </div>
 
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places&callback=initialize" async defer>
+</script>
+<script>
+    function initialize() {
+        const eventLocationInput = document.getElementById('event_location');
+        const latitudeInput = document.getElementById('latitude');
+        const longitudeInput = document.getElementById('longitude');
+
+        if (!eventLocationInput) {
+            console.error('Event location input not found.');
+            return;
+        }
+
+        // Initialize Google Places SearchBox
+        const searchBox = new google.maps.places.SearchBox(eventLocationInput);
+
+        searchBox.addListener('places_changed', () => {
+            const places = searchBox.getPlaces();
+            if (places.length === 0) {
+                return;
+            }
+
+            const place = places[0];
+            const lat = place.geometry.location.lat();
+            const lng = place.geometry.location.lng();
+
+            // Set latitude and longitude values
+            latitudeInput.value = lat;
+            longitudeInput.value = lng;
+        });
+    }
+
+
+    // Prevent form submission on Enter key in event location input
+    document.getElementById('event_location').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+        }
+    });
+
+    $('#addEventModal').on('shown.bs.modal', function () {
+        initialize();
+    });
+</script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var warningToastEl = document.getElementById('warningToast');
@@ -269,6 +323,7 @@
         var timeInput = document.getElementById('event_time');
 
         flatpickr(dateInput, {
+            mode: "range",
             minDate: tomorrow,
             altInput: true,
             altFormat: "F j, Y",
@@ -404,6 +459,8 @@
                         console.log('reset');
                     }
                     successToast.show();
+
+                    location.reload();
                     // Handle the response as needed
                 },
                 error: function(xhr, textStatus, errorThrown, response) {

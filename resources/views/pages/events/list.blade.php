@@ -68,7 +68,7 @@
     <script
         src="{{ URL::asset('build/libs/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js') }}">
     </script>
-    <script
+    <script 
         src="{{ URL::asset('build/libs/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js') }}">
     </script>
     <script src="{{ URL::asset('build/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js') }}"></script>
@@ -124,14 +124,14 @@
                         }
                     },
                     {
-                        data: "date",
-                        name: "date",
+                        data: "start_date",
+                        name: "start_date",
                         render: function(data) {
                             if (data == null) {
                                 return '<span class="text-capitalize">N/A</span>';
                             }
 
-                            return '<span class="text-capitalize">' + data + '</span>';;
+                            return '<span class="text-capitalize">' + data + '</span>';
                         }
                     },
                     {
@@ -199,7 +199,7 @@
                     responsive: true,
                     serverSide: true,
                     ajax: {
-                        url: "/dashboard/events/",
+                        url: "/dashboard/events",
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest'
                         }

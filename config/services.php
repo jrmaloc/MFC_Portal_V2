@@ -30,4 +30,12 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'paymaya' => [
+        'url' => 'https://pg-sandbox.paymaya.com/checkout/v1/checkouts',
+        'api_key' => env('PAYMAYA_API_KEY'),
+        'secret_key' => env('PAYMAYA_SECRET_KEY'),
+        'test_api_key' => env('PAYMAYA_TEST_API_KEY'),
+        'test_secret_key' => env('PAYMAYA_TEST_SECRET_KEY')
+    ]
+
 ];

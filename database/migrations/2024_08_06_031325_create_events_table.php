@@ -18,12 +18,17 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->string('type')->nullable();
             $table->foreignId('section_id')->nullable()->constrained('sections')->cascadeOnDelete();
-            $table->date('date')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->time('time')->nullable();
             $table->string('location')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->decimal('reg_fee')->nullable();
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
             $table->string('category')->nullable();
+            $table->boolean('is_open_for_non_community')->default(false);
+            $table->boolean('is_enable_event_registration')->default(false);
             $table->string('poster')->nullable();
             $table->enum('status', User::$status)->nullable()->default('Active');
 

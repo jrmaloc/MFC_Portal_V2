@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Notifications\SendEmailVerification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -83,5 +84,30 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->notify(new SendEmailVerification($otp, $this, $date));
 
         return redirect()->route('verification.notice');
+    }
+
+    public function generateNextMfcId()
+    {
+        // Get the latest MFC ID from the database
+        $lastUser = User::orderBy('mfc_id_number', 'desc')->first();
+
+        // Extract the numeric part and increment it
+        if ($lastUser && $lastUser->mfc_id_number) {
+            $lastNumberPart = (int)substr($lastUser->mfc_id_number, 4);
+            $nextNumber = $lastNumberPart + 1;
+        } else {
+            // Start from 1 if no MFC ID exists
+            $nextNumber = 1;
+        }
+
+        // Pad the number with leading zeros to maintain the length of 7 digits
+        $newNumberPart = str_pad($nextNumber, 7, '0', STR_PAD_LEFT);
+
+        // Concatenate with the prefix "MFC-"
+        return "MFC-" . $newNumberPart;
+    }
+
+    public function section() : BelongsTo {
+        return $this->belongsTo(Section::class, 'section_id');
     }
 }

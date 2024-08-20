@@ -40,6 +40,8 @@
     --vz-secondary-rgb: 53, 119, 241;
     --vz-success-rgb: 10, 179, 156;
     --vz-info-rgb: 41, 156, 219;
+    --vz-blue-rgb: 0, 102, 171;
+    --vz-orange-rgb: 255, 105, 7;
     --vz-warning-rgb: 247, 184, 75;
     --vz-danger-rgb: 240, 101, 72;
     --vz-red-rgb: 237, 45, 45;
@@ -58,6 +60,8 @@
     --vz-secondary-bg-subtle: #e1ebfd;
     --vz-success-bg-subtle: #daf4f0;
     --vz-info-bg-subtle: #dff0fa;
+    --vz-blue-bg-subtle: #0066ab;
+    --vz-orange-bg-subtle: #ff6907;
     --vz-warning-bg-subtle: #fef4e4;
     --vz-danger-bg-subtle: #fde8e4;
     --vz-red-bg-subtle: #f7e5e5;
@@ -8164,6 +8168,14 @@ fieldset:disabled .btn {
     --vz-text-opacity: 1;
     color: rgba(var(--vz-info-rgb), var(--vz-text-opacity)) !important;
 }
+.text-blue {
+    --vz-text-opacity: 1;
+    color: rgba(var(--vz-blue-rgb), var(--vz-text-opacity)) !important;
+}
+.text-orange {
+    --vz-text-opacity: 1;
+    color: rgba(var(--vz-orange-rgb), var(--vz-text-opacity)) !important;
+}
 .text-warning {
     --vz-text-opacity: 1;
     color: rgba(var(--vz-warning-rgb), var(--vz-text-opacity)) !important;
@@ -8497,6 +8509,12 @@ fieldset:disabled .btn {
 }
 .bg-info-subtle {
     background-color: var(--vz-info-bg-subtle) !important;
+}
+.bg-blue-subtle {
+    background-color: var(--vz-blue-bg-subtle) !important;
+}
+.bg-orange-subtle {
+    background-color: var(--vz-orange-bg-subtle) !important;
 }
 .bg-warning-subtle {
     background-color: var(--vz-warning-bg-subtle) !important;

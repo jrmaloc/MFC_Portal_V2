@@ -15,6 +15,6 @@ class OTP extends Model
         'otp_code',
         'user_id',
         'is_used',
-        'expirest_at',
+        'expires_at',
     ];
 }

@@ -36,8 +36,29 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script> --}}
 <script src="{{ URL::asset('build/js/app.js') }}"></script>
+
+@if (Session::get('success'))
+    <script>
+        toastr.options = {
+            closeButton: true, // Add close button
+            timeOut: 2000
+        };
+        toastr.success("{{ Session::get('success') }}", "Success");
+    </script>
+@endif
+
+@if (Session::get('fail'))
+    <script>
+        toastr.options = {
+            closeButton: true, // Add close button
+            timeOut: 2000
+        };
+        toastr.error("{{ Session::get('fail') }}", 'Fail');
+    </script>
+@endif
 
 @yield('script')
 @yield('script-bottom')

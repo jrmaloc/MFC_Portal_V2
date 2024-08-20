@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EventAttendanceController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TithesController;
@@ -26,6 +27,8 @@ Route::middleware(['guest', 'nocache'])->group(function () {
     Route::get('/forgot-password', [AuthenticatedSessionController::class, 'reset_password'])->name('password.update');
 });
 
+Route::get('/events/show/{title}', [EventController::class, 'show'])->name('events.show');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     //Language Translation
     Route::get('/index/{locale}', [HomeController::class, 'lang']);
@@ -35,12 +38,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('dashboard')->middleware(['auth', 'verified', 'checkSession'])->group(function () {
         Route::resource('/announcements', AnnouncementController::class);
+
+        Route::get('/users/search', [UserController::class, 'search'])->name('search');
         Route::resource('/users', UserController::class)->except(['index']);
+        
         Route::get('/directory/{section}', [UserController::class, 'index'])->name('users.index');
+
         Route::get('/profile/{user}', [UserController::class, 'profile'])->name('users.profile');
-        Route::resource('/events', EventController::class);
+
+        Route::get('/events/calendar', [EventController::class, 'calendar'])->name('events.calendar');
+        Route::get('events/all', [EventController::class, 'all']);
+        Route::get('/events/full-calendar', [EventController::class, 'fullCalendar'])->name('events.all');
+        Route::resource('/events', EventController::class)->except(['show']);
+        Route::get('/events/{event_id}/register', [EventController::class, 'register'])->name('events.register');
+        Route::post('/events/register', [EventController::class, 'save_registration'])->name('events.register.post');
+        
         Route::resource('/tithes', TithesController::class);
-        Route::resource('/announcements', AnnouncementController::class);
+        Route::post('attendances/save', [EventAttendanceController::class, 'saveAttendance'])->name('attendances.save');
+        Route::get('attendances/events/{event_id}/users', [EventAttendanceController::class, 'users'])->name('attendances.users');
 
         //Update User Details
         Route::post('/update-profile/{id}', [HomeController::class, 'updateProfile'])->name('updateProfile');

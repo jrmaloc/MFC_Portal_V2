@@ -40,8 +40,9 @@
                         </div>
                         <h5 class="fs-16 mb-1">{{ Auth::user()->fist_name ?? 'Sample' }}
                             {{ Auth::user()->last_name ?? 'User' }}</h5>
-                        <p class="text-muted mb-0">MFC ID: <span id="mfc-id">{{ Auth::user()->mfc_id_number }}</span> <a href="javascript:void(0);"
-                                class="ri-file-copy-line" id="copy-mfc-id" data-bs-toggle="tooltip" data-bs-placement="right"></a></p>
+                        <p class="text-muted mb-0">MFC ID: <span id="mfc-id">{{ Auth::user()->mfc_id_number }}</span> <a
+                                href="javascript:void(0);" class="ri-file-copy-line" id="copy-mfc-id"
+                                data-bs-toggle="tooltip" data-bs-placement="right"></a></p>
                         <script>
                             document.getElementById('copy-mfc-id').addEventListener('click', function(event) {
                                 event.preventDefault(); // Prevent default action
@@ -231,8 +232,7 @@
                                     <div class="col-lg-3">
                                         <div class="mb-3">
                                             <label for="JoiningdatInput" class="form-label">Area</label>
-                                            <select name="section" id="mfc_section" data-choices
-                                                data-choices-sorting-false>
+                                            <select name="section" id="mfc_area" data-choices data-choices-sorting-false>
                                                 <option value="">Select Area</option>
                                                 <option value="ncr">NCR</option>
                                                 <option value="ncr_north">NCR - North</option>
@@ -414,84 +414,35 @@
                         <div class="tab-pane" id="service" role="tabpanel">
                             <form>
                                 <div id="newlink">
-                                    <div id="1" class="containerElement">
-                                        <div class="row">
+                                    {{-- <div id="1" class="containerElement">
+                                        <div class="row service-container">
                                             <span class="menu-title mb-1">Service</span>
                                             <div class="col-3">
                                                 <div class="mb-3">
-                                                    <label for="service_category" class="form-label">MFC/LCSC</label>
+                                                    <label for="service_category1" class="form-label">MFC/LCSC</label>
                                                     <select name="service_category" id="service_category1" data-choices
-                                                        data-choices-search-false data-choices-sorting-false>
+                                                        data-choices-search-false data-choices-sorting-false
+                                                        class="service-category-select">
                                                         <option value="">Select one</option>
                                                         <option value="mfc">MFC</option>
                                                         <option value="lcsc">LCSC</option>
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-3" id="mfc_service_type_container1">
+                                            <div class="col-3" id="service_type_container">
                                                 <div class="mb-3">
-                                                    <label for="mfc_service_type" class="form-label">Service</label>
-                                                    <select class="d-none" name="mfc_service_type" id="mfc_service_type1"
-                                                        data-choices data-choices-search-false data-choices-sorting-false>
-                                                        <option value="">Select one</option>
-                                                        <option value="1">Servant Council</option>
-                                                        <option value="2">National Coordinator</option>
-                                                        <option value="3">Section Coordinator</option>
-                                                        <option value="4">Provincial Coordinator</option>
-                                                        <option value="5">Area Servant</option>
-                                                        <option value="6">Chapter Servant</option>
-                                                        <option value="7">Unit Servant</option>
-                                                        <option value="8">Household Servant</option>
-                                                        <option value="9">Mission Volunteer</option>
-                                                        <option value="10">Full Time</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-3 d-none" id="lcsc_service_type_container1">
-                                                <div class="mb-3">
-                                                    <label for="lcsc_service_type" class="form-label">Service</label>
-                                                    <select name="lcsc_service_type" id="lcsc_service_type1" data-choices
-                                                        data-choices-search-false data-choices-sorting-false>
-                                                        <option value="">Select one</option>
-                                                        <option value="11">LCSC Coordinator</option>
-                                                        <option value="12">Pillar Head</option>
-                                                        <option value="13">Area Coordinator</option>
-                                                        <option value="14">Provincial Coordinator</option>
-                                                        <option value="15">Full Time</option>
-                                                        <option value="16">Mission Volunteer</option>
+                                                    <label for="service_type1" class="form-label">Service Type</label>
+                                                    <select name="service_type[]" id="service_type1"
+                                                        class="service-type-select form-select">
                                                     </select>
                                                 </div>
                                             </div>
 
-                                            <div class="col-3" id="mfc_section_pillar_container1">
+                                            <div class="col-3" id="section_container">
                                                 <div class="mb-3">
-                                                    <label for="mfc_section_pillar"
-                                                        class="form-label">Section/Pillar</label>
-                                                    <select name="mfc_section_pillar" id="mfc_section_pillar1"
-                                                        data-choices data-choices-search-false data-choices-sorting-false>
-                                                        <option value="">Select one</option>
-                                                        <option value="1">Kids</option>
-                                                        <option value="2">Youth</option>
-                                                        <option value="3">Singles</option>
-                                                        <option value="4">Handmaids</option>
-                                                        <option value="5">Servants</option>
-                                                        <option value="6">Couples</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-3 d-none" id="lcsc_section_pillar_container1">
-                                                <div class="mb-3">
-                                                    <label for="lcsc_section_pillar"
-                                                        class="form-label">Section/Pillar</label>
-                                                    <select name="lcsc_section_pillar" id="lcsc_section_pillar1"
-                                                        data-choices data-choices-search-false data-choices-sorting-false>
-                                                        <option value="">Select one</option>
-                                                        <option value="7">LCSC</option>
-                                                        <option value="8">Live Pure</option>
-                                                        <option value="9">Live Life</option>
-                                                        <option value="10">Live The Word</option>
-                                                        <option value="11">Live Full</option>
-                                                        <option value="12">Live The Faith</option>
+                                                    <label for="section1" class="form-label">Section/Pillar</label>
+                                                    <select name="section[]" id="section1"
+                                                        class="section-select form-select">
                                                     </select>
                                                 </div>
                                             </div>
@@ -499,9 +450,9 @@
 
                                             <div class="col-lg-3">
                                                 <div class="mb-3">
-                                                    <label for="service_area" class="form-label">Area</label>
-                                                    <select name="service_area" id="service_area1" data-choices
-                                                        data-choices-sorting-false>
+                                                    <label for="service_area1" class="form-label">Area</label>
+                                                    <select name="service_area[]" id="service_area1" data-choices
+                                                        data-choices-sorting-false class="sercive-area-select">
                                                         <option value="">Select Area</option>
                                                         <option value="1">NCR</option>
                                                         <option value="2">NCR - North</option>
@@ -527,8 +478,7 @@
                                                 <a class="btn btn-success" href="javascript:deleteEl(1)">Delete</a>
                                             </div>
                                         </div>
-                                        <!--end row-->
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div id="newForm" style="display: none;">
 
@@ -555,6 +505,11 @@
 @section('script')
     <script src="{{ URL::asset('build/js/pages/profile-setting.init.js') }}"></script>
     <script src="{{ URL::asset('build/js/app.js') }}"></script>
+
+    <script>
+        
+    </script>
+
 
     {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {

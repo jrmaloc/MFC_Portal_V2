@@ -14,11 +14,11 @@
         <!-- Light Logo-->
         <a href="index" class="logo logo-light">
             <span class="logo-sm">
-                <img src="{{ URL::asset('build/images/logo-sm.png') }}" alt="" height="22">
+                <img src="{{ URL::asset('build/images/logo-sm.png') }}" alt="" width="22" height="22">
             </span>
             <span class="logo-lg">
                 <img class="rounded-circle mt-3" src="{{ URL::asset('build/images/MFC-Logo.jpg') }}" alt=""
-                    height="80">
+                    height="80" width="80">
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
@@ -157,19 +157,19 @@
                             <li
                                 class="nav-item {{ preg_match('/^dashboard\/events/', Request::path()) ? 'active' : '' }}">
                                 <a href="{{ route('events.index') }}"
-                                    class="nav-link {{ preg_match('/^dashboard\/events/', Request::path()) ? 'active' : '' }}">@lang('translation.list')</a>
+                                    class="nav-link {{ 'dashboard/events' === Request::path() ? 'active' : '' }}">@lang('translation.list')</a>
                             </li>
                             <li
-                                class="nav-item {{ preg_match('/^dashboard\/calendar/', Request::path()) ? 'active' : '' }}">
-                                <a href="{{ route('events.index', ['section' => 'calendar']) }}"
-                                    class="nav-link {{ preg_match('/^dashboard\/events\/calendar/', Request::path()) ? 'active' : '' }}">@lang('translation.calendar')</a>
+                                class="nav-item {{ preg_match('/^dashboard\/events/', Request::path()) ? 'active' : '' }}">
+                                <a href="{{ route('events.calendar') }}"
+                                    class="nav-link {{ 'dashboard/events/calendar' === Request::path() ? 'active' : '' }}">@lang('translation.calendar')</a>
                             </li>
                         </ul>
                     </div>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ preg_match('/^directory\/tithes/', Request::path()) ? 'active' : '' }}"
+                    <a class="nav-link menu-link {{ preg_match('/^dashboard\/tithes/', Request::path()) ? 'active' : '' }}"
                         href="{{ route('tithes.index') }}">
                         <i class="ri-bubble-chart-line"></i> <span>@lang('translation.tithes')</span>
                     </a>
