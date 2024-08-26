@@ -275,7 +275,7 @@ document.addEventListener("DOMContentLoaded", function () {
         modalTitle.innerText = selectedEvent.title;
     
         // formEvent.classList.add("view-event");
-        document.getElementById('btn-delete-event').removeAttribute('hidden');
+        // document.getElementById('btn-delete-event').removeAttribute('hidden');
     }
 
     const fetchAllEvents = async () => {
@@ -371,20 +371,20 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    document.getElementById("btn-delete-event").addEventListener("click", function (e) {
-        if (selectedEvent) {
-            for (var i = 0; i < defaultEvents.length; i++) {
-                if (defaultEvents[i].id == selectedEvent.id) {
-                    defaultEvents.splice(i, 1);
-                    i--;
-                }
-            }
-            upcomingEvent(defaultEvents);
-            selectedEvent.remove();
-            selectedEvent = null;
-            addEvent.hide();
-        }
-    });
+    // document.getElementById("btn-delete-event").addEventListener("click", function (e) {
+    //     if (selectedEvent) {
+    //         for (var i = 0; i < defaultEvents.length; i++) {
+    //             if (defaultEvents[i].id == selectedEvent.id) {
+    //                 defaultEvents.splice(i, 1);
+    //                 i--;
+    //             }
+    //         }
+    //         upcomingEvent(defaultEvents);
+    //         selectedEvent.remove();
+    //         selectedEvent = null;
+    //         addEvent.hide();
+    //     }
+    // });
 
     // Register in the event
     document.getElementById("register-event-btn").addEventListener("click", function (e) {
