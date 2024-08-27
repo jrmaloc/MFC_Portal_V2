@@ -226,5 +226,8 @@ return [
     "hot" => "Hot",
 
     "tithes" => "Tithes",
+    
+    "attendance" => "Attendance",
+    "attendance_report" => "Attendance Report",
 ];
 

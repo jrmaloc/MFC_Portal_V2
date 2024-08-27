@@ -412,77 +412,107 @@
                         <!--end tab-pane-->
                         <!--service-->
                         <div class="tab-pane" id="service" role="tabpanel">
-                            <form>
+                            <form action="{{ route('users.profile.put', $user->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
                                 <div id="newlink">
-                                    {{-- <div id="1" class="containerElement">
-                                        <div class="row service-container">
-                                            <span class="menu-title mb-1">Service</span>
-                                            <div class="col-3">
-                                                <div class="mb-3">
-                                                    <label for="service_category1" class="form-label">MFC/LCSC</label>
-                                                    <select name="service_category" id="service_category1" data-choices
-                                                        data-choices-search-false data-choices-sorting-false
-                                                        class="service-category-select">
-                                                        <option value="">Select one</option>
-                                                        <option value="mfc">MFC</option>
-                                                        <option value="lcsc">LCSC</option>
-                                                    </select>
+                                    @forelse ($user->missionary_services as $service)
+                                        <div id="1" class="containerElement">
+                                            <div class="row service-container">
+                                                <span class="menu-title mb-1">Service</span>
+                                                <div class="col-3">
+                                                    <div class="mb-3">
+                                                        <label for="service_category1" class="form-label">MFC/LCSC</label>
+                                                        <select name="service_category[]" id="service_category1"
+                                                            data-choices data-choices-search-false
+                                                            data-choices-sorting-false class="service-category-select">
+                                                            <option {{ $service->service_category == "" ? "selected" : null }} value="">Select one</option>
+                                                            <option {{ $service->service_category == "mfc" ? "selected" : null }} value="mfc"
+                                                                value="{{ $service->service_category }}">MFC</option>
+                                                            <option  {{ $service->service_category == "lcsc" ? "selected" : null }} value="lcsc">LCSC</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-3" id="service_type_container">
-                                                <div class="mb-3">
-                                                    <label for="service_type1" class="form-label">Service Type</label>
-                                                    <select name="service_type[]" id="service_type1"
-                                                        class="service-type-select form-select">
-                                                    </select>
+                                                <div class="col-3" id="service_type_container">
+                                                    <div class="mb-3">
+                                                        <label for="service_type1" class="form-label">Service Type</label>
+                                                        <select name="service_type[]" id="service_type1"
+                                                            selected-data="{{ $service->service_type }}"
+                                                            class="service-type-select form-select">
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-3" id="section_container">
-                                                <div class="mb-3">
-                                                    <label for="section1" class="form-label">Section/Pillar</label>
-                                                    <select name="section[]" id="section1"
-                                                        class="section-select form-select">
-                                                    </select>
+                                                <div class="col-3" id="section_container">
+                                                    <div class="mb-3">
+                                                        <label for="section1" class="form-label">Section/Pillar</label>
+                                                        <select name="section[]" id="section1"
+                                                            selected-data="{{ $service->section }}"
+                                                            class="section-select form-select">
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <!--end col-->
+                                                <!--end col-->
 
-                                            <div class="col-lg-3">
-                                                <div class="mb-3">
-                                                    <label for="service_area1" class="form-label">Area</label>
-                                                    <select name="service_area[]" id="service_area1" data-choices
-                                                        data-choices-sorting-false class="sercive-area-select">
-                                                        <option value="">Select Area</option>
-                                                        <option value="1">NCR</option>
-                                                        <option value="2">NCR - North</option>
-                                                        <option value="3">NCR - South</option>
-                                                        <option value="4">NCR - East</option>
-                                                        <option value="5">NCR - Central</option>
-                                                        <option value="6">South Luzon</option>
-                                                        <option value="7">North & Central Luzon</option>
-                                                        <option value="8">Visayas</option>
-                                                        <option value="9">Mindanao</option>
-                                                        <option value="10">International</option>
-                                                        <option value="11">Baguio</option>
-                                                        <option value="12">Palawan</option>
-                                                        <option value="13">Batangas</option>
-                                                        <option value="14">Laguna</option>
-                                                        <option value="15">Pampanga</option>
-                                                        <option value="16">Tarlac</option>
-                                                        <option value="17">Other</option>
-                                                    </select>
+                                                <div class="col-lg-3">
+                                                    <div class="mb-3">
+                                                        <label for="service_area1" class="form-label">Area</label>
+                                                        <select name="service_area[]" id="service_area1" data-choices
+                                                            data-choices-sorting-false class="sercive-area-select">
+                                                            <option {{ $service->area == '' ? 'selected' : null }}
+                                                                value="">Select Area</option>
+                                                            <option
+                                                                {{ $service->area == 'NCR - North' ? 'selected' : null }}
+                                                                value="NCR - North">NCR - North</option>
+                                                            <option
+                                                                {{ $service->area == 'NCR - South' ? 'selected' : null }}
+                                                                value="NCR - South">NCR - South</option>
+                                                            <option
+                                                                {{ $service->area == 'NCR - East' ? 'selected' : null }}
+                                                                value="NCR - East">NCR - East</option>
+                                                            <option
+                                                                {{ $service->area == 'NCR - Central' ? 'selected' : null }}
+                                                                value="NCR - Central">NCR - Central</option>
+                                                            <option
+                                                                {{ $service->area == 'South Luzon' ? 'selected' : null }}
+                                                                value="South Luzon">South Luzon</option>
+                                                            <option
+                                                                {{ $service->area == 'North & Central Luzon' ? 'selected' : null }}
+                                                                value="North & Central Luzon">North & Central Luzon
+                                                            </option>
+                                                            <option {{ $service->area == 'Visayas' ? 'selected' : null }}
+                                                                value="Visayas">Visayas</option>
+                                                            <option {{ $service->area == 'Mindanao' ? 'selected' : null }}
+                                                                value="Mindanao">Mindanao</option>
+                                                            <option
+                                                                {{ $service->area == 'International' ? 'selected' : null }}
+                                                                value="International">International</option>
+                                                            <option {{ $service->area == 'Baguio' ? 'selected' : null }}
+                                                                value="Baguio">Baguio</option>
+                                                            <option {{ $service->area == 'Palawan' ? 'selected' : null }}
+                                                                value="Palawan">Palawan</option>
+                                                            <option {{ $service->area == 'Batangas' ? 'selected' : null }}
+                                                                value="Batangas">Batangas</option>
+                                                            <option {{ $service->area == 'Laguna' ? 'selected' : null }}
+                                                                value="Laguna">Laguna</option>
+                                                            <option {{ $service->area == 'Pampanga' ? 'selected' : null }}
+                                                                value="Pampanga">Pampanga</option>
+                                                            <option {{ $service->area == 'Tarlac' ? 'selected' : null }}
+                                                                value="Tarlac">Tarlac</option>
+                                                            <option {{ $service->area == 'Other' ? 'selected' : null }}
+                                                                value="Other">Other</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="hstack gap-2 justify-content-end">
-                                                <a class="btn btn-success" href="javascript:deleteEl(1)">Delete</a>
+                                                <div class="hstack gap-2 justify-content-end">
+                                                    <a class="btn btn-success" href="javascript:deleteEl(1)">Delete</a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div> --}}
+                                    @empty
+                                    @endforelse
                                 </div>
-                                <div id="newForm" style="display: none;">
-
-                                </div>
+                                <div id="newForm" style="display: none;"></div>
                                 <div class="col-lg-12">
                                     <div class="hstack gap-2">
                                         <button type="submit" class="btn btn-success">Update</button>
@@ -505,16 +535,78 @@
 @section('script')
     <script src="{{ URL::asset('build/js/pages/profile-setting.init.js') }}"></script>
     <script src="{{ URL::asset('build/js/app.js') }}"></script>
-
     <script>
-        
-    </script>
+        document.addEventListener("DOMContentLoaded", (event) => {
+            let mfcTypes = ["Servant Council", "National Coordinator", "Section Coordinator",
+                "Provincial Coordinator", "Area Servant", "Chapter Servant", "Unit Servant", "Household Servant", 
+                "Mission Volunteer", "Full Time"];
+            let mfcSections = ["Kids", "Youth", "Singles", "Handmaids", "Servants", "Couples"];
 
+            let lcscTypes = ["LCSC Coordinator", "Pillar Head", "Area Coordinator", "Provincial Coordinator",
+                "Full Time",  "Mission Volunteer"];
 
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            chooseServiceCategory(1);
-            choicesInit(1);
+            let lcscSections = ["LCSC", "Live Pure", "Live Life", "Live the Word", "Live Full", "Live the Faith"];
+            let serviceTypeSelects = document.querySelectorAll(".service-type-select");
+            let sectionSelects = document.querySelectorAll(".section-select");
+
+            serviceTypeSelects.forEach(select => {
+                let selectedValue = select.getAttribute("selected-data");
+                let container = $(select).closest(".containerElement");
+                let serviceCategorySelect = container.find('.service-category-select');
+                let serviceCategoryValue = serviceCategorySelect[0].value;
+
+                if(serviceCategoryValue === "mfc") {
+                    mfcTypes.forEach(type => {
+                        var option = document.createElement("option");
+                        option.text = type;
+                        option.value = type;
+                        if(selectedValue == type) {
+                            option.setAttribute("selected", true);
+                        }
+                        select.add(option);
+                    })
+                } else {
+                    lcscTypes.forEach(type => {
+                        var option = document.createElement("option");
+                        option.text = type;
+                        option.value = type;
+                        if(selectedValue == type) {
+                            option.setAttribute("selected", true);
+                        }
+                        select.add(option);
+                    })
+                }
+            });
+
+            sectionSelects.forEach(select => {
+                let selectedValue = select.getAttribute("selected-data");
+                let container = $(select).closest(".containerElement");
+                let serviceCategorySelect = container.find('.service-category-select');
+                let serviceCategoryValue = serviceCategorySelect[0].value;
+
+                if(serviceCategoryValue === "mfc") {
+                    mfcSections.forEach(type => {
+                        var option = document.createElement("option");
+                        option.text = type;
+                        option.value = type;
+                        if(selectedValue == type) {
+                            option.setAttribute("selected", true);
+                        }
+                        select.add(option);
+                    })
+                } else {
+                    lcscSections.forEach(type => {
+                        var option = document.createElement("option");
+                        option.text = type;
+                        option.value = type;
+                        if(selectedValue == type) {
+                            option.setAttribute("selected", true);
+                        }
+                        select.add(option);
+                    })
+                }
+            });
+
         });
-    </script> --}}
+    </script>
 @endsection

@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
             'email' => 'georgesteve123@gmail.com', 
             'password' => Hash::make('12345678'), 
             'avatar' => 'avatar-2.jpg', 
+            'section_id' => 3,
             'created_at' => now(), 
             'email_verified_at' => now()
         ]);
@@ -40,6 +41,7 @@ class UserSeeder extends Seeder
             'email' => 'marktone1234@gmail.com', 
             'password' => Hash::make('12345678'), 
             'avatar' => 'avatar-3.jpg', 
+            'section_id' => 3,
             'created_at' => now(), 
             'email_verified_at' => now()
         ]);
@@ -59,6 +61,7 @@ class UserSeeder extends Seeder
             'email' => 'jamesyue443@gmail.com', 
             'password' => Hash::make('12345678'), 
             'avatar' => 'avatar-4.jpg', 
+            'section_id' => 5,
             'created_at' => now(), 
             'email_verified_at' => now()
         ]);
@@ -78,6 +81,7 @@ class UserSeeder extends Seeder
             'email' => 'robertmendez13@gmail.com', 
             'password' => Hash::make('12345678'), 
             'avatar' => 'avatar-5.jpg', 
+            'section_id' => 3,
             'created_at' => now(), 
             'email_verified_at' => now()
         ]);
@@ -97,6 +101,7 @@ class UserSeeder extends Seeder
             'email' => 'charlesjamis@gmail.com', 
             'password' => Hash::make('12345678'), 
             'avatar' => 'avatar-6.jpg', 
+            'section_id' => 3,
             'created_at' => now(), 
             'email_verified_at' => now()
         ]);

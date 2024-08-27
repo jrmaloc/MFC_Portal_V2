@@ -77,7 +77,7 @@ function new_link() {
             <div class="col-3">
                 <div class="mb-3">
                     <label for="service_category${count}" class="form-label">MFC/LCSC</label>
-                    <select name="service_category" id="service_category${count}" data-choices
+                    <select name="service_category[]" id="service_category${count}" data-choices
                         data-choices-search-false data-choices-sorting-false
                         class="service-category-select">
                         <option value="">Select one</option>
@@ -111,23 +111,22 @@ function new_link() {
                     <select name="service_area[]" id="service_area${count}" data-choices
                         data-choices-sorting-false class="sercive-area-select"> 
                         <option value="">Select Area</option>
-                        <option value="1">NCR</option>
-                        <option value="2">NCR - North</option>
-                        <option value="3">NCR - South</option>
-                        <option value="4">NCR - East</option>
-                        <option value="5">NCR - Central</option>
-                        <option value="6">South Luzon</option>
-                        <option value="7">North & Central Luzon</option>
-                        <option value="8">Visayas</option>
-                        <option value="9">Mindanao</option>
-                        <option value="10">International</option>
-                        <option value="11">Baguio</option>
-                        <option value="12">Palawan</option>
-                        <option value="13">Batangas</option>
-                        <option value="14">Laguna</option>
-                        <option value="15">Pampanga</option>
-                        <option value="16">Tarlac</option>
-                        <option value="17">Other</option>
+                        <option value="NCR - North">NCR - North</option>
+                        <option value="NCR - South">NCR - South</option>
+                        <option value="NCR - East">NCR - East</option>
+                        <option value="NCR - Central">NCR - Central</option>
+                        <option value="South Luzon">South Luzon</option>
+                        <option value="North & Central Luzon">North & Central Luzon</option>
+                        <option value="Visayas">Visayas</option>
+                        <option value="Mindanao">Mindanao</option>
+                        <option value="International">International</option>
+                        <option value="Baguio">Baguio</option>
+                        <option value="Palawan">Palawan</option>
+                        <option value="Batangas">Batangas</option>
+                        <option value="Laguna">Laguna</option>
+                        <option value="Pampanga">Pampanga</option>
+                        <option value="Tarlac">Tarlac</option>
+                        <option value="Other">Other</option>
                     </select>
                 </div>
             </div>
@@ -189,39 +188,78 @@ function chooseServiceCategory(count) {
     const serviceTypeSelect = document.getElementById("service_type" + count);
     const sectionSelect = document.getElementById("section" + count);
 
-    let typeChoiceInstance = null;
-    let sectionChoiceInstance = null;
-
-    if (!typeChoiceInstance) {
-        typeChoiceInstance = new Choices(serviceTypeSelect);
-    }
-
-    if (!sectionChoiceInstance) {
-        sectionChoiceInstance = new Choices(sectionSelect);
-    }
-
     service_category.addEventListener("change", function (e) {
-        setChoicesForServices(typeChoiceInstance, sectionChoiceInstance, e.target.value);
+        if(e.target.value === "mfc") {
+            serviceTypeSelect.innerHTML = "";
+            mfcTypes.forEach(type => {
+                var option = document.createElement("option");
+                option.text = type;
+                option.value = type;
+                serviceTypeSelect.add(option);
+            })
+
+            sectionSelect.innerHTML = "";
+            mfcSections.forEach(type => {
+                var option = document.createElement("option");
+                option.text = type;
+                option.value = type;
+                sectionSelect.add(option);
+            })
+        } else {
+            serviceTypeSelect.innerHTML = "";
+            lcscTypes.forEach(type => {
+                var option = document.createElement("option");
+                option.text = type;
+                option.value = type;
+               serviceTypeSelect.add(option);
+            })
+            
+            sectionSelect.innerHTML = "";
+            lcscSections.forEach(type => {
+                var option = document.createElement("option");
+                option.text = type;
+                option.value = type;
+                sectionSelect.add(option);
+            })
+        }    
     });
 }
 
-// Declare variables to hold the Choices instances (moved outside the function to persist them)
-let typeChoiceInstance = null;
-let sectionChoiceInstance = null;
 $('.service-category-select').on("change", (e) => {
     let container = $(e.target).closest(".containerElement");
     let serviceTypeSelect = container.find(".service-type-select");
     let sectionSelect = container.find(".section-select");
 
-        if (!typeChoiceInstance) {
-            typeChoiceInstance = new Choices(serviceTypeSelect[0]);
-        }
+    if(e.target.value === "mfc") {
+        mfcTypes.forEach(type => {
+            var option = document.createElement("option");
+            option.text = type;
+            option.value = type;
+            serviceTypeSelect[0].add(option);
+        })
 
-        if (!sectionChoiceInstance) {
-            sectionChoiceInstance = new Choices(sectionSelect[0]);
-        }
+        mfcSections.forEach(type => {
+            var option = document.createElement("option");
+            option.text = type;
+            option.value = type;
+            sectionSelect[0].add(option);
+        })
+    } else {
+        lcscTypes.forEach(type => {
+            var option = document.createElement("option");
+            option.text = type;
+            option.value = type;
+           serviceTypeSelect[0].add(option);
+        })
 
-    setChoicesForServices(typeChoiceInstance, sectionChoiceInstance, e.target.value);
+        lcscSections.forEach(type => {
+            var option = document.createElement("option");
+            option.text = type;
+            option.value = type;
+            sectionSelect[0].add(option);
+        })
+    }
+        
 });
 
 function setChoicesForServices(typeChoiceInstance, sectionChoiceInstance, value) {
@@ -249,7 +287,7 @@ function setChoicesForServices(typeChoiceInstance, sectionChoiceInstance, value)
             lcscTypes.map((type, index) => ({ value: type, label: type, id: index + 1 })),
             'value', 'label', true
         );
-
+                                                                                                                                   
         sectionChoiceInstance.setChoices(
             lcscSections.map((section, index) => ({ value: section, label: section, id: index + 1 })),
             'value', 'label', true

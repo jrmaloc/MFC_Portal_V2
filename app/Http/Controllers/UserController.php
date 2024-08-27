@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserMissionaryService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -71,12 +72,24 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
+        $user->load('missionary_services');
+
         return view('pages.profile.index', compact('user'));
     }
 
     public function updateProfile(Request $request, string $id) {
         $user = User::findOrFail($id);
-        
+        foreach ($request->service_category as $key => $category) {
+            UserMissionaryService::updateOrCreate([
+                "user_id" => $user->id,
+                "service_category" => $category,
+                "service_type" => $request->service_type[$key],
+                "section" => $request->section[$key],
+                "area" => $request->service_area[$key],
+            ], []);
+        }
+
+        return back()->withSuccess("User service updated successfully.");
     }
 
     /**
@@ -100,9 +113,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
-
-        dd($id);
+        
     }
 
     /**

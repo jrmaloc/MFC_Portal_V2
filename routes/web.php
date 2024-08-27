@@ -27,7 +27,7 @@ Route::middleware(['guest', 'nocache'])->group(function () {
     Route::get('/forgot-password', [AuthenticatedSessionController::class, 'reset_password'])->name('password.update');
 });
 
-Route::get('/events/show/{title}', [EventController::class, 'show'])->name('events.show');
+Route::get('/events/show/{identifier}', [EventController::class, 'show'])->name('events.show');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     //Language Translation
@@ -55,7 +55,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         
         Route::resource('/tithes', TithesController::class);
         Route::post('attendances/save', [EventAttendanceController::class, 'saveAttendance'])->name('attendances.save');
-        Route::get('attendances/events/{event_id}/users', [EventAttendanceController::class, 'users'])->name('attendances.users');
+        Route::get('attendances/events/{event_id}/users', [EventAttendanceController::class, 'getEventUsers'])->name('attendances.users');
+        Route::get('attendances/report/{event_id}', [EventAttendanceController::class, 'report'])->name('attendances.report');
 
         //Update User Details
         Route::post('/update-profile/{id}', [HomeController::class, 'updateProfile'])->name('updateProfile');

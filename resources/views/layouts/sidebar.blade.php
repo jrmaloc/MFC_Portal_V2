@@ -177,7 +177,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#">
-                        <i class="ri-folder-user-line"></i> <span>@lang('translation.attendance')</span>
+                        <i class="ri-folder-user-line"></i> <span>@lang('translation.attendance_report')</span>
                     </a>
                 </li>
 

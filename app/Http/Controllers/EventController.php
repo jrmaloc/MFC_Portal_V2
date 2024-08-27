@@ -141,10 +141,20 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, string $title)
+    public function show(Request $request, string $identifier)
     {   
-        $title = $request->title;
-        $event = Event::where('title', $title)->firstOrFail();
+        if(is_numeric($request->identifier)) {
+            $event = Event::findOrFail($identifier);
+        } else {
+            $event = Event::where('title', $identifier)->firstOrFail();
+        }
+
+        if($request->ajax()) {
+            return response()->json([
+                'status' => 'success',
+                'event' => $event,
+            ]);
+        }
 
         return view('pages.events.show', compact('event'));
     }
@@ -259,7 +269,9 @@ class EventController extends Controller
             $users_count = count($request->users);
             $auth_user = Auth::user();
 
-            $total_amount = 0;
+            // Add the request donation in total amount
+            $total_amount = 0 + $request->donation;
+
             for ($i=0; $i < $users_count; $i++) { 
                 $total_amount += $event->reg_fee;
             }
@@ -270,6 +282,7 @@ class EventController extends Controller
             $transaction = Transaction::create([
                 'transaction_code' => $transaction_code,
                 'reference_code' => $reference_code,
+                'donation' => $request->donation,
                 'sub_amount' => $event->reg_fee,
                 'total_amount' => $total_amount,
                 'payment_mode' => "N/A",

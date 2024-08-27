@@ -34,7 +34,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make('mfc_portal123'),
             'section_id' => $section->id,
             'contact_number' => $request->contact_number,
-            'role_id' => 3,
+            'role_id' => 7,
         ]);
 
         $user->update([

@@ -23,6 +23,7 @@ return [
     "tithes" => "Tithes",
     "registration" => "Registration",
     "attendance" => "Attendance",
+    "attendance_report" => "Attendance Report",
     "roles" => "Roles",
     "permissions" => "Permissions",
     "add_new_user" => "Add New User",
