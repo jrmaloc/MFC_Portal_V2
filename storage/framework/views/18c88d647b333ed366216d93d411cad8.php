@@ -1,24 +1,25 @@
-@extends('layouts.master')
-@section('title')
-    @lang('translation.events')
-@endsection
 
-@section('content')
-    @component('components.breadcrumb')
-        @slot('li_1')
+<?php $__env->startSection('title'); ?>
+    <?php echo app('translator')->get('translation.events'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <?php $__env->startComponent('components.breadcrumb'); ?>
+        <?php $__env->slot('li_1'); ?>
             Event Registration
-        @endslot
-        @slot('title')
-            {{ $endPoint }}
-        @endslot
-    @endcomponent
+        <?php $__env->endSlot(); ?>
+        <?php $__env->slot('title'); ?>
+            <?php echo e($endPoint); ?>
+
+        <?php $__env->endSlot(); ?>
+    <?php echo $__env->renderComponent(); ?>
 
     <div class="row">
-        <form action="{{ route('events.register.post') }}" method="POST" id="register-form">
-            @csrf
-            <input type="hidden" name="event_id" id="event-id-field" value="{{ $event->id }}">
+        <form action="<?php echo e(route('events.register.post')); ?>" method="POST" id="register-form">
+            <?php echo csrf_field(); ?>
+            <input type="hidden" name="event_id" id="event-id-field" value="<?php echo e($event->id); ?>">
             <input type="hidden" name="event_registration_fee" id="event-registration-fee-field"
-                value="{{ $event->reg_fee }}">
+                value="<?php echo e($event->reg_fee); ?>">
             <div class="row mb-3">
                 <div class="col-xl-8">
                     <div class="card">
@@ -51,8 +52,8 @@
                                     <div class="list-grid-nav hstack gap-1">
 
                                         <button type="button" class="btn btn-primary" id="register-self-btn"
-                                            data-mfc-id="{{ auth()->user()->mfc_id_number }}"
-                                            data-user-id="{{ auth()->user()->id }}">
+                                            data-mfc-id="<?php echo e(auth()->user()->mfc_id_number); ?>"
+                                            data-user-id="<?php echo e(auth()->user()->id); ?>">
                                             I will register myself <i class="ri-add-fill me-1 align-bottom"></i>
                                         </button>
                                     </div>
@@ -62,7 +63,7 @@
                             <!--end row-->
                         </div>
                     </div>
-                    {{-- <input type="hidden"> --}}
+                    
                     <div class="products"></div>
 
                     <div class="text-end mb-4">
@@ -101,7 +102,7 @@
                                             <tr>
                                                 <td>Sub Total :</td>
                                                 <td class="text-end" id="registration-subtotal">₱
-                                                    {{ number_format($event->reg_fee, 2) }}</td>
+                                                    <?php echo e(number_format($event->reg_fee, 2)); ?></td>
                                             </tr>
                                             <tr>
                                                 <td>Donation : </td>
@@ -133,18 +134,16 @@
                                 <h5 class="card-title mb-0">Event Details</h5>
                             </div>
                             <div class="card-header bg-light-subtle border-bottom-dashed">
-                                <h3>{{ $event->title }}</h3>
+                                <h3><?php echo e($event->title); ?></h3>
                                 <div class="flex gap-2">
                                     <span class="bg-primary badge text-uppercase">Worldwide</span>
-                                    <span class="badge bg-primary text-uppercase">{{ $event->section->name }}</span>
+                                    <span class="badge bg-primary text-uppercase"><?php echo e($event->section->name); ?></span>
                                 </div>
                                 <div class="my-2">
-                                    {!! $event->description !!}
+                                    <?php echo $event->description; ?>
+
                                 </div>
-                                {{-- <div class="my-1">
-                                <img src="{{ URL::asset('uploads/' . $event->poster) }}" alt="" class="rounded"
-                                    style="width: 100%;">
-                            </div> --}}
+                                
                             </div>
                             <div class="card-body pt-2">
                                 <div class="table-responsive">
@@ -156,9 +155,11 @@
                                                 </div>
                                                 <div class="flex-grow-1">
                                                     <h6 class="d-block fw-semibold mb-0" id="event-start-date-tag">
-                                                        {{ Carbon::parse($event->start_date)->format('F d, Y') }}
+                                                        <?php echo e(Carbon::parse($event->start_date)->format('F d, Y')); ?>
+
                                                         -
-                                                        {{ Carbon::parse($event->end_date)->format('F d, Y') }}
+                                                        <?php echo e(Carbon::parse($event->end_date)->format('F d, Y')); ?>
+
                                                     </h6>
                                                 </div>
                                             </div>
@@ -169,7 +170,8 @@
                                             </div>
                                             <div class="flex-grow-1">
                                                 <h6 class="d-block fw-semibold mb-0">
-                                                    {{ Carbon::parse($event->time)->format('H:i A') }}
+                                                    <?php echo e(Carbon::parse($event->time)->format('H:i A')); ?>
+
                                                 </h6>
                                             </div>
                                         </div>
@@ -180,7 +182,8 @@
                                             <div class="flex-grow-1">
                                                 <h6 class="d-block fw-semibold mb-0">
                                                     <span id="event-location-tag">
-                                                        {{ $event->location }}
+                                                        <?php echo e($event->location); ?>
+
                                                     </span>
                                                 </h6>
                                             </div>
@@ -191,7 +194,8 @@
                                             </div>
                                             <div class="flex-grow-1">
                                                 <p class="d-block fw-semibold mb-0" id="event-registrationfee-tag">
-                                                    ₱ {{ number_format($event->reg_fee, 2) }}
+                                                    ₱ <?php echo e(number_format($event->reg_fee, 2)); ?>
+
                                                 </p>
                                             </div>
                                         </div>
@@ -207,16 +211,16 @@
             </div>
         </form>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('script')
-    @if ($errors->any())
-        @foreach ($errors->all() as $error)
+<?php $__env->startSection('script'); ?>
+    <?php if($errors->any()): ?>
+        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <script>
-                toastr.error("{{ $error }}", "Failed");
+                toastr.error("<?php echo e($error); ?>", "Failed");
             </script>
-        @endforeach
-    @endif
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    <?php endif; ?>
     <script>
         let searchBtn = document.querySelector('#search-mfc-user-btn');
 
@@ -239,7 +243,7 @@
                     users.forEach(user => {
                         output += `<div class="d-flex justify-content-center align-items-center gap-4 border py-3">
                                     <div style="width: 20%;">
-                                        <img class="rounded-circle" src="{{ URL::asset('build/images/users/${user.avatar}') }}" style="width: 100%;">
+                                        <img class="rounded-circle" src="<?php echo e(URL::asset('build/images/users/${user.avatar}')); ?>" style="width: 100%;">
                                     </div>
                                     <div style="width: 70%;">
                                         <h5>${user.first_name} ${user.last_name}</h5>
@@ -303,7 +307,7 @@
                                             <div class="row gy-3">
                                                 <div class="col-sm-auto">
                                                     <div class="avatar-lg bg-light rounded p-1">
-                                                        <img src="{{ URL::asset('build/images/users/${user.avatar}') }}" alt="" class="img-fluid d-block">
+                                                        <img src="<?php echo e(URL::asset('build/images/users/${user.avatar}')); ?>" alt="" class="img-fluid d-block">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm">
@@ -378,4 +382,6 @@
             computeTotalAmount();
         });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\MFC_Portal_V2\resources\views/pages/events/register.blade.php ENDPATH**/ ?>

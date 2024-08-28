@@ -190,7 +190,7 @@ class EventController extends Controller
     public function all(Request $request) {
         $events = Event::query();
 
-        if($request->query('filter') && $request->query('filter') === "upcoming-events") {
+        if($request->query('filter') && $request->query('filter') === "upcoming_events") {
             $today = Carbon::today()->toDateString();
             $events = $events->where("start_date", '>', $today);
         }

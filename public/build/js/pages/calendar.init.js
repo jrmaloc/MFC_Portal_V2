@@ -282,13 +282,18 @@ document.addEventListener("DOMContentLoaded", function () {
         const response = await fetch(`/dashboard/events/full-calendar`);
         const data = await response.json();
         defaultEvents = data.events;
-        upcomingEvent(defaultEvents);
         calendar.addEventSource(data.events);
         calendar.render();
+    }
 
+    const fetchUpcomingEvents = async () => {
+        const response = await fetch(`/dashboard/events/all?filter=upcoming_events`);
+        const data = await response.json();
+        upcomingEvent(data.events);
     }
 
     fetchAllEvents();
+    fetchUpcomingEvents();
     // calendar.render();
 
     upcomingEvent(defaultEvents);

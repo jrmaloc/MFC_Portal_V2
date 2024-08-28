@@ -1,12 +1,12 @@
-@extends('layouts.master')
-@section('title')
-    @lang('translation.calendar')
-@endsection
-@section('css')
-    <link rel="stylesheet" href="{{ URL::asset('build/libs/filepond/filepond.min.css') }}" type="text/css" />
+
+<?php $__env->startSection('title'); ?>
+    <?php echo app('translator')->get('translation.calendar'); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('css'); ?>
+    <link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/filepond/filepond.min.css')); ?>" type="text/css" />
     <link rel="stylesheet"
-        href="{{ URL::asset('build/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.css') }}">
+        href="<?php echo e(URL::asset('build/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.css')); ?>">
     <style>
         .upcoming-event-card {
             cursor: pointer;
@@ -18,16 +18,16 @@
             }
         }
     </style>
-@endsection
-@section('content')
-    @component('components.breadcrumb')
-        @slot('li_1')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+    <?php $__env->startComponent('components.breadcrumb'); ?>
+        <?php $__env->slot('li_1'); ?>
             Apps
-        @endslot
-        @slot('title')
+        <?php $__env->endSlot(); ?>
+        <?php $__env->slot('title'); ?>
             Calendar
-        @endslot
-    @endcomponent
+        <?php $__env->endSlot(); ?>
+    <?php echo $__env->renderComponent(); ?>
     <div class="row">
         <div class="col-12">
             <div class="row">
@@ -72,7 +72,7 @@
                         </div>
                         <div class="modal-body p-4">
                             <form class="needs-validation" name="event-form" id="form-event" novalidate>
-                                @csrf
+                                <?php echo csrf_field(); ?>
                                 <div class="text-end">
                                     <a href="#" class="btn btn-sm btn-soft-primary" id="edit-event-btn"
                                         data-id="edit-event" onclick="editEvent(this)" role="button">Edit</a>
@@ -216,10 +216,10 @@
                                 </div>
                                 <!--end row-->
                                 <div class="hstack gap-2 justify-content-end">
-                                    @if (auth()->user()->can('delete-event'))
+                                    <?php if(auth()->user()->can('delete-event')): ?>
                                         <button type="button" class="btn btn-soft-danger" id="btn-delete-event"><i
                                                 class="ri-close-line align-bottom"></i> Delete</button>
-                                    @endif
+                                    <?php endif; ?>
                                     <button type="submit" class="btn btn-success" id="btn-save-event">Add Event</button>
                                 </div>
                             </form>
@@ -324,33 +324,32 @@
         </div>
     </div> <!-- end row-->
 
-    {{-- <input type="text" id="event_location">
-    <input type="text" id="latitude">
-    <input type="text" id="longitude"> --}}
+    
     <!-- Create Modal -->
-    @component('components.new_events_modal')
-        @slot('route')
-            {{ route('events.store') }}
-        @endslot
-    @endcomponent
-@endsection
+    <?php $__env->startComponent('components.new_events_modal'); ?>
+        <?php $__env->slot('route'); ?>
+            <?php echo e(route('events.store')); ?>
 
-@section('script')
-    <script src="{{ URL::asset('build/libs/fullcalendar/index.global.min.js') }}"></script>
-    <script src="{{ URL::asset('build/js/pages/calendar.init.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/filepond/filepond.min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js') }}">
+        <?php $__env->endSlot(); ?>
+    <?php echo $__env->renderComponent(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('script'); ?>
+    <script src="<?php echo e(URL::asset('build/libs/fullcalendar/index.global.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/calendar.init.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/libs/filepond/filepond.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js')); ?>">
     </script>
     <script
-        src="{{ URL::asset('build/libs/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js') }}">
+        src="<?php echo e(URL::asset('build/libs/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js')); ?>">
     </script>
     <script
-        src="{{ URL::asset('build/libs/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js') }}">
+        src="<?php echo e(URL::asset('build/libs/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js')); ?>">
     </script>
-    <script src="{{ URL::asset('build/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js') }}"></script>
-    <script src="{{ URL::asset('build/js/pages/form-file-upload.init.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/sweetalert2/sweetalert2.all.min.js') }}"></script>
-    <script src="{{ URL::asset('build/js/app.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/form-file-upload.init.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.all.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
 
     <script>
         $("#attendances-btn").click((e) => {
@@ -429,11 +428,11 @@
             function handleUserAttendance(e) {
                 let event_id = e.target.getAttribute('data-event-id');
                 let checked = e.target.checked ? 1 : 0;
-                let token = "{{ csrf_token() }}";
+                let token = "<?php echo e(csrf_token()); ?>";
 
                 $.ajax({
                     method: "POST",
-                    url: "{{ route('attendances.save') }}",
+                    url: "<?php echo e(route('attendances.save')); ?>",
                     data: {
                         _token: token,
                         event_id: event_id,
@@ -464,4 +463,6 @@
         })
     </script>
     
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\MFC_Portal_V2\resources\views/apps-calendar.blade.php ENDPATH**/ ?>
