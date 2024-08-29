@@ -5,9 +5,11 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventAttendanceController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventRegistrationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TithesController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,8 +52,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('events/all', [EventController::class, 'all'])->name('events.all');
         Route::get('/events/full-calendar', [EventController::class, 'fullCalendar'])->name('events.c');
         Route::resource('/events', EventController::class)->except(['show']);
-        Route::get('/events/{event_id}/register', [EventController::class, 'register'])->name('events.register');
-        Route::post('/events/register', [EventController::class, 'save_registration'])->name('events.register.post');
+        Route::get('/events/{event_id}/register', [EventRegistrationController::class, 'register'])->name('events.register');
+        Route::post('/events/register', [EventRegistrationController::class, 'save_registration'])->name('events.register.post');
         
         Route::resource('/tithes', TithesController::class);
         Route::post('attendances/save', [EventAttendanceController::class, 'saveAttendance'])->name('attendances.save');
@@ -63,6 +65,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/update-password/{id}', [HomeController::class, 'updatePassword'])->name('updatePassword');
     });
 });
+
+Route::post('/paymaya/webhook/checkout-success', [WebhookController::class, 'checkout_success']);
 
 Route::fallback( function() {
     return redirect()->route('root');

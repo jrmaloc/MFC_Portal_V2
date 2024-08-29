@@ -306,7 +306,7 @@
                                     aria-label="Example text with two button addons" placeholder="Search user...">
                             <button class="btn btn-primary" id="search-event-user-btn">Search <i class="ri-search-2-line"></i></button>
                         </div>
-                        <button id="attendance-report-btn" class="btn btn-primary btn-block">Download Report <i class="ri-file-download-line"></i></button>
+                        <button id="attendance-report-btn" class="btn btn-primary btn-block">Report</button>
                     </div>
                     <div class="noresult">
                         <div class="text-center">
@@ -441,6 +441,9 @@
                     },
                     success: function (response) {
                         toastr.success(response.message, "Success");
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert("some error");
                     }
                 })
             }

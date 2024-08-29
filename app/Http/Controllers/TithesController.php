@@ -97,15 +97,6 @@ class TithesController extends Controller
                 "status" => "pending",
             ]);
 
-            UserTransactionDetail::create([
-                "transaction_id" => $transaction->id,
-                "first_name" => $user->first_name ?? ($request->firstname ?? "No First Name Found"),
-                "last_name" => $user->last_name ??  ($request->lastname ?? "No Last Name Found"),
-                "email" => $user->email ?? ($request->email ?? "No Email Found"),
-                "contact_number" => $user->contact_number ?? ($request->contact_number ?? "000000000000"),
-                "address" => $user->address ?? ($request->address ?? "No Address Found"),
-            ]);
-
             Tithe::create([
                 "mfc_user_id" => $user->mfc_id_number,
                 "transaction_id" => $transaction->id,
@@ -114,8 +105,12 @@ class TithesController extends Controller
                 "status" => "unpaid", 
             ]);
 
-            $payment_request_model = $this->paymayaService->createRequestModel($transaction);
+            $paymaya_user_details = [
+                'firstname' => $user->first_name,
+                'lastname' => $user->last_name,
+            ];
 
+            $payment_request_model = $this->paymayaService->createRequestModel($transaction, $paymaya_user_details);
             $payment_response = $this->paymayaService->pay($payment_request_model);
 
             $transaction->update([
@@ -164,6 +159,12 @@ class TithesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $tithe = Tithe::find($id);
+        $tithe->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Tithe deleted successfully',
+        ]);
     }
 }

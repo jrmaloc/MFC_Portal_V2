@@ -1,17 +1,18 @@
-@extends('layouts.master')
-@section('title')
-    @lang('translation.tithes')
-@endsection
 
-@section('content')
-    @component('components.breadcrumb')
-        @slot('li_1')
+<?php $__env->startSection('title'); ?>
+    <?php echo app('translator')->get('translation.tithes'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <?php $__env->startComponent('components.breadcrumb'); ?>
+        <?php $__env->slot('li_1'); ?>
             Tithes
-        @endslot
-        @slot('title')
-            {{ $endPoint }}
-        @endslot
-    @endcomponent
+        <?php $__env->endSlot(); ?>
+        <?php $__env->slot('title'); ?>
+            <?php echo e($endPoint); ?>
+
+        <?php $__env->endSlot(); ?>
+    <?php echo $__env->renderComponent(); ?>
 
     <div class="row mt-3">
         <div class="col-lg-12">
@@ -19,7 +20,7 @@
                 <div class="d-flex align-items-center justify-content-end">
                     <div class="flex-shrink-0">
                         <div class="d-flex flex-wrap gap-2">
-                            <a href="{{ route('tithes.create') }}" class="btn btn-primary add-btn text-capitalize">
+                            <a href="<?php echo e(route('tithes.create')); ?>" class="btn btn-primary add-btn text-capitalize">
                                 <i class="ri-add-line align-bottom me-1"></i>Add Tithe</a>
                             <button class="btn btn-soft-danger" id="remove-actions"><i
                                     class="ri-delete-bin-2-line"></i></button>
@@ -49,7 +50,7 @@
         <!--end col-->
     </div>
 
-@section('script')
+<?php $__env->startSection('script'); ?>
     <script>
         $(document).ready(function() {
 
@@ -155,5 +156,7 @@
             initializeTables();
         })
     </script>
-@endsection
-@endsection
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\GodesQ\MFC_Portal_V2\resources\views/pages/tithes/list.blade.php ENDPATH**/ ?>

@@ -125,11 +125,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#">
-                        <i class="ri-folder-user-line"></i> <span><?php echo app('translator')->get('translation.attendance_report'); ?></span>
-                    </a>
-                </li>
+                
 
                 <li class="menu-title"><i class="ri-more-fill"></i> <span><?php echo app('translator')->get('translation.management'); ?></span></li>
 
