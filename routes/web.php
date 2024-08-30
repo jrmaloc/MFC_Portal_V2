@@ -7,6 +7,8 @@ use App\Http\Controllers\EventAttendanceController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventRegistrationController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PermissionsController;
+use App\Http\Controllers\RolesController;
 use App\Http\Controllers\TithesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebhookController;
@@ -59,6 +61,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('attendances/save', [EventAttendanceController::class, 'saveAttendance'])->name('attendances.save');
         Route::get('attendances/events/{event_id}/users', [EventAttendanceController::class, 'getEventUsers'])->name('attendances.users');
         Route::get('attendances/report/{event_id}', [EventAttendanceController::class, 'report'])->name('attendances.report');
+
+        Route::resource('roles', RolesController::class);
+
+        Route::resource('permissions', PermissionsController::class);
 
         //Update User Details
         Route::post('/update-profile/{id}', [HomeController::class, 'updateProfile'])->name('updateProfile');

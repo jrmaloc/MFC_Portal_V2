@@ -4,18 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EventRegistration\StoreRequest;
 use App\Models\Event;
-use App\Models\EventRegistration;
-use App\Models\EventUserDetail;
 use App\Models\Section;
-use App\Models\Transaction;
-use App\Models\User;
-use App\Services\PaymayaService;
 use Carbon\Carbon;
-use DB;
-use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Yajra\DataTables\DataTables;
 
@@ -103,7 +94,6 @@ class EventController extends Controller
                     $start_date = $dates[0] ?? '';
                     $end_date = $dates[1] ?? '';
                 }
-
 
                 $data = [
                     'title' => $request->event_title,

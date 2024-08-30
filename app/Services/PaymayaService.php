@@ -13,7 +13,7 @@ class PaymayaService {
 
     public function pay(array $request_model) {
         try {
-            $authToken = config('app.env') === 'development' ? base64_encode(config('services.paymaya.api_key') . ":") : base64_encode(config('services.paymaya.test_api_key') . ":");
+            $authToken = base64_encode(config('services.paymaya.api_key') . ":");
             
             $url = config('services.paymaya.url');
 

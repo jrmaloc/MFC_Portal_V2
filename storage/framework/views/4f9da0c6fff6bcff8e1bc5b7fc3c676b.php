@@ -130,13 +130,13 @@
                 <li class="menu-title"><i class="ri-more-fill"></i> <span><?php echo app('translator')->get('translation.management'); ?></span></li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#">
+                    <a class="nav-link <?php echo e(preg_match('/^dashboard\/roles/', Request::path()) ? 'active' : ''); ?> menu-link" href="<?php echo e(route('roles.index')); ?>">
                         <i class="ri-shield-user-line"></i> <span><?php echo app('translator')->get('translation.roles'); ?></span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#">
+                    <a class="nav-link menu-link" <?php echo e(preg_match('/^dashboard\/permissions/', Request::path()) ? 'active' : ''); ?> href="<?php echo e(route('permissions.index')); ?>">
                         <i class="ri-body-scan-line"></i> <span><?php echo app('translator')->get('translation.permissions'); ?></span>
                     </a>
                 </li>

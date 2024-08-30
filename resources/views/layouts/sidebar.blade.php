@@ -184,13 +184,13 @@
                 <li class="menu-title"><i class="ri-more-fill"></i> <span>@lang('translation.management')</span></li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#">
+                    <a class="nav-link {{ preg_match('/^dashboard\/roles/', Request::path()) ? 'active' : '' }} menu-link" href="{{ route('roles.index') }}">
                         <i class="ri-shield-user-line"></i> <span>@lang('translation.roles')</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#">
+                    <a class="nav-link menu-link" {{ preg_match('/^dashboard\/permissions/', Request::path()) ? 'active' : '' }} href="{{ route('permissions.index') }}">
                         <i class="ri-body-scan-line"></i> <span>@lang('translation.permissions')</span>
                     </a>
                 </li>
