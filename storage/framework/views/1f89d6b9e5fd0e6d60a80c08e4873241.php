@@ -1,28 +1,27 @@
 
 <?php $__env->startSection('title'); ?>
-    <?php echo app('translator')->get('translation.starter'); ?>
+    <?php echo app('translator')->get('translation.tithes'); ?>
 <?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('content'); ?>
     <?php $__env->startComponent('components.breadcrumb'); ?>
         <?php $__env->slot('li_1'); ?>
-            Directory
+            Tithes
         <?php $__env->endSlot(); ?>
         <?php $__env->slot('title'); ?>
-            <?php echo e($breadcrumb); ?>
+            <?php echo e($endPoint); ?>
 
         <?php $__env->endSlot(); ?>
     <?php echo $__env->renderComponent(); ?>
 
     <div class="row mt-3">
-        <input type="text" hidden id="section" value="<?php echo e($section); ?>">
         <div class="col-lg-12">
             <div class="card-header border-0 mb-3">
                 <div class="d-flex align-items-center justify-content-end">
                     <div class="flex-shrink-0">
                         <div class="d-flex flex-wrap gap-2">
-                            <button type="button" class="btn <?php echo e($btn_color); ?> add-btn" data-bs-toggle="modal"
-                                data-bs-target="#addmemberModal">
-                                <i class="ri-add-line align-bottom me-1"></i><?php echo app('translator')->get('translation.add_new_user'); ?></button>
+                            <a href="<?php echo e(route('tithes.create')); ?>" class="btn btn-primary add-btn text-capitalize">
+                                <i class="ri-add-line align-bottom me-1"></i>Add Tithe</a>
                             <button class="btn btn-soft-danger" id="remove-actions"><i
                                     class="ri-delete-bin-2-line"></i></button>
                         </div>
@@ -31,22 +30,18 @@
             </div>
             <div class="card" id="ticketsList">
                 <div class="card-body">
-                    <table id="users_datatables" class="table nowrap align-middle" style="width:100%">
+                    <table id="tithes_datatable" class="table nowrap align-middle table-striped" style="width:100%">
                         <thead>
                             <tr>
                                 <th class="" data-sort="id">ID</th>
                                 <th class="" data-sort="name">Name</th>
-                                <th class="" data-sort="email">Email</th>
-                                <th class="" data-sort="contact_number">Contact Number</th>
-                                <th class="" data-sort="area">Area</th>
-                                <th class="" data-sort="chapter">Chapter</th>
-                                <th class="" data-sort="gender">Gender</th>
+                                <th class="" data-sort="amount">Amount</th>
+                                <th class="" data-sort="section">Section</th>
                                 <th class="" data-sort="status">Status</th>
                                 <th class="" data-sort="action">Actions</th>
                             </tr>
                         </thead>
                     </table>
-
                 </div>
                 <!--end card-body-->
             </div>
@@ -55,24 +50,12 @@
         <!--end col-->
     </div>
 
-    <!-- Create Modal -->
-    <?php $__env->startComponent('components.new-user-modal'); ?>
-        <?php $__env->slot('color'); ?>
-            <?php echo e($btn_color); ?>
-
-        <?php $__env->endSlot(); ?>
-        <?php $__env->slot('route'); ?>
-            <?php echo e(route('users.store')); ?>
-
-        <?php $__env->endSlot(); ?>
-    <?php echo $__env->renderComponent(); ?>
-<?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
     <script>
         $(document).ready(function() {
 
-            // make sure that the table is loaded correctly
-            $('#users_datatables').on('draw.dt', function() {
+            $('#tithes_datatable').on('draw.dt', function() {
+
                 $('[data-bs-toggle="tooltip"]').tooltip();
 
                 $('.remove-btn').click(function() {
@@ -82,7 +65,7 @@
                         message: '<strong class="text-danger">Removing this user</strong> will remove all of the information from our database.',
                         deleteFunction: function() {
                             $.ajax({
-                                url: '/kids/' + id,
+                                url: '/dashboard/tithes/' + id,
                                 type: 'DELETE',
                                 data: {
                                     _token: $('meta[name="csrf-token"]').attr(
@@ -90,6 +73,7 @@
                                 },
                                 success: function(response) {
                                     showSuccessMessage(response.message);
+                                    $('#tithes_datatable').DataTable().ajax.reload(null, false); // false to keep the current page
                                 },
                                 error: function(xhr, response, error) {
                                     showErrorMessage(xhr.statusText);
@@ -106,83 +90,22 @@
                         name: "id",
                     },
                     {
-                        data: "name",
-                        name: "name",
-                        render: function(data) {
-                            if (data == null) {
-                                return '<span class="text-capitalize">N/A</span>';
-                            }
-
-                            return '<span class="text-capitalize">' + data + '</span>';;
-                        }
+                        data: 'user',
+                        name: 'user',
                     },
                     {
-                        data: "email",
-                        name: "email",
-                        render: function(data) {
-                            if (data == null) {
-                                return '<span class="text-capitalize">N/A</span>';
-                            }
-
-                            return '<span>' + data + '</span>';;
-                        }
+                        data: 'amount',
+                        name: 'amount',
                     },
                     {
-                        data: "contact_number",
-                        name: "contact_number",
-                        render: function(data) {
-                            if (data == null) {
-                                return '<span class="text-capitalize">N/A</span>';
-                            }
-
-                            return '<span class="text-capitalize d-flex">0' + data + '</span>';;
-                        }
+                        data: 'section',
+                        name: 'section',
                     },
                     {
-                        data: "area",
-                        name: "area",
-                        render: function(data) {
-                            if (data == null) {
-                                return '<span class="text-capitalize">N/A</span>';
-                            }
-
-                            return '<span class="text-capitalize">' + data + '</span>';;
-                        }
-                    },
-                    {
-                        data: "chapter",
-                        name: "chapter",
-                        render: function(data) {
-                            if (data == null) {
-                                return '<span class="text-capitalize">N/A</span>';
-                            }
-
-                            return '<span class="text-capitalize">' + data + '</span>';;
-                        }
-                    },
-                    {
-                        data: "gender",
-                        name: "gender",
-                        render: function(data) {
-                            if (data == null) {
-                                return '<span class="text-capitalize">N/A</span>';
-                            }
-
-                            return '<span class="text-capitalize">' + data + '</span>';;
-                        }
-                    },
-                    {
-                        data: "status",
-                        name: "status",
-                        render: function(data, type, row) {
-                            if (data == 'Active') {
-                                return '<span class="text-uppercase badge bg-success-subtle text-success">' +
-                                    data + '</span>';
-                            } else {
-                                return '<span class="text-uppercase badge bg-warning-subtle text-warning">' +
-                                    data + '</span>';
-                            }
-                        }
+                        data: 'status',
+                        name: 'status',
+                        orderable: false,
+                        searchable: false,
                     },
                     {
                         data: "actions",
@@ -192,15 +115,13 @@
                     },
                 ];
 
-                const section = $('#section').val();
-
-                let table = $("#users_datatables").DataTable({
+                let table = $("#tithes_datatable").DataTable({
                     processing: true,
                     pageLength: 10,
                     responsive: true,
                     serverSide: true,
                     ajax: {
-                        url: "/dashboard/directory/" + section,
+                        url: "/dashboard/tithes/",
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest'
                         }
@@ -236,5 +157,6 @@
         })
     </script>
 <?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\GodesQ\MFC_Portal_V2\resources\views/pages/users/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\MFC_Portal_V2\resources\views/pages/tithes/list.blade.php ENDPATH**/ ?>

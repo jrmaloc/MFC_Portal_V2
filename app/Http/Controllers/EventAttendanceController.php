@@ -26,11 +26,13 @@ class EventAttendanceController extends Controller
 
         $users = $users->with('section')->get();
 
+        $event_dates = $this->getEventDateRange($request->event_id);
+
         // Get all event attendances for the specific event
         $event_attendances = EventAttendance::where("event_id", $request->event_id)->pluck('user_id')->toArray();
 
         // Add a 'checked' property to each user if they are in the event attendances
-        $users = $users->map(function ($user) use ($event_attendances) {
+        $users = $users->map(function ($user) use ($event_attendances, $event_dates) {
             $user->checked = in_array($user->id, $event_attendances);
             return $user;
         });
@@ -75,5 +77,36 @@ class EventAttendanceController extends Controller
         $endPoint = "Report";
 
         return view('pages.reports.event-attendance-report', compact('endPoint', 'event'));
+    }
+
+    private function getEventDateRange($event_id) {
+        // Fetch the event based on the provided event_id
+        $event = Event::where('id', $event_id)->first();
+    
+        // Check if event exists
+        if (!$event) {
+            return []; // Return an empty array if no event found
+        }
+    
+        // Initialize the start and end dates from the event
+        $start_date = new \DateTime($event->start_date);
+        $end_date = new \DateTime($event->end_date);
+        
+        // Include the end date in the range
+        $end_date->modify('+1 day');
+    
+        // Initialize the array to store the dates
+        $date_range = [];
+    
+        // Loop through the dates from start to end
+        while ($start_date < $end_date) {
+            // Add the current date to the array
+            $date_range[] = $start_date->format('Y-m-d');
+            
+            // Move to the next day
+            $start_date->modify('+1 day');
+        }
+    
+        return $date_range;
     }
 }

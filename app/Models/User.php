@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -110,6 +111,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function section() : BelongsTo {
         return $this->belongsTo(Section::class, 'section_id');
+    }
+
+    public function user_details() : HasOne {
+        return $this->hasOne(UserDetail::class, 'user_id');
     }
 
     public function missionary_services() : HasMany {

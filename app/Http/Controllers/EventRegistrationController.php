@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\PaymentType;
 use App\Http\Requests\EventRegistration\StoreRequest;
 use App\Models\Event;
 use App\Models\EventRegistration;
@@ -55,7 +56,7 @@ class EventRegistrationController extends Controller
                 'sub_amount' => $event->reg_fee,
                 'total_amount' => $total_amount,
                 'payment_mode' => "N/A",
-                'payment_type' => 'event_registration',
+                'payment_type' => PaymentType::EVENT_REGISTRATION,
                 'status' => 'pending', 
             ]);
 

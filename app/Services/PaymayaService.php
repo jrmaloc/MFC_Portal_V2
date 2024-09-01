@@ -39,9 +39,11 @@ class PaymayaService {
     }
 
     public function createRequestModel($transaction, $paymaya_user_details) {
+        $total_amount = config('app.env') === "production" ? $transaction->total_amount : 2;
+
         return [
             "totalAmount" => [
-                "value" => $transaction->total_amount,
+                "value" => $total_amount,
                 "currency" => "PHP",
             ],
             "buyer" => [

@@ -1,11 +1,11 @@
-@extends('layouts.master')
-@section('title')
-    @lang('translation.settings')
-@endsection
-@section('content')
+
+<?php $__env->startSection('title'); ?>
+    <?php echo app('translator')->get('translation.settings'); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
     <div class="position-relative mx-n4 mt-n4">
         <div class="profile-wid-bg profile-setting-img">
-            <img src="{{ URL::asset('build/images/profile-bg.jpg') }}" class="profile-wid-img" alt="">
+            <img src="<?php echo e(URL::asset('build/images/profile-bg.jpg')); ?>" class="profile-wid-img" alt="">
             <div class="overlay-content">
                 <div class="text-end p-3">
                     <div class="p-0 ms-auto rounded-circle profile-photo-edit">
@@ -26,7 +26,7 @@
                 <div class="card-body p-4">
                     <div class="text-center">
                         <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
-                            <img src="@if (Auth::user()->avatar != '') {{ URL::asset('build/images/users/' . Auth::user()->avatar) }}@else{{ URL::asset('build/images/users/avatar-1.jpg') }} @endif"
+                            <img src="<?php if(Auth::user()->avatar != ''): ?> <?php echo e(URL::asset('build/images/users/' . Auth::user()->avatar)); ?><?php else: ?><?php echo e(URL::asset('build/images/users/avatar-1.jpg')); ?> <?php endif; ?>"
                                 class="  rounded-circle avatar-xl img-thumbnail user-profile-image"
                                 alt="user-profile-image">
                             <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
@@ -38,9 +38,10 @@
                                 </label>
                             </div>
                         </div>
-                        <h5 class="fs-16 mb-1">{{ Auth::user()->fist_name ?? 'Sample' }}
-                            {{ Auth::user()->last_name ?? 'User' }}</h5>
-                        <p class="text-muted mb-0">MFC ID: <span id="mfc-id">{{ Auth::user()->mfc_id_number }}</span> <a
+                        <h5 class="fs-16 mb-1"><?php echo e(Auth::user()->fist_name ?? 'Sample'); ?>
+
+                            <?php echo e(Auth::user()->last_name ?? 'User'); ?></h5>
+                        <p class="text-muted mb-0">MFC ID: <span id="mfc-id"><?php echo e(Auth::user()->mfc_id_number); ?></span> <a
                                 href="javascript:void(0);" class="ri-file-copy-line" id="copy-mfc-id"
                                 data-bs-toggle="tooltip" data-bs-placement="right"></a></p>
                         <script>
@@ -156,9 +157,9 @@
                     <div class="tab-content">
                         <!-- personalDetails -->
                         <div class="tab-pane active" id="personalDetails" role="tabpanel">
-                            <form action="{{ route('users.profile.update', $user->id) }}" method="POST">
-                                @csrf
-                                @method('PUT')
+                            <form action="<?php echo e(route('users.profile.update', $user->id)); ?>" method="POST">
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('PUT'); ?>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="mb-3">
@@ -166,7 +167,7 @@
                                                 Name</label>
                                             <input type="text" class="form-control" id="firstnameInput"
                                                 placeholder="Enter your firstname" name="first_name"
-                                                value="{{ $user->first_name }}">
+                                                value="<?php echo e($user->first_name); ?>">
                                         </div>
                                     </div>
                                     <!--end col-->
@@ -175,7 +176,7 @@
                                             <label for="lastnameInput" class="form-label">Last
                                                 Name</label>
                                             <input type="text" class="form-control" id="lastnameInput"
-                                                placeholder="Enter your lastname" value="{{ $user->last_name }}">
+                                                placeholder="Enter your lastname" value="<?php echo e($user->last_name); ?>">
                                         </div>
                                     </div>
                                     <!--end col-->
@@ -184,7 +185,7 @@
                                             <label for="phonenumberInput" class="form-label">Phone
                                                 Number</label>
                                             <input name="contact_number" type="text" class="form-control" id="phonenumberInput"
-                                                placeholder="Enter your phone number" value="{{ $user->contact_number }}">
+                                                placeholder="Enter your phone number" value="<?php echo e($user->contact_number); ?>">
                                         </div>
                                     </div>
                                     <!--end col-->
@@ -193,7 +194,7 @@
                                             <label for="emailInput" class="form-label">Email
                                                 Address</label>
                                             <input type="email" name="email" class="form-control" id="emailInput"
-                                                placeholder="Enter your email" value="{{ $user->email }}">
+                                                placeholder="Enter your email" value="<?php echo e($user->email); ?>">
                                         </div>
                                     </div>
                                     <!--end col-->
@@ -203,7 +204,7 @@
                                                 Date</label>
                                             <input type="text" class="form-control" data-provider="flatpickr"
                                                 data-altFormat="F j, Y" id="JoiningdatInput" name="created_at"
-                                                value="{{ $user->created_at }}" placeholder="Select date" />
+                                                value="<?php echo e($user->created_at); ?>" placeholder="Select date" />
                                         </div>
                                     </div>
                                     <!--end col-->
@@ -212,12 +213,13 @@
                                             <label for="JoiningdatInput" class="form-label">MFC Section</label>
                                             <select name="section" id="mfc_section" class="form-select">
                                                 <option value="">Select Section</option>
-                                                @foreach ($sections as $section)
-                                                    <option value="{{ $section->id }}"
-                                                        {{ $section->id == $user->section_id ? 'selected' : null }}>
-                                                        {{ $section->name }}
+                                                <?php $__currentLoopData = $sections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $section): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($section->id); ?>"
+                                                        <?php echo e($section->id == $user->section_id ? 'selected' : null); ?>>
+                                                        <?php echo e($section->name); ?>
+
                                                     </option>
-                                                @endforeach
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </select>
                                         </div>
                                     </div>
@@ -228,39 +230,51 @@
                                         <div class="mb-3">
                                             <label for="mfc_area" class="form-label">Area</label>
                                             <select name="area" id="mfc_area" data-choices data-choices-sorting-false>
-                                                <option {{ $user->area == '' ? 'selected' : null }} value="">Select
+                                                <option <?php echo e($user->area == '' ? 'selected' : null); ?> value="">Select
                                                     Area</option>
-                                                <option {{ $user->area == 'ncr_north' ? 'selected' : null }}
+                                                <option <?php echo e($user->area == 'ncr_north' ? 'selected' : null); ?>
+
                                                     value="ncr_north">NCR - North</option>
-                                                <option {{ $user->area == 'ncr_south' ? 'selected' : null }}
+                                                <option <?php echo e($user->area == 'ncr_south' ? 'selected' : null); ?>
+
                                                     value="ncr_south">NCR - South</option>
-                                                <option {{ $user->area == 'ncr_east' ? 'seleected' : null }}
+                                                <option <?php echo e($user->area == 'ncr_east' ? 'seleected' : null); ?>
+
                                                     value="ncr_east">NCR - East</option>
-                                                <option {{ $user->area == 'ncr_cental' ? 'selected' : null }}
+                                                <option <?php echo e($user->area == 'ncr_cental' ? 'selected' : null); ?>
+
                                                     value="ncr_cental">NCR - Central</option>
-                                                <option {{ $user->area == 'handmaids' ? 'selected' : null }}
+                                                <option <?php echo e($user->area == 'handmaids' ? 'selected' : null); ?>
+
                                                     value="handmaids">South Luzon</option>
-                                                <option {{ $user->area == 'servants' ? 'selected' : null }}
+                                                <option <?php echo e($user->area == 'servants' ? 'selected' : null); ?>
+
                                                     value="servants">North & Central Luzon</option>
-                                                <option {{ $user->area == 'visayas' ? 'selected' : null }}
+                                                <option <?php echo e($user->area == 'visayas' ? 'selected' : null); ?>
+
                                                     value="visayas">Visayas</option>
-                                                <option {{ $user->area == 'mindanao' ? 'selected' : null }}
+                                                <option <?php echo e($user->area == 'mindanao' ? 'selected' : null); ?>
+
                                                     value="mindanao">Mindanao</option>
-                                                <option {{ $user->area == 'international' ? 'selected' : null }}
+                                                <option <?php echo e($user->area == 'international' ? 'selected' : null); ?>
+
                                                     value="international">International</option>
-                                                <option {{ $user->area == 'baguio' ? 'selected' : null }} value="baguio">
+                                                <option <?php echo e($user->area == 'baguio' ? 'selected' : null); ?> value="baguio">
                                                     Baguio</option>
-                                                <option {{ $user->area == 'palawan' ? 'selected' : null }}
+                                                <option <?php echo e($user->area == 'palawan' ? 'selected' : null); ?>
+
                                                     value="palawan">Palawan</option>
-                                                <option {{ $user->area == 'batangas' ? 'selected' : null }}
+                                                <option <?php echo e($user->area == 'batangas' ? 'selected' : null); ?>
+
                                                     value="batangas">Batangas</option>
-                                                <option {{ $user->area == 'laguna' ? 'selected' : null }} value="laguna">
+                                                <option <?php echo e($user->area == 'laguna' ? 'selected' : null); ?> value="laguna">
                                                     Laguna</option>
-                                                <option {{ $user->area == 'pampanga' ? 'selected' : null }}
+                                                <option <?php echo e($user->area == 'pampanga' ? 'selected' : null); ?>
+
                                                     value="pampanga">Pampanga</option>
-                                                <option {{ $user->area == 'tarlac' ? 'selected' : null }} value="tarlac">
+                                                <option <?php echo e($user->area == 'tarlac' ? 'selected' : null); ?> value="tarlac">
                                                     Tarlac</option>
-                                                <option {{ $user->area == 'other' ? 'selected' : null }} value="other">
+                                                <option <?php echo e($user->area == 'other' ? 'selected' : null); ?> value="other">
                                                     Other</option>
                                             </select>
                                         </div>
@@ -274,27 +288,32 @@
                                                 <option value="">Select a Skill</option>
                                                 <optgroup label="Spiritual and Pastoral Skills">
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Prayer Leading' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Prayer Leading' ? 'selected' : null); ?>
+
                                                         value="Prayer Leading">
                                                         Prayer Leading
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Bible Study Facilitation' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Bible Study Facilitation' ? 'selected' : null); ?>
+
                                                         value="Bible Study Facilitation">
                                                         Bible Study Facilitation
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Spiritual Counseling' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Spiritual Counseling' ? 'selected' : null); ?>
+
                                                         value="Spiritual Counseling">
                                                         Spiritual Counseling
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Worship Leading' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Worship Leading' ? 'selected' : null); ?>
+
                                                         value="Worship Leading">
                                                         Worship Leading
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Catechism Teaching' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Catechism Teaching' ? 'selected' : null); ?>
+
                                                         value="Catechism Teaching">
                                                         Catechism Teaching
                                                     </option>
@@ -302,27 +321,32 @@
 
                                                 <optgroup label="Community and Social Skills">
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Event Planning and Coordination' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Event Planning and Coordination' ? 'selected' : null); ?>
+
                                                         value="Event Planning and Coordination">
                                                         Event Planning and Coordination
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Community Outreach' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Community Outreach' ? 'selected' : null); ?>
+
                                                         value="Community Outreach">
                                                         Community Outreach
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Fundraising and Development' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Fundraising and Development' ? 'selected' : null); ?>
+
                                                         value="Fundraising and Development">
                                                         Fundraising and Development
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Volunteer Management' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Volunteer Management' ? 'selected' : null); ?>
+
                                                         value="Volunteer Management">
                                                         Volunteer Management
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Conflict Resolution' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Conflict Resolution' ? 'selected' : null); ?>
+
                                                         value="Conflict Resolution">
                                                         Conflict Resolution
                                                     </option>
@@ -330,32 +354,38 @@
 
                                                 <optgroup label="Administrative and Technical Skills">
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Administration and Office Management' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Administration and Office Management' ? 'selected' : null); ?>
+
                                                         value="Administration and Office Management">
                                                         Administration and Office Management
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Financial Management and Accounting' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Financial Management and Accounting' ? 'selected' : null); ?>
+
                                                         value="Financial Management and Accounting">
                                                         Financial Management and Accounting
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'IT Support and Systems Management' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'IT Support and Systems Management' ? 'selected' : null); ?>
+
                                                         value="IT Support and Systems Management">
                                                         IT Support and Systems Management
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Website Development and Maintenance' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Website Development and Maintenance' ? 'selected' : null); ?>
+
                                                         value="Website Development and Maintenance">
                                                         Website Development and Maintenance
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Graphic Design' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Graphic Design' ? 'selected' : null); ?>
+
                                                         value="Graphic Design">
                                                         Graphic Design
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Content Creation and Management' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Content Creation and Management' ? 'selected' : null); ?>
+
                                                         value="Content Creation and Management">
                                                         Content Creation and Management
                                                     </option>
@@ -363,22 +393,26 @@
 
                                                 <optgroup label="Educational and Training Skills">
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Teaching and Instruction' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Teaching and Instruction' ? 'selected' : null); ?>
+
                                                         value="Teaching and Instruction">
                                                         Teaching and Instruction
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Workshop Facilitation' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Workshop Facilitation' ? 'selected' : null); ?>
+
                                                         value="Workshop Facilitation">
                                                         Workshop Facilitation
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Youth Mentorship and Leadership' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Youth Mentorship and Leadership' ? 'selected' : null); ?>
+
                                                         value="Youth Mentorship and Leadership">
                                                         Youth Mentorship and Leadership
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Life Skills Coaching' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Life Skills Coaching' ? 'selected' : null); ?>
+
                                                         value="Life Skills Coaching">
                                                         Life Skills Coaching
                                                     </option>
@@ -386,27 +420,32 @@
 
                                                 <optgroup label="Creative and Artistic Skills">
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Music and Instrument Playing' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Music and Instrument Playing' ? 'selected' : null); ?>
+
                                                         value="Music and Instrument Playing">
                                                         Music and Instrument Playing
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Singing and Vocal Training' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Singing and Vocal Training' ? 'selected' : null); ?>
+
                                                         value="Singing and Vocal Training">
                                                         Singing and Vocal Training
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Drama and Theatrical Arts' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Drama and Theatrical Arts' ? 'selected' : null); ?>
+
                                                         value="Drama and Theatrical Arts">
                                                         Drama and Theatrical Arts
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Visual Arts and Crafts' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Visual Arts and Crafts' ? 'selected' : null); ?>
+
                                                         value="Visual Arts and Crafts">
                                                         Visual Arts and Crafts
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Writing and Editing' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Writing and Editing' ? 'selected' : null); ?>
+
                                                         value="Writing and Editing">
                                                         Writing and Editing
                                                     </option>
@@ -414,22 +453,26 @@
 
                                                 <optgroup label="Health and Wellness Skills">
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Counseling and Mental Health Support' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Counseling and Mental Health Support' ? 'selected' : null); ?>
+
                                                         value="Counseling and Mental Health Support">
                                                         Counseling and Mental Health Support
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Health and Fitness Training' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Health and Fitness Training' ? 'selected' : null); ?>
+
                                                         value="Health and Fitness Training">
                                                         Health and Fitness Training
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'First Aid and Medical Support' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'First Aid and Medical Support' ? 'selected' : null); ?>
+
                                                         value="First Aid and Medical Support">
                                                         First Aid and Medical Support
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Nutrition and Wellness Coaching' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Nutrition and Wellness Coaching' ? 'selected' : null); ?>
+
                                                         value="Nutrition and Wellness Coaching">
                                                         Nutrition and Wellness Coaching
                                                     </option>
@@ -437,22 +480,26 @@
 
                                                 <optgroup label="Logistics and Support Skills">
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Transportation Coordination' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Transportation Coordination' ? 'selected' : null); ?>
+
                                                         value="Transportation Coordination">
                                                         Transportation Coordination
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Food Preparation and Catering' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Food Preparation and Catering' ? 'selected' : null); ?>
+
                                                         value="Food Preparation and Catering">
                                                         Food Preparation and Catering
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Setup and Teardown (Event Logistics)' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Setup and Teardown (Event Logistics)' ? 'selected' : null); ?>
+
                                                         value="Setup and Teardown (Event Logistics)">
                                                         Setup and Teardown (Event Logistics)
                                                     </option>
                                                     <option
-                                                        {{ optional($user->user_details)->god_given_skill == 'Audio/Visual Equipment Management' ? 'selected' : null }}
+                                                        <?php echo e(optional($user->user_details)->god_given_skill == 'Audio/Visual Equipment Management' ? 'selected' : null); ?>
+
                                                         value="Audio/Visual Equipment Management">
                                                         Audio/Visual Equipment Management
                                                     </option>
@@ -466,7 +513,7 @@
                                         <div class="mb-3">
                                             <label for="facebook-link-field" class="form-label">Facebook Link</label>
                                             <input type="url" class="form-control" name="facebook_link" id="facebook-link-field" 
-                                                value="{{ optional($user->user_details)->facebook_link }}">
+                                                value="<?php echo e(optional($user->user_details)->facebook_link); ?>">
                                         </div>
                                     </div>
 
@@ -474,7 +521,7 @@
                                         <div class="mb-3">
                                             <label for="instagram-link-field" class="form-label">Instagram Link</label>
                                             <input type="url" class="form-control" name="instagram_link" id="instagram-link-field"
-                                                value="{{ optional($user->user_details)->instagram_link }}">
+                                                value="<?php echo e(optional($user->user_details)->instagram_link); ?>">
                                         </div>
                                     </div>
 
@@ -493,9 +540,9 @@
 
                         <!--changePassword-->
                         <div class="tab-pane" id="changePassword" role="tabpanel">
-                            <form action="{{ route('users.profile.change_password', $user->id) }}" method="POST">
-                                @csrf
-                                @method("PUT")
+                            <form action="<?php echo e(route('users.profile.change_password', $user->id)); ?>" method="POST">
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field("PUT"); ?>
                                 <div class="row g-2">
                                     <div class="col-lg-4">
                                         <div>
@@ -547,11 +594,11 @@
 
                         <!--service-->
                         <div class="tab-pane" id="service" role="tabpanel">
-                            <form action="{{ route('users.profile.services.put', auth()->user()->id) }}" method="POST">
-                                @csrf
-                                @method('PUT')
+                            <form action="<?php echo e(route('users.profile.services.put', auth()->user()->id)); ?>" method="POST">
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('PUT'); ?>
                                 <div id="newlink">
-                                    @forelse ($user->missionary_services as $service)
+                                    <?php $__empty_1 = true; $__currentLoopData = $user->missionary_services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                         <div id="1" class="containerElement">
                                             <div class="row service-container">
                                                 <span class="menu-title mb-1">Service</span>
@@ -562,14 +609,17 @@
                                                             data-choices data-choices-search-false
                                                             data-choices-sorting-false class="service-category-select">
                                                             <option
-                                                                {{ $service->service_category == '' ? 'selected' : null }}
+                                                                <?php echo e($service->service_category == '' ? 'selected' : null); ?>
+
                                                                 value="">Select one</option>
                                                             <option
-                                                                {{ $service->service_category == 'mfc' ? 'selected' : null }}
-                                                                value="mfc" value="{{ $service->service_category }}">
+                                                                <?php echo e($service->service_category == 'mfc' ? 'selected' : null); ?>
+
+                                                                value="mfc" value="<?php echo e($service->service_category); ?>">
                                                                 MFC</option>
                                                             <option
-                                                                {{ $service->service_category == 'lcsc' ? 'selected' : null }}
+                                                                <?php echo e($service->service_category == 'lcsc' ? 'selected' : null); ?>
+
                                                                 value="lcsc">LCSC</option>
                                                         </select>
                                                     </div>
@@ -578,7 +628,7 @@
                                                     <div class="mb-3">
                                                         <label for="service_type1" class="form-label">Service Type</label>
                                                         <select name="service_type[]" id="service_type1"
-                                                            selected-data="{{ $service->service_type }}"
+                                                            selected-data="<?php echo e($service->service_type); ?>"
                                                             class="service-type-select form-select">
                                                         </select>
                                                     </div>
@@ -588,7 +638,7 @@
                                                     <div class="mb-3">
                                                         <label for="section1" class="form-label">Section/Pillar</label>
                                                         <select name="section[]" id="section1"
-                                                            selected-data="{{ $service->section }}"
+                                                            selected-data="<?php echo e($service->section); ?>"
                                                             class="section-select form-select">
                                                         </select>
                                                     </div>
@@ -600,47 +650,64 @@
                                                         <label for="service_area1" class="form-label">Area</label>
                                                         <select name="service_area[]" id="service_area1" data-choices
                                                             data-choices-sorting-false class="sercive-area-select">
-                                                            <option {{ $service->area == '' ? 'selected' : null }}
+                                                            <option <?php echo e($service->area == '' ? 'selected' : null); ?>
+
                                                                 value="">Select Area</option>
                                                             <option
-                                                                {{ $service->area == 'NCR - North' ? 'selected' : null }}
+                                                                <?php echo e($service->area == 'NCR - North' ? 'selected' : null); ?>
+
                                                                 value="NCR - North">NCR - North</option>
                                                             <option
-                                                                {{ $service->area == 'NCR - South' ? 'selected' : null }}
+                                                                <?php echo e($service->area == 'NCR - South' ? 'selected' : null); ?>
+
                                                                 value="NCR - South">NCR - South</option>
                                                             <option
-                                                                {{ $service->area == 'NCR - East' ? 'selected' : null }}
+                                                                <?php echo e($service->area == 'NCR - East' ? 'selected' : null); ?>
+
                                                                 value="NCR - East">NCR - East</option>
                                                             <option
-                                                                {{ $service->area == 'NCR - Central' ? 'selected' : null }}
+                                                                <?php echo e($service->area == 'NCR - Central' ? 'selected' : null); ?>
+
                                                                 value="NCR - Central">NCR - Central</option>
                                                             <option
-                                                                {{ $service->area == 'South Luzon' ? 'selected' : null }}
+                                                                <?php echo e($service->area == 'South Luzon' ? 'selected' : null); ?>
+
                                                                 value="South Luzon">South Luzon</option>
                                                             <option
-                                                                {{ $service->area == 'North & Central Luzon' ? 'selected' : null }}
+                                                                <?php echo e($service->area == 'North & Central Luzon' ? 'selected' : null); ?>
+
                                                                 value="North & Central Luzon">North & Central Luzon
                                                             </option>
-                                                            <option {{ $service->area == 'Visayas' ? 'selected' : null }}
+                                                            <option <?php echo e($service->area == 'Visayas' ? 'selected' : null); ?>
+
                                                                 value="Visayas">Visayas</option>
-                                                            <option {{ $service->area == 'Mindanao' ? 'selected' : null }}
+                                                            <option <?php echo e($service->area == 'Mindanao' ? 'selected' : null); ?>
+
                                                                 value="Mindanao">Mindanao</option>
                                                             <option
-                                                                {{ $service->area == 'International' ? 'selected' : null }}
+                                                                <?php echo e($service->area == 'International' ? 'selected' : null); ?>
+
                                                                 value="International">International</option>
-                                                            <option {{ $service->area == 'Baguio' ? 'selected' : null }}
+                                                            <option <?php echo e($service->area == 'Baguio' ? 'selected' : null); ?>
+
                                                                 value="Baguio">Baguio</option>
-                                                            <option {{ $service->area == 'Palawan' ? 'selected' : null }}
+                                                            <option <?php echo e($service->area == 'Palawan' ? 'selected' : null); ?>
+
                                                                 value="Palawan">Palawan</option>
-                                                            <option {{ $service->area == 'Batangas' ? 'selected' : null }}
+                                                            <option <?php echo e($service->area == 'Batangas' ? 'selected' : null); ?>
+
                                                                 value="Batangas">Batangas</option>
-                                                            <option {{ $service->area == 'Laguna' ? 'selected' : null }}
+                                                            <option <?php echo e($service->area == 'Laguna' ? 'selected' : null); ?>
+
                                                                 value="Laguna">Laguna</option>
-                                                            <option {{ $service->area == 'Pampanga' ? 'selected' : null }}
+                                                            <option <?php echo e($service->area == 'Pampanga' ? 'selected' : null); ?>
+
                                                                 value="Pampanga">Pampanga</option>
-                                                            <option {{ $service->area == 'Tarlac' ? 'selected' : null }}
+                                                            <option <?php echo e($service->area == 'Tarlac' ? 'selected' : null); ?>
+
                                                                 value="Tarlac">Tarlac</option>
-                                                            <option {{ $service->area == 'Other' ? 'selected' : null }}
+                                                            <option <?php echo e($service->area == 'Other' ? 'selected' : null); ?>
+
                                                                 value="Other">Other</option>
                                                         </select>
                                                     </div>
@@ -650,8 +717,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    @empty
-                                    @endforelse
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                    <?php endif; ?>
                                 </div>
                                 <div id="newForm" style="display: none;"></div>
                                 <div class="col-lg-12">
@@ -672,10 +739,10 @@
         <!--end col-->
     </div>
     <!--end row-->
-@endsection
-@section('script')
-    <script src="{{ URL::asset('build/js/pages/profile-setting.init.js') }}"></script>
-    <script src="{{ URL::asset('build/js/app.js') }}"></script>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
+    <script src="<?php echo e(URL::asset('build/js/pages/profile-setting.init.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
     <script>
         document.addEventListener("DOMContentLoaded", (event) => {
             let mfcTypes = ["Servant Council", "National Coordinator", "Section Coordinator",
@@ -753,4 +820,6 @@
 
         });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\MFC_Portal_V2\resources\views/pages/profile/index.blade.php ENDPATH**/ ?>

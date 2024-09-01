@@ -7,6 +7,7 @@ use App\Http\Controllers\EventAttendanceController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventRegistrationController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaymayaController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\TithesController;
@@ -44,11 +45,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('/announcements', AnnouncementController::class);
 
         Route::get('/users/search', [UserController::class, 'search'])->name('search');
+        Route::get('/users/profile/{user_id}');
         Route::resource('/users', UserController::class)->except(['index']);
         
         Route::get('/directory/{section}', [UserController::class, 'index'])->name('users.index');
 
         Route::get('/profile/{user}', [UserController::class, 'profile'])->name('users.profile');
+        Route::put('/profile/update/{user}', [UserController::class, 'updateProfile'])->name('users.profile.update');
+        Route::put('/profile/services/{user}', [UserController::class, 'updateProfileService'])->name('users.profile.services.put');
+        Route::put('/profile/change-password/{user}', [UserController::class, 'updatePassword'])->name('users.profile.change_password');
 
         Route::get('/events/calendar', [EventController::class, 'calendar'])->name('events.calendar');
         Route::get('events/all', [EventController::class, 'all'])->name('events.all');
@@ -67,12 +72,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('permissions', PermissionsController::class);
 
         //Update User Details
-        Route::post('/update-profile/{id}', [HomeController::class, 'updateProfile'])->name('updateProfile');
         Route::post('/update-password/{id}', [HomeController::class, 'updatePassword'])->name('updatePassword');
     });
 });
 
-Route::post('/paymaya/webhook/checkout-success', [WebhookController::class, 'checkout_success']);
+Route::post('/paymaya/webhook/checkout-success', [PaymayaController::class, 'checkout_success']);
+Route::post('/paymaya/webhook/checkout-failed', [PaymayaController::class, 'checkout_failed']);
+Route::post('/paymaya/webhook/payment-success', [PaymayaController::class, 'payment_success']);
 
 Route::fallback( function() {
     return redirect()->route('root');

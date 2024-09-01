@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Section;
 use App\Models\User;
+use App\Models\UserDetail;
 use App\Models\UserMissionaryService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
@@ -69,16 +72,35 @@ class UserController extends Controller
     }
 
     public function profile(string $id)
-    {
+    {   
+        $sections = Section::get();
         $user = User::findOrFail($id);
 
         $user->load('missionary_services');
+        
 
-        return view('pages.profile.index', compact('user'));
+        return view('pages.profile.index', compact('user', 'sections'));
     }
 
     public function updateProfile(Request $request, string $id) {
+        $data = $request->except('_token', '_method');
+        $user = User::where('id', $id)->with('user_details')->firstOrFail();
+
+        $user->update($data);
+
+        if($user->user_details) {
+            $user->user_details->update($data);
+        } else {
+            UserDetail::create(array_merge($data, ['user_id' => $user->id]));
+        }
+        
+        return back()->withSuccess("Profile Updated Successfully");
+        
+    }
+
+    public function updateProfileService(Request $request, $id) {
         $user = User::findOrFail($id);
+
         foreach ($request->service_category as $key => $category) {
             UserMissionaryService::updateOrCreate([
                 "user_id" => $user->id,
@@ -91,6 +113,18 @@ class UserController extends Controller
 
         return back()->withSuccess("User service updated successfully.");
     }
+
+    public function updatePassword(Request $request, $id) {
+        $user = User::findOrFail($id);
+
+        if(!Hash::check($request->old_password, $user->password)) return back()->with('fail', "The user password is not match in the old password.");
+
+        $user->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        return back()->withSuccess('Change Password Successfully');
+    } 
 
     /**
      * Show the form for creating a new resource.
