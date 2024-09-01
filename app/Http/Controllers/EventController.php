@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EventRegistration\StoreRequest;
+use App\Http\Requests\Event\StoreRequest;
 use App\Models\Event;
 use App\Models\Section;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
 class EventController extends Controller
@@ -61,67 +62,52 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {   
         try {
-            if ($request->ajax()) {
-                $filename = '';
-                $file = "";
-                if ($request->hasFile('event_poster')) {
-                    $file = $request->file('event_poster');
-                    $filename = time() . '_' . $file->getClientOriginalName();
-                }
+            DB::beginTransaction();
 
-                $request->validate([
-                    'event_title' => ['required', 'string', 'max:255'],
-                    'event_type' => ['required', 'string', 'max:255'],
-                    'event_section' => ['required', 'integer'],
-                    'event_date' => ['required'],
-                    'event_time' => '',
-                    'event_location' => ['required', 'string', 'max:255'],
-                    'latitude' => '',
-                    'longitude' => '',
-                    'event_reg_fee' => '',
-                    'event_poster' => ['required', 'file', 'mimes:jpeg,png,jpg'],
-                    'event_description' => ['required', 'string'],
-                ]);
+            if(!$request->ajax()) throw new Exception("Error processing data.", 400);
+            $data = $request->validated();
 
-                $start_date = $request->event_date;
-                $end_date = $request->event_date;
+            $filename = "";
+            $file = "";
 
-                if (strpos($request->event_date, 'to') !== false) {
-                    $dates = explode(' to ', $request->event_date);
-                    $start_date = $dates[0] ?? '';
-                    $end_date = $dates[1] ?? '';
-                }
-
-                $data = [
-                    'title' => $request->event_title,
-                    'type' => $request->event_type,
-                    'section_id' => $request->event_section,
-                    'start_date' => $start_date,
-                    'end_date' => $end_date,
-                    'time' => $request->event_time,
-                    'location' => $request->event_location,
-                    'latitude' => $request->latitude,
-                    'longitude' => $request->longitude,
-                    'reg_fee' => $request->event_reg_fee ?? 0,
-                    'poster' => $filename,
-                    'description' => $request->event_description,
-                    'is_open_for_non_community' => $request->has('is_open_for_non_community'),
-                    'is_enable_event_registration' => $request->has('is_enable_event_registration'),
-                ];
-
-                $event = Event::create($data);
-
-                if ($event) {
-                    $file->move(public_path('uploads'), $filename);
-                    return response()->json(['message' => 'Event Created Successfully'], 200);
-                }
+            if ($request->hasFile('poster')) {
+                $file = $request->file('poster');
+                $filename = time() . '_' . $file->getClientOriginalName();
             }
-        } catch (ValidationException $e) {
-            // Return validation errors
-            return response()->json(['errors' => $e->errors()], 422);
+
+            $start_date = $request->event_date;
+            $end_date = $request->event_date;
+
+            if (strpos($request->event_date, 'to') !== false) {
+                $dates = explode(' to ', $request->event_date);
+                $start_date = $dates[0] ?? '';
+                $end_date = $dates[1] ?? '';
+            }
+
+            Event::create(array_merge($data, [
+                'poster' => $filename,
+                'start_date' => $start_date,
+                'end_date' => $end_date,
+                'is_open_for_non_community' => $request->has('is_open_for_non_community'),
+                'is_enable_event_registration' => $request->has('is_enable_event_registration'),
+            ]));
+
+            $file->move(public_path('uploads'), $filename); // Store the poster file in the uploads directory
+
+            DB::commit();
+
+            return response()->json(['message' => 'Event Created Successfully'], 200);
+
+        }catch (Exception $exception) {
+            DB::rollBack();
+            $exception_code = $exception->getCode() === 0 ? 500 : $exception->getCode();
+
+            return response()->json([
+                "message" => $exception->getMessage(),
+            ], $exception_code);
         }
     }
     /**
@@ -181,7 +167,7 @@ class EventController extends Controller
             $events = $events->where("start_date", '>', $today);
         }
 
-        $events = $events->get();
+        $events = $events->with('section')->get();
 
         return response()->json([
             'status' => 'success',
