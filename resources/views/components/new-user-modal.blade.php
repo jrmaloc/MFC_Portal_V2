@@ -7,7 +7,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0">
             <div class="modal-body">
-                <form autocomplete="off" id="memberlist-form" class="novalidate" novalidate action="{{ $route }}"
+                <form autocomplete="off" id="memberlist-form" action="{{ $route }}"
                     method="POST">
                     @csrf
                     <div class="row">
@@ -74,11 +74,11 @@
                             </div>
                             <div class="mb-3">
                                 <label for="first-name-field" class="form-label">First Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="first_name" id="first-name-field">
+                                <input type="text" class="form-control" name="first_name" id="first-name-field" required>
                             </div>
                             <div class="mb-3">
                                 <label for="last-name-field" class="form-label">Last Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="last_name" id="last-name-field">
+                                <input type="text" class="form-control" name="last_name" id="last-name-field" required>
                             </div>
                             
                             @component('components.input_fields.username')
@@ -106,7 +106,7 @@
 
                             <div class="mb-3">
                                 <label for="section-field">Section <span class="text-danger">*</span></label>
-                                <select name="" id="" class="form-select" required>
+                                <select name="section_id" id="section-field" class="form-select" required>
                                     <option value="1">Kids</option>
                                     <option value="2">Youth</option>
                                     <option value="3">Singles</option>

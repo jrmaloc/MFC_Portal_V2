@@ -7,6 +7,7 @@ use App\Models\Section;
 use App\Models\User;
 use App\Models\UserDetail;
 use App\Models\UserMissionaryService;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
@@ -138,9 +139,24 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRequest $request)
-    {
-        dd($request->all());
+    public function store(Request $request)
+    {   
+        $data = $request->except('_token', 'password');
+
+        $user = User::create(array_merge($data, [
+            "password" => Hash::make($request->password),
+            "role_id" => 7 // Set to Member
+        ]));
+
+        $user->update([
+            'mfc_id_number' => $user->generateNextMfcId(),
+        ]);
+
+        $user->assignRole('member');
+
+        event(new Registered($user));
+
+        return back()->withSuccess("User added successfully");
     }
 
     /**
