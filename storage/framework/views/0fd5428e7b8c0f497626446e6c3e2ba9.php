@@ -35,7 +35,7 @@
             </div>
             <div class="card" id="ticketsList">
                 <div class="card-body">
-                    <table id="users_datatables" class="table nowrap align-middle table-striped" style="width:100%">
+                    <table id="events_datatable" class="table nowrap align-middle table-striped" style="width:100%">
                         <thead>
                             <tr>
                                 <th class="" data-sort="id">ID</th>
@@ -55,6 +55,8 @@
         <!--end col-->
     </div>
 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places&callback=initialize" async defer></script>
+
     <!-- Create Modal -->
     <?php $__env->startComponent('components.new_events_modal'); ?>
         <?php $__env->slot('route'); ?>
@@ -62,6 +64,13 @@
 
         <?php $__env->endSlot(); ?>
     <?php echo $__env->renderComponent(); ?>
+
+    <!-- View Modal -->
+    <?php $__env->startComponent('components.events.edit-form', ['sections' => $sections]); ?>
+        <!-- Any other slots or content you want to pass -->
+    <?php echo $__env->renderComponent(); ?>
+
+
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
     <script src="<?php echo e(URL::asset('build/libs/filepond/filepond.min.js')); ?>"></script>
@@ -79,8 +88,59 @@
 
     <script>
         $(document).ready(function() {
+            var editEvent = new bootstrap.Modal(document.getElementById('event-modal'), {
+                keyboard: false
+            });
+
+            var snowEditorData = {};
+
+            snowEditorData.theme = 'snow',
+                snowEditorData.modules = {
+                    'toolbar': [
+                        [{
+                            'font': []
+                        }, {
+                            'size': []
+                        }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{
+                            'color': []
+                        }, {
+                            'background': []
+                        }],
+                        [{
+                            'script': 'super'
+                        }, {
+                            'script': 'sub'
+                        }],
+                        [{
+                            'header': [false, 1, 2, 3, 4, 5, 6]
+                        }, 'blockquote', 'code-block'],
+                        [{
+                            'list': 'ordered'
+                        }, {
+                            'list': 'bullet'
+                        }, {
+                            'indent': '-1'
+                        }, {
+                            'indent': '+1'
+                        }],
+                        ['direction', {
+                            'align': []
+                        }],
+                        ['link', 'image', 'video'],
+                        ['clean']
+                    ]
+                }
+
+
+            var quill = new Quill('#edit_event_description', snowEditorData);
+
+            quill.on('text-change', (delta, oldDelta, source) => {
+            });
+
             // make sure that the table is loaded correctly
-            $('#users_datatables').on('draw.dt', function() {
+            $('#events_datatable').on('draw.dt', function() {
 
                 $('[data-bs-toggle="tooltip"]').tooltip();
 
@@ -88,25 +148,106 @@
                     var id = $(this).attr('id');
 
                     showDeleteMessage({
-                        message: '<strong class="text-danger">Removing this user</strong> will remove all of the information from our database.',
+                        message: '<strong class="text-danger">Removing this event</strong> will remove all of the information from our database.',
                         deleteFunction: function() {
                             $.ajax({
-                                url: '/kids/' + id,
-                                type: 'DELETE',
+                                url: `/dashboard/events/${id}`,
+                                method: "DELETE",
                                 data: {
-                                    _token: $('meta[name="csrf-token"]').attr(
-                                        'content')
+                                    id: id,
+                                    _token: "<?php echo e(csrf_token()); ?>"
                                 },
-                                success: function(response) {
+                                success: function (response) {
                                     showSuccessMessage(response.message);
+                                    $('#events_datatable').DataTable().ajax.reload(null, false); // false to keep the current page
                                 },
-                                error: function(xhr, response, error) {
+                                error: function(xhr, status, error) {
                                     showErrorMessage(xhr.statusText);
                                 }
                             });
                         }
                     });
                 });
+
+                $('.edit-btn').click(function () {
+                    editEvent.show();
+                    var id = $(this).attr('id');
+
+                    $.ajax({
+                        url: `/events/show/${id}`,
+                        method: "GET",
+                        success: function(response) {
+                            displayEventValues(response.event);
+
+                            var editorContent = quill.root;
+                            editorContent.innerHTML = document.getElementById('event-description-field').value;
+                        }
+                    })
+                })
+
+                function displayEventValues(event) {
+                    document.getElementById("event-id-field").value = event.id;
+                    document.getElementById("title-field").value = event.title;
+                    document.getElementById("event-type-field").value = event.type;
+                    document.getElementById("event-section-field").value = event.section_id;
+                    document.getElementById("event-reg-fee").value = event.reg_fee;
+                    document.getElementById("event-location-field").value = event.location;
+                    document.getElementById("event-latitude-field").value = event.latitude;
+                    document.getElementById("event-longitude-field").value = event.longitude;
+                    document.getElementById("event-description-field").value = event.description;
+
+                    if(event.is_open_for_non_community) {
+                        document.getElementById("is-open-for-non-community-checkbox").checked = true;
+                    }
+
+                    if(event.is_enable_event_registration) {
+                        document.getElementById("is-enable-event-registration-checkbox").checked = true;
+                    }
+
+                    var st_date = event.start_date;
+                    var ed_date = event.end_date;
+
+                    var date_r = function formatDate(date) {
+                        var d = new Date(date),
+                            month = '' + (d.getMonth() + 1),
+                            day = '' + d.getDate(),
+                            year = d.getFullYear();
+                        if (month.length < 2)
+                            month = '0' + month;
+                        if (day.length < 2)
+                            day = '0' + day;
+                        return [year, month, day].join('-');
+                    };
+
+                    var updateDay = null;
+
+                    if(ed_date != null){
+                        var endUpdateDay = new Date(ed_date);
+                        updateDay = endUpdateDay.setDate(endUpdateDay.getDate());
+                    }
+                    
+                    var er_date = ed_date == null ? (date_r(st_date)) : (date_r(st_date)) + ' to ' + (date_r(updateDay));
+                
+                    flatpickr(document.getElementById('event-date-field'), {
+                        defaultDate: er_date,
+                        altInput: true,
+                        altFormat: "j F Y",
+                        dateFormat: "Y-m-d",
+                        mode: ed_date !== null ? "range" : "range",
+                        onChange: function (selectedDates, dateStr, instance) {
+                            var date_range = dateStr;
+                        },
+                    });
+
+                    flatpickr("#event-time-field", {
+                        defaultDate: event.time, // Set default value
+                        noCalendar: true,
+                        enableTime: true,
+                        dateFormat: "H:i", 
+                        time_24hr: false 
+                    });
+                }
+
             });
 
             function initializeTables() {
@@ -195,7 +336,7 @@
                     },
                 ];
 
-                let table = $("#users_datatables").DataTable({
+                let table = $("#events_datatable").DataTable({
                     processing: true,
                     pageLength: 10,
                     responsive: true,
@@ -248,4 +389,4 @@
     </script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\MFC_Portal_V2\resources\views/pages/events/list.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\GodesQ\MFC_Portal_V2\resources\views/pages/events/list.blade.php ENDPATH**/ ?>

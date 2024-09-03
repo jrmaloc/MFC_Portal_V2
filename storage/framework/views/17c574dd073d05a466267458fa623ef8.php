@@ -9,7 +9,6 @@
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <!-- App favicon -->
     <link rel="shortcut icon" href="<?php echo e(URL::asset('build/images/favicon.ico')); ?>">
-    <?php echo app('Illuminate\Foundation\Vite')('resources/css/app.css'); ?>
     <?php echo $__env->make('layouts.head-css', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <style>
         #map {
@@ -218,4 +217,4 @@
 </body>
 
 </html>
-<?php /**PATH D:\MFC_Portal_V2\resources\views/pages/events/show.blade.php ENDPATH**/ ?>
+<?php /**PATH D:\GodesQ\MFC_Portal_V2\resources\views/pages/events/show.blade.php ENDPATH**/ ?>

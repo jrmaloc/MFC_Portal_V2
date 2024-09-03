@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Event\StoreRequest;
+use App\Http\Requests\Event\UpdateRequest;
 use App\Models\Event;
 use App\Models\Section;
 use Carbon\Carbon;
@@ -30,8 +31,8 @@ class EventController extends Controller
                 })
                 ->addColumn('actions', function ($event) {
                     $actions = "<div class='hstack gap-2'>
-                        <a href='" . route('events.show', ['identifier' => $event->title]) . "' target='_blank' class='btn btn-soft-primary btn-sm' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='ri-eye-fill align-bottom'></i></a>
-                        <a href='" . route('events.edit', ['event' => $event->id]) . "' class='btn btn-soft-success btn-sm' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit'><i class='ri-pencil-fill align-bottom'></i></a>
+                        <a href='" . route('events.show', ['identifier' => $event->title]) . "' class='btn btn-soft-primary btn-sm' data-bs-toggle='tooltip' data-bs-placement='top' title='Show'><i class='ri-eye-fill align-bottom'></i></a>
+                        <button type='button' class='btn btn-soft-success btn-sm edit-btn' id='" . $event->id . "' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='ri-pencil-fill align-bottom'></i></button>
                         <button type='button' class='btn btn-soft-danger btn-sm remove-btn' id='" . $event->id . "' data-bs-toggle='tooltip' data-bs-placement='top' title='Remove'><i class='ri-delete-bin-5-fill align-bottom'></i></button>
                     </div>";
 
@@ -48,7 +49,8 @@ class EventController extends Controller
                 ->make(true);
         }
 
-        return view('pages.events.list', compact('endPoint'));
+        $sections = Section::get();
+        return view('pages.events.list', compact('endPoint', 'sections'));
     }
 
     /**
@@ -121,7 +123,7 @@ class EventController extends Controller
             $event = Event::where('title', $identifier)->firstOrFail();
         }
 
-        if($request->ajax()) {
+        if($request->ajax() || $request->header('application/json')) {
             return response()->json([
                 'status' => 'success',
                 'event' => $event,
@@ -142,9 +144,30 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(UpdateRequest $request, string $id)
+    {   
+        $data = $request->except('_token', '_method', 'eventid');
+        $event = Event::findOrFail($id);
+
+        $start_date = $request->event_date;
+        $end_date = $request->event_date;
+
+        if (strpos($request->event_date, 'to') !== false) {
+            $dates = explode(' to ', $request->event_date);
+            $start_date = $dates[0] ?? '';
+            $end_date = $dates[1] ?? '';
+        }
+
+        $event->update(array_merge($data, [
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+        ]));
+
+        return response()->json([
+            'status' => TRUE,
+            'message' => "Event Successfully Updated."
+        ]);
+
     }
 
     /**
@@ -152,7 +175,17 @@ class EventController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $event = Event::findOrFail($id);
+
+        $old_upload_image = public_path('uploads/') . $event->poster;
+        @unlink($old_upload_image);
+
+        $event->delete();
+
+        return response()->json([
+            'status' => TRUE,
+            'message' => "Event Successfully Deleted"
+        ]);
     }
 
     public function calendar(Request $request) {
@@ -212,6 +245,8 @@ class EventController extends Controller
                 'extendedProps' => [
                     'time' => $event->time,
                     'location' => $event->location,
+                    'latitude' => $event->latitude,
+                    'longitude' => $event->longitude,
                     'description' => $event->description,
                     'registration_fee' => $event->reg_fee, 
                     'is_enable_event_registration' => $event->is_enable_event_registration,

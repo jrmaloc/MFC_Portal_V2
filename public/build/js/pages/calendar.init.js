@@ -73,10 +73,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    var eventCategoryChoice = new Choices("#event-category", {
-        searchEnabled: false
-    });
-
     var calendar = new FullCalendar.Calendar(calendarEl, {
         timeZone: 'local',
         editable: true,
@@ -172,6 +168,8 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("attendances-btn").setAttribute('data-event-id', selectedEvent.id);
         document.getElementById("attendance-report-btn").setAttribute('data-event-id', selectedEvent.id);
         document.getElementById("search-event-user-btn").setAttribute('data-event-id', selectedEvent.id);
+        document.getElementById("btn-delete-event").setAttribute('data-event-id', selectedEvent.id);
+
         // If the event is not available for registration
         if(!selectedEvent.extendedProps.is_enable_event_registration) {
             document.getElementById("register-event-btn").style.display = "none";
@@ -181,17 +179,20 @@ document.addEventListener("DOMContentLoaded", function () {
     
         // Edit Modal
         document.getElementById("event-title").value = selectedEvent.title;
-        document.getElementById("event-location").value = selectedEvent.extendedProps.location === undefined ? "No Location" : selectedEvent.extendedProps.location;
+        document.getElementById("event-location-field").value = selectedEvent.extendedProps.location === undefined ? "No Location" : selectedEvent.extendedProps.location;
+        document.getElementById("latitude-field").value = selectedEvent.extendedProps.latitude;
+        document.getElementById("longitude-field").value = selectedEvent.extendedProps.longitude;
         document.getElementById("event-description").value = selectedEvent.extendedProps.description === undefined ? "No Description" : selectedEvent.extendedProps.description;
         document.getElementById("eventid").value = selectedEvent.id;
-    
-        if (Array.isArray(selectedEvent.classNames) && selectedEvent.classNames[0]) {
-            eventCategoryChoice.destroy();
-            eventCategoryChoice = new Choices("#event-category", {
-                searchEnabled: false
-            });
-            eventCategoryChoice.setChoiceByValue(selectedEvent.classNames[0]);
-        }
+
+        flatpickr("#event-time-field", {
+            defaultDate: selectedEvent.extendedProps.time, // Set default value
+            noCalendar: true,
+            enableTime: true,
+            dateFormat: "H:i", 
+            time_24hr: false 
+        });
+
         var st_date = selectedEvent.start;
         var ed_date = selectedEvent.end;
     
@@ -223,18 +224,9 @@ document.addEventListener("DOMContentLoaded", function () {
             mode: ed_date !== null ? "range" : "range",
             onChange: function (selectedDates, dateStr, instance) {
                 var date_range = dateStr;
-                var dates = date_range.split("to");
-                if (dates.length > 1) {
-                    document.getElementById('event-time').setAttribute("hidden", true);
-                } else {
-                    document.getElementById("timepicker1").parentNode.classList.remove("d-none");
-                    document.getElementById("timepicker1").classList.replace("d-none", "d-block");
-                    document.getElementById("timepicker2").parentNode.classList.remove("d-none");
-                    document.getElementById("timepicker2").classList.replace("d-none", "d-block");
-                    document.getElementById('event-time').removeAttribute("hidden");
-                }
             },
         });
+        
         document.getElementById("event-start-date-tag").innerHTML = r_date;
         var gt_time = selectedEvent.extendedProps.time;
         var ed_time = selectedEvent.extendedProps.time;
@@ -297,99 +289,61 @@ document.addEventListener("DOMContentLoaded", function () {
     // calendar.render();
 
     upcomingEvent(defaultEvents);
-    /*Add new event*/
-    // Form to add new event
-    formEvent.addEventListener('submit', function (ev) {
-        ev.preventDefault();
-        var updatedTitle = document.getElementById("event-title").value;
-        var updatedCategory = document.getElementById('event-category').value;
-        var start_date = (document.getElementById("event-start-date").value).split("to");
-        var updateStartDate = new Date(start_date[0].trim());
 
-        var newdate = new Date(start_date[1]);
-        newdate.setDate(newdate.getDate() + 1);
+    formEvent.addEventListener('submit', function (e) {
+        e.preventDefault();
+        let event_id = document.querySelector("#eventid").value;
 
-        var updateEndDate = (start_date[1]) ? newdate : '';
+        let formData = new FormData(this);
+        formData.append('_method', 'PUT'); // Laravel needs this to treat it as a PUT request
+        formData.append('_token', document.querySelector('input[name="_token"]').value);
 
-        var end_date = null;
-        var event_location = document.getElementById("event-location").value;
-        var eventDescription = document.getElementById("event-description").value;
-        var eventid = document.getElementById("eventid").value;
-        var all_day = false;
-        if (start_date.length > 1) {
-            var end_date = new Date(start_date[1]);
-            end_date.setDate(end_date.getDate() + 1);
-            start_date = new Date(start_date[0]);
-            all_day = true;
-        } else {
-            var e_date = start_date;
-            var start_time = (document.getElementById("timepicker1").value).trim();
-            var end_time = (document.getElementById("timepicker2").value).trim();
-            start_date = new Date(start_date + "T" + start_time);
-            end_date = new Date(e_date + "T" + end_time);
-        }
-        var e_id = defaultEvents.length + 1;
-
-        // validation
-        if (forms[0].checkValidity() === false) {
-            forms[0].classList.add('was-validated');
-        } else {
-            if (selectedEvent) {
-                selectedEvent.setProp("id", eventid);
-                selectedEvent.setProp("title", updatedTitle);
-                selectedEvent.setProp("classNames", [updatedCategory]);
-                selectedEvent.setStart(updateStartDate);
-                selectedEvent.setEnd(updateEndDate);
-                selectedEvent.setAllDay(all_day);
-                selectedEvent.setExtendedProp("description", eventDescription);
-                selectedEvent.setExtendedProp("location", event_location);
-                var indexOfSelectedEvent = defaultEvents.findIndex(function (x) {
-                    return x.id == selectedEvent.id
-                });
-                if (defaultEvents[indexOfSelectedEvent]) {
-                    defaultEvents[indexOfSelectedEvent].title = updatedTitle;
-                    defaultEvents[indexOfSelectedEvent].start = updateStartDate;
-                    defaultEvents[indexOfSelectedEvent].end = updateEndDate;
-                    defaultEvents[indexOfSelectedEvent].allDay = all_day;
-                    defaultEvents[indexOfSelectedEvent].className = updatedCategory;
-                    defaultEvents[indexOfSelectedEvent].description = eventDescription;
-                    defaultEvents[indexOfSelectedEvent].location = event_location;
+        $.ajax({
+            url: `/dashboard/events/${event_id}`,
+            method: 'POST',
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if(response.status) {
+                    toastr.success(response.message);
+                    location.reload();
                 }
-                calendar.render();
-                // default
-            } else {
-                var newEvent = {
-                    id: e_id,
-                    title: updatedTitle,
-                    start: start_date,
-                    end: end_date,
-                    allDay: all_day,
-                    className: updatedCategory,
-                    description: eventDescription,
-                    location: event_location
-                };
-                calendar.addEvent(newEvent);
-                defaultEvents.push(newEvent);
+            },
+            error: function(xhr, status, error) {
+                toastr.failed("Error processing form.");
             }
-            addEvent.hide();
-            upcomingEvent(defaultEvents);
-        }
-    });
+        });
+    })
 
-    // document.getElementById("btn-delete-event").addEventListener("click", function (e) {
-    //     if (selectedEvent) {
-    //         for (var i = 0; i < defaultEvents.length; i++) {
-    //             if (defaultEvents[i].id == selectedEvent.id) {
-    //                 defaultEvents.splice(i, 1);
-    //                 i--;
-    //             }
-    //         }
-    //         upcomingEvent(defaultEvents);
-    //         selectedEvent.remove();
-    //         selectedEvent = null;
-    //         addEvent.hide();
-    //     }
-    // });
+    $('#btn-delete-event').on("click", function(e) {
+        let event_id = e.target.getAttribute('data-event-id');
+        let token = document.querySelector('input[name="_token"]').value;
+
+        showDeleteMessage({
+            message: '<strong class="text-danger">Removing this event</strong> will remove all of the information from our database.',
+            deleteFunction: function() {
+                $.ajax({
+                    url: `/dashboard/events/${event_id}`,
+                    method: "DELETE",
+                    data: {
+                        id: event_id,
+                        _token: token
+                    },
+                    success: function (response) {
+                        if(response.status) {
+                            toastr.success(response.message);
+                            location.reload();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        toastr.failed("Error deleting event.");
+                    }
+                });
+            }
+        });
+    })
 
     // Register in the event
     document.getElementById("register-event-btn").addEventListener("click", function (e) {
@@ -518,7 +472,6 @@ function flatpicekrValueClear() {
 function eventClicked() {
     document.getElementById('form-event').classList.add("view-event");
     document.getElementById("event-title").classList.replace("d-block", "d-none");
-    document.getElementById("event-category").classList.replace("d-block", "d-none");
     document.getElementById("event-start-date").parentNode.classList.add("d-none");
     document.getElementById("event-start-date").classList.replace("d-block", "d-none");
     document.getElementById('event-time').setAttribute("hidden", true);
@@ -526,7 +479,7 @@ function eventClicked() {
     document.getElementById("timepicker1").classList.replace("d-block", "d-none");
     document.getElementById("timepicker2").parentNode.classList.add("d-none");
     document.getElementById("timepicker2").classList.replace("d-block", "d-none");
-    document.getElementById("event-location").classList.replace("d-block", "d-none");
+    document.getElementById("event-location-field").classList.replace("d-block", "d-none");
     document.getElementById("event-description").classList.replace("d-block", "d-none");
     document.getElementById("event-start-date-tag").classList.replace("d-none", "d-block");
     document.getElementById("event-timepicker1-tag").classList.replace("d-none", "d-block");
@@ -559,14 +512,13 @@ function editEvent(data) {
 function eventTyped() {
     document.getElementById('form-event').classList.remove("view-event");
     document.getElementById("event-title").classList.replace("d-none", "d-block");
-    document.getElementById("event-category").classList.replace("d-none", "d-block");
     document.getElementById("event-start-date").parentNode.classList.remove("d-none");
     document.getElementById("event-start-date").classList.replace("d-none", "d-block");
     document.getElementById("timepicker1").parentNode.classList.remove("d-none");
     document.getElementById("timepicker1").classList.replace("d-none", "d-block");
     document.getElementById("timepicker2").parentNode.classList.remove("d-none");
     document.getElementById("timepicker2").classList.replace("d-none", "d-block");
-    document.getElementById("event-location").classList.replace("d-none", "d-block");
+    document.getElementById("event-location-field").classList.replace("d-none", "d-block");
     document.getElementById("event-description").classList.replace("d-none", "d-block");
     document.getElementById("event-start-date-tag").classList.replace("d-block", "d-none");
     document.getElementById("event-timepicker1-tag").classList.replace("d-block", "d-none");

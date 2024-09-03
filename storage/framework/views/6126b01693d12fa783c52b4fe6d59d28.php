@@ -27,7 +27,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" data-simplebar>
         <div class="modal-content border-0">
             <div class="modal-body">
-                <form autocomplete="off" id="createEvent-form" class="needs-validation" novalidate
+                <form autocomplete="off" id="event-form" class="needs-validation" novalidate
                     action="<?php echo e($route); ?>" method="POST" enctype="multipart/form-data">
                     <?php echo csrf_field(); ?>
                     <div class="row">
@@ -59,7 +59,7 @@
                                     event_title
                                 <?php $__env->endSlot(); ?>
                                 <?php $__env->slot('name'); ?>
-                                    event_title
+                                    title
                                 <?php $__env->endSlot(); ?>
                                 <?php $__env->slot('label'); ?>
                                     Title
@@ -74,53 +74,35 @@
 
                             <div class="row">
                                 <div class="col-6">
-                                    <?php $__env->startComponent('components.input_fields.choices'); ?>
-                                        <?php $__env->slot('label'); ?>
-                                            Event Type
-                                        <?php $__env->endSlot(); ?>
-                                        <?php $__env->slot('id'); ?>
-                                            event_type
-                                        <?php $__env->endSlot(); ?>
-                                        <?php $__env->slot('formId'); ?>
-                                            createEvent-form
-                                        <?php $__env->endSlot(); ?>
-                                        <?php $__env->slot('name'); ?>
-                                            event_type
-                                        <?php $__env->endSlot(); ?>
-
-                                        <option value="1">Worldwide</option>
-                                        <option value="2">National</option>
-                                        <option value="3">Regional</option>
-                                        <option value="4">NCR</option>
-                                        <option value="5">Area</option>
-                                        <option value="6">Chapter</option>
-                                        <option value="7">Unit</option>
-                                        <option value="8">Household</option>
-                                    <?php echo $__env->renderComponent(); ?>
+                                    <div class="mb-3">
+                                        <label for="event_type" class="form-label">Event Type</label>
+                                        <select name="type" id="event_type" class="form-select">
+                                            <option value="">Select Event Type</option>
+                                            <option value="1">Worldwide</option>
+                                            <option value="2">National</option>
+                                            <option value="3">Regional</option>
+                                            <option value="4">NCR</option>
+                                            <option value="5">Area</option>
+                                            <option value="6">Chapter</option>
+                                            <option value="7">Unit</option>
+                                            <option value="8">Household</option>
+                                        </select>
+                                    </div>
                                 </div>
 
                                 <div class="col-6">
-                                    <?php $__env->startComponent('components.input_fields.choices'); ?>
-                                        <?php $__env->slot('label'); ?>
-                                            Event Section
-                                        <?php $__env->endSlot(); ?>
-                                        <?php $__env->slot('id'); ?>
-                                            event_section
-                                        <?php $__env->endSlot(); ?>
-                                        <?php $__env->slot('formId'); ?>
-                                            createEvent-form
-                                        <?php $__env->endSlot(); ?>
-                                        <?php $__env->slot('name'); ?>
-                                            event_section
-                                        <?php $__env->endSlot(); ?>
-
-                                        <option value="1">Kids</option>
-                                        <option value="2">Youth</option>
-                                        <option value="3">Singles</option>
-                                        <option value="4">Handmaids</option>
-                                        <option value="5">Servants</option>
-                                        <option value="6">Couples</option>
-                                    <?php echo $__env->renderComponent(); ?>
+                                    <div class="mb-3">
+                                        <label for="event_section" class="form-label">Event Type</label>
+                                        <select name="section_id" id="event_section" class="form-select">
+                                            <option value="">Select Event Section</option>
+                                            <option value="1">Kids</option>
+                                            <option value="2">Youth</option>
+                                            <option value="3">Singles</option>
+                                            <option value="4">Handmaids</option>
+                                            <option value="5">Servants</option>
+                                            <option value="6">Couples</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 
@@ -142,7 +124,7 @@
                                     <div class="mb-3">
                                         <label for="event_time" class="form-label">Event Time</label>
                                         <div class="form-icon right">
-                                            <input type="text" name="event_time" id="event_time"
+                                            <input type="text" name="time" id="event_time"
                                                 class="form-control event_time" placeholder="Select Time..."
                                                 data-provider="timepickr" data-time-basic="true">
                                             <i class="ri-time-line"></i>
@@ -155,7 +137,7 @@
                                 <div class="mb-3">
                                     <label for="event_location" class="form-label">Location <span
                                             class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="event_location"
+                                    <input type="text" class="form-control" name="location"
                                         placeholder="Event Location..." required id="event_location">
                                     <input type="hidden" name="latitude" id="latitude" value="">
                                     <input type="hidden" name="longitude" id="longitude" value="">
@@ -165,10 +147,10 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="mb-3">
-                                        <label for="event_location" class="form-label">Registration Fee</label>
+                                        <label for="event_reg_fee" class="form-label">Registration Fee</label>
                                         <div class="form-icon">
                                             <input type="text" oninput="validateDigit(this)" id="event_reg_fee"
-                                                class="form-control form-control-icon" name="event_reg_fee"
+                                                class="form-control form-control-icon" name="reg_fee"
                                                 placeholder="Leave blank if free...">
                                             <i class="fst-normal">₱</i>
                                         </div>
@@ -188,7 +170,7 @@
                                         <div class="form-check form-radio-secondary">
                                             <input type="checkbox" class="form-check-input"
                                                 name="is_enable_event_registration" id="is_enable_event_registration"
-                                                value="1" required>
+                                                value="1">
                                             <label for="is_enable_event_registration" class="form-check-label">Enable
                                                 Event
                                                 Registration</label>
@@ -202,7 +184,7 @@
                                     <label for="event_poster" class="form-label">Poster <span
                                             class="text-danger">*</span></label>
                                     <input type="file" class="filepond filepond-input-multiple" id="event_poster"
-                                        name="event_poster" data-max-file-size="3MB" required>
+                                        name="poster" data-max-file-size="3MB" required>
                                     <input type="hidden" id="image_input" name="image_input">
                                 </div>
                             </div> <!-- end col -->
@@ -211,7 +193,7 @@
                                 <div class="mb-3">
                                     <label for="event_description" class="form-label">Description <span
                                             class="text-danger">*</span></label>
-                                    <textarea name="event_description" id="event_description_input" hidden></textarea>
+                                    <textarea name="description" id="event_description_input" hidden></textarea>
                                     <div class="" id="event_description" style="height: 300px;"></div>
                                     <!-- end Snow-editor-->
                                 </div>
@@ -273,9 +255,6 @@
     </div>
 </div>
 
-<script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places&callback=initialize" async defer>
-</script>
 <script>
     function initialize() {
         const eventLocationInput = document.getElementById('event_location');
@@ -410,7 +389,7 @@
             allowMultiple: false,
         });
 
-        var form = document.getElementById('createEvent-form');
+        var form = document.getElementById('event-form');
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -455,7 +434,7 @@
             const formData = new FormData(this);
 
             if (files.length > 0) {
-                formData.append('event_poster', files[0].file);
+                formData.append('poster', files[0].file);
             }
 
             $.ajax({
@@ -471,9 +450,9 @@
                     $('#addEventModal').modal('hide');
 
                     $('#addEventModal').attr('data-id', 1);
-                    $('#createEvent-form')[0].reset();
+                    $('#event-form')[0].reset();
 
-                    if ($('#createEvent-form')[0].reset()) {
+                    if ($('#event-form')[0].reset()) {
                         console.log('reset');
                     }
                     successToast.show();
@@ -509,4 +488,4 @@
 
     });
 </script>
-<?php /**PATH D:\MFC_Portal_V2\resources\views/components/new_events_modal.blade.php ENDPATH**/ ?>
+<?php /**PATH D:\GodesQ\MFC_Portal_V2\resources\views/components/new_events_modal.blade.php ENDPATH**/ ?>

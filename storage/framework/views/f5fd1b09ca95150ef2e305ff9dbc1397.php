@@ -72,7 +72,6 @@
                         </div>
                         <div class="modal-body p-4">
                             <form class="needs-validation" name="event-form" id="form-event" novalidate>
-                                <?php echo csrf_field(); ?>
                                 <div class="text-end">
                                     <a href="#" class="btn btn-sm btn-soft-primary" id="edit-event-btn"
                                         data-id="edit-event" onclick="editEvent(this)" role="button">Edit</a>
@@ -131,21 +130,6 @@
                                 <div class="row event-form">
                                     <div class="col-12">
                                         <div class="mb-3">
-                                            <label class="form-label">Type</label>
-                                            <select class="form-select d-none" name="category" id="event-category" required>
-                                                <option value="bg-danger-subtle">Danger</option>
-                                                <option value="bg-success-subtle">Success</option>
-                                                <option value="bg-primary-subtle">Primary</option>
-                                                <option value="bg-info-subtle">Info</option>
-                                                <option value="bg-dark-subtle">Dark</option>
-                                                <option value="bg-warning-subtle">Warning</option>
-                                            </select>
-                                            <div class="invalid-feedback">Please select a valid event category</div>
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col-12">
-                                        <div class="mb-3">
                                             <label class="form-label">Event Name</label>
                                             <input class="form-control d-none" placeholder="Enter event name"
                                                 type="text" name="title" id="event-title" required
@@ -160,9 +144,20 @@
                                             <div class="input-group d-none">
                                                 <input type="text" id="event-start-date"
                                                     class="form-control flatpickr flatpickr-input"
-                                                    placeholder="Select date" readonly required>
+                                                    placeholder="Select date" required name="event_date">
                                                 <span class="input-group-text"><i
                                                         class="ri-calendar-event-line"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mb-3">
+                                            <label for="event-time-field" class="form-label">Event Time</label>
+                                            <div class="form-icon right">
+                                                <input type="text" name="time" id="event-time-field"
+                                                    class="form-control event_time" placeholder="Select Time..."
+                                                    data-provider="timepickr" data-time-basic="true">
+                                                <i class="ri-time-line"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -198,9 +193,11 @@
                                         <div class="mb-3">
                                             <label for="event-location">Location</label>
                                             <div>
-                                                <input type="text" class="form-control d-none" name="event-location"
-                                                    id="event-location" placeholder="Event location">
+                                                <input type="text" class="form-control d-none" name="location"
+                                                    id="event-location-field" placeholder="Event location">
                                             </div>
+                                            <input type="hidden" name="latitude" id="latitude-field">
+                                            <input type="hidden" name="longitude" id="longitude-field">
                                         </div>
                                     </div>
                                     <!--end col-->
@@ -208,7 +205,7 @@
                                     <div class="col-12">
                                         <div class="mb-3">
                                             <label class="form-label">Description</label>
-                                            <textarea class="form-control d-none" id="event-description" placeholder="Enter a description" rows="3"
+                                            <textarea class="form-control d-none" id="event-description" placeholder="Enter a description" rows="5"
                                                 spellcheck="false"></textarea>
                                         </div>
                                     </div>
@@ -466,4 +463,4 @@
     
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\MFC_Portal_V2\resources\views/apps-calendar.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\GodesQ\MFC_Portal_V2\resources\views/apps-calendar.blade.php ENDPATH**/ ?>
