@@ -9,6 +9,7 @@ use App\Http\Controllers\EventRegistrationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymayaController;
 use App\Http\Controllers\PermissionsController;
+use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\TithesController;
 use App\Http\Controllers\UserController;
@@ -80,6 +81,8 @@ Route::post('/paymaya/webhook/checkout-success', [PaymayaController::class, 'che
 Route::post('/paymaya/webhook/checkout-failed', [PaymayaController::class, 'checkout_failed']);
 Route::post('/paymaya/webhook/payment-success', [PaymayaController::class, 'payment_success']);
 Route::post('/paymaya/webhook/payment-failed', [PaymayaController::class, 'checkout_failed']);
+
+Route::get('/payments/success', [RedirectController::class, 'payment_success']);
 
 Route::fallback( function() {
     return redirect()->route('root');

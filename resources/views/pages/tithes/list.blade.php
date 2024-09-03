@@ -61,7 +61,7 @@
                     var id = $(this).attr('id');
 
                     showDeleteMessage({
-                        message: '<strong class="text-danger">Removing this user</strong> will remove all of the information from our database.',
+                        message: '<strong class="text-danger">Removing this tithe</strong> will remove all of the information from our database.',
                         deleteFunction: function() {
                             $.ajax({
                                 url: '/dashboard/tithes/' + id,
