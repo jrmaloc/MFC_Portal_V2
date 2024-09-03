@@ -79,7 +79,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::post('/paymaya/webhook/checkout-success', [PaymayaController::class, 'checkout_success']);
 Route::post('/paymaya/webhook/checkout-failed', [PaymayaController::class, 'checkout_failed']);
 Route::post('/paymaya/webhook/payment-success', [PaymayaController::class, 'payment_success']);
-Route::post('/paymaya/webhook/payment-failed', [PaymayaController::class, 'payment_failed']);
+Route::post('/paymaya/webhook/payment-failed', [PaymayaController::class, 'checkout_failed']);
 
 Route::fallback( function() {
     return redirect()->route('root');
