@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('payment_type');
             $table->string('checkout_id')->nullable();
             $table->string('payment_link')->nullable();
+            $table->json('transaction_response_json')->nullable();
             $table->string('status')->default('unpaid');
             $table->timestamps();
         });

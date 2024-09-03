@@ -19,6 +19,7 @@ class Transaction extends Model
         "payment_type", 
         "checkout_id", 
         "payment_link", 
+        'transaction_response_json',
         "status"
     ];
 }
