@@ -98,26 +98,6 @@ class AnnouncementController extends Controller
         ]));
 
         return redirect()->route('announcements.index')->with('success', 'Announcement created successfully');
-
-        // $originalUserIds = $data['user_ids'];
-        // $additionalValues = ['1', '2'];
-        // $modifiedUserIds = array_merge($originalUserIds, $additionalValues);
-
-        // $modifiedUserIdsJson = json_encode($modifiedUserIds);
-
-        // $announcement = Announcements::create(array_merge($data, [
-        //     'user_id' => $id,
-        //     'user_ids' => $modifiedUserIdsJson,
-        // ]));
-
-        // $admins = User::whereHas('roles', function ($query) {
-        //     $query->whereIn('id', [1, 2, 3, 4, 5, 6, 7]); // Use whereIn for multiple IDs
-        // })->get();
-
-        // Notification::send($admins, new AnnouncementNotification($announcement, 'There is a new announcement! Check it now.'));
-
-        // return redirect(route('announcements.index'))->with('success', 'Announcement created successfully');
-
     }
 
     /**

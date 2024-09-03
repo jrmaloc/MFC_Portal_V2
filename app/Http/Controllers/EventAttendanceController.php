@@ -64,19 +64,15 @@ class EventAttendanceController extends Controller
     }
 
     public function report(Request $request) {
-        // $event_attendance = EventAttendance::select('attendance_date', DB::raw('MAX(event_id) as event_id'))
-        //                                 ->where("event_id", $request->event_id)
-        //                                 ->groupBy('attendance_date')
-        //                                 ->with('user')
-        //                                 ->get();
-
-        // if(count($event_attendance) <= 0) {
-        //     return back()->with('fail', 'No attendance record found.');
-        // }
         $event = Event::where('id', $request->event_id)->first();
+
+        $event_attendance = EventAttendance::select('attendance_date', DB::raw("COUNT(*) as user_count"))
+                                ->where('event_id', $request->event_id)
+                                ->groupBy('attendance_date')
+                                ->get();
         $endPoint = "Report";
 
-        return view('pages.reports.event-attendance-report', compact('endPoint', 'event'));
+        return view('pages.reports.event-attendance-report', compact('endPoint', 'event', 'event_attendance'));
     }
 
     private function getEventDateRange($event_id) {

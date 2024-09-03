@@ -1,18 +1,19 @@
-@extends('layouts.master')
 
-@section('title')
-    @lang('translation.attendance_report')
-@endsection
 
-@section('content')
-    @component('components.breadcrumb')
-        @slot('li_1')
+<?php $__env->startSection('title'); ?>
+    <?php echo app('translator')->get('translation.attendance_report'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <?php $__env->startComponent('components.breadcrumb'); ?>
+        <?php $__env->slot('li_1'); ?>
             Attendance
-        @endslot
-        @slot('title')
-            {{ $endPoint }}
-        @endslot
-    @endcomponent
+        <?php $__env->endSlot(); ?>
+        <?php $__env->slot('title'); ?>
+            <?php echo e($endPoint); ?>
+
+        <?php $__env->endSlot(); ?>
+    <?php echo $__env->renderComponent(); ?>
 
     <div class="row">
         <div class="col-lg-4">
@@ -21,15 +22,16 @@
                     <h3 class="card-title">Event Details</h3>
                 </div>
                 <div class="card-body">
-                    <img src="{{ URL::asset('uploads/' . $event->poster) }}" alt="" class="rounded mb-2"
+                    <img src="<?php echo e(URL::asset('uploads/' . $event->poster)); ?>" alt="" class="rounded mb-2"
                         style="width: 100%; max-height: 200px; object-fit: cover;">
-                    <h3>{{ $event->title }}</h3>
+                    <h3><?php echo e($event->title); ?></h3>
                     <div class="flex gap-2">
                         <span class="bg-primary badge text-uppercase">Worldwide</span>
-                        <span class="badge bg-primary text-uppercase">{{ $event->section->name }}</span>
+                        <span class="badge bg-primary text-uppercase"><?php echo e($event->section->name); ?></span>
                     </div>
                     <div class="my-2">
-                        {!! $event->description !!}
+                        <?php echo $event->description; ?>
+
                     </div>
                 </div>
             </div>
@@ -70,16 +72,16 @@
                                     <table class="table table-responsive table-bordered">
                                         <thead>
                                             <tr>
-                                                @foreach ($event_attendance as $attendance)
-                                                    <th class="text-center">{{ Carbon::parse($attendance->attendance_date)->format('F d, Y') }}</th>
-                                                @endforeach
+                                                <?php $__currentLoopData = $event_attendance; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $attendance): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <th class="text-center"><?php echo e(Carbon::parse($attendance->attendance_date)->format('F d, Y')); ?></th>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                @foreach ($event_attendance as $attendance)
-                                                    <td class="text-center">{{ $attendance->user_count }}</td>
-                                                @endforeach
+                                                <?php $__currentLoopData = $event_attendance; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $attendance): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <td class="text-center"><?php echo e($attendance->user_count); ?></td>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -91,11 +93,13 @@
             </div>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('script')
+<?php $__env->startSection('script'); ?>
     <!-- apexcharts -->
-    <script src="{{ URL::asset('build/libs/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ URL::asset('build/js/pages/dashboard-crm.init.js') }}"></script>
-    <script src="{{ URL::asset('build/js/app.js') }}"></script>
-@endsection
+    <script src="<?php echo e(URL::asset('build/libs/apexcharts/apexcharts.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/dashboard-crm.init.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\GodesQ\MFC_Portal_V2\resources\views/pages/reports/event-attendance-report.blade.php ENDPATH**/ ?>
