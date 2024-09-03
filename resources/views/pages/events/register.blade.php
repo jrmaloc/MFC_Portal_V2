@@ -253,8 +253,8 @@
 
                     mfcMembersDiv.innerHTML = output;
 
-                    let registerUserBtn = document.querySelector("#register-user-btn");
-                    registerUserBtn.addEventListener('click', registerUser);
+                    // let registerUserBtn = document.querySelector("#register-user-btn");
+                    // registerUserBtn.addEventListener('click', registerUser);
                 }
             })
         })
