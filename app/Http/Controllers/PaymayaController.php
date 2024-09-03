@@ -8,7 +8,20 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class PaymayaController extends Controller
-{
+{   
+    public function checkout_success(Request $request) {
+        $reference_number = $request->requestReferenceNumber;
+        $transaction = Transaction::where('reference_code', $reference_number)->first();
+
+        abort_if(!$transaction, 404);
+
+        $transaction->update([
+            'status' => 'incompleted',
+        ]);
+
+        return response(['message' => "Ok"]);
+    }
+
     public function payment_success(Request $request) {
         $reference_number = $request->requestReferenceNumber;
         $payment_id = $request->id;
