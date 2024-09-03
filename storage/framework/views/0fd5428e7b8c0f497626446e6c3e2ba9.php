@@ -55,8 +55,6 @@
         <!--end col-->
     </div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places&callback=initialize" async defer></script>
-
     <!-- Create Modal -->
     <?php $__env->startComponent('components.new_events_modal'); ?>
         <?php $__env->slot('route'); ?>

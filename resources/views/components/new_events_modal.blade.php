@@ -253,6 +253,7 @@
         const searchBox = new google.maps.places.SearchBox(eventLocationInput);
 
         searchBox.addListener('places_changed', () => {
+            console.log("test");
             const places = searchBox.getPlaces();
             if (places.length === 0) {
                 return;
