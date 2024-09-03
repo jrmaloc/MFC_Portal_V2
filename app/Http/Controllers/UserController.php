@@ -10,6 +10,7 @@ use App\Models\UserMissionaryService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
@@ -54,9 +55,8 @@ class UserController extends Controller
             return DataTables::of($users)
                 ->addColumn('actions', function ($user) {
                     $actions = "<div class='hstack gap-2'>
-                        <a href='" . route('users.show', ['user' => $user->id]) . "' class='btn btn-soft-primary btn-sm' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='ri-eye-fill align-bottom'></i></a>
-                        <a href='" . route('users.edit', ['user' => $user->id]) . "' class='btn btn-soft-success btn-sm' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit'><i class='ri-pencil-fill align-bottom'></i></a>
-                        <button type='button' class='btn btn-soft-danger btn-sm remove-btn' id='" . $user->id . "' data-bs-toggle='tooltip' data-bs-placement='top' title='Remove'><i class='ri-delete-bin-5-fill align-bottom'></i></button>
+                        <button type='button' class='btn btn-soft-success btn-sm edit-btn' id='" . $user->id . "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit'><i class='ri-pencil-fill align-bottom'></i></button>
+                        <button type='button' class='btn btn-soft-danger btn-sm remove-btn' id='" . $user->id . "' data-bs-toggle='tooltip' data-bs-placement='top' title='Remove'><i class='ri-delete-bin-fill align-bottom'></i></button>
                     </div>";
 
                     return $actions;
@@ -70,7 +70,9 @@ class UserController extends Controller
                 ->make(true);
         }
 
-        return view('pages.users.index', compact('section', 'breadcrumb', 'btn_color'));
+        $sections = Section::get();
+        $roles = Role::get();
+        return view('pages.users.index', compact('section', 'breadcrumb', 'btn_color', 'sections', 'roles'));
     }
 
     public function profile(string $id)
@@ -162,9 +164,18 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        
+    public function show(Request $request, string $id)
+    {   
+        $user = User::findOrFail($id);
+
+        if($request->ajax()) {
+            return response()->json([
+                "status" => TRUE,
+                "user" => $user,
+            ]);
+        }
+
+        return;
     }
 
     /**
@@ -180,7 +191,8 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        
     }
 
     /**

@@ -1,27 +1,28 @@
-@extends('layouts.master')
-@section('title')
-    @lang('translation.starter')
-@endsection
-@section('content')
-    @component('components.breadcrumb')
-        @slot('li_1')
+
+<?php $__env->startSection('title'); ?>
+    <?php echo app('translator')->get('translation.starter'); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+    <?php $__env->startComponent('components.breadcrumb'); ?>
+        <?php $__env->slot('li_1'); ?>
             Directory
-        @endslot
-        @slot('title')
-            {{ $breadcrumb }}
-        @endslot
-    @endcomponent
+        <?php $__env->endSlot(); ?>
+        <?php $__env->slot('title'); ?>
+            <?php echo e($breadcrumb); ?>
+
+        <?php $__env->endSlot(); ?>
+    <?php echo $__env->renderComponent(); ?>
 
     <div class="row mt-3">
-        <input type="text" hidden id="section" value="{{ $section }}">
+        <input type="text" hidden id="section" value="<?php echo e($section); ?>">
         <div class="col-lg-12">
             <div class="card-header border-0 mb-3">
                 <div class="d-flex align-items-center justify-content-end">
                     <div class="flex-shrink-0">
                         <div class="d-flex flex-wrap gap-2">
-                            <button type="button" class="btn {{ $btn_color }} add-btn" data-bs-toggle="modal"
+                            <button type="button" class="btn <?php echo e($btn_color); ?> add-btn" data-bs-toggle="modal"
                                 data-bs-target="#addmemberModal">
-                                <i class="ri-add-line align-bottom me-1"></i>@lang('translation.add_new_user')</button>
+                                <i class="ri-add-line align-bottom me-1"></i><?php echo app('translator')->get('translation.add_new_user'); ?></button>
                             <button class="btn btn-soft-danger" id="remove-actions"><i
                                     class="ri-delete-bin-2-line"></i></button>
                         </div>
@@ -55,23 +56,25 @@
     </div>
 
     <!-- Create Modal -->
-    @component('components.new-user-modal')
-        @slot('color')
-            {{ $btn_color }}
-        @endslot
-        @slot('route')
-            {{ route('users.store') }}
-        @endslot
-    @endcomponent
+    <?php $__env->startComponent('components.new-user-modal'); ?>
+        <?php $__env->slot('color'); ?>
+            <?php echo e($btn_color); ?>
+
+        <?php $__env->endSlot(); ?>
+        <?php $__env->slot('route'); ?>
+            <?php echo e(route('users.store')); ?>
+
+        <?php $__env->endSlot(); ?>
+    <?php echo $__env->renderComponent(); ?>
 
     <!-- Edit Modal -->
-    @component('components.users.edit-form', [
+    <?php $__env->startComponent('components.users.edit-form', [
         'sections' => $sections, 
         'roles' => $roles
-    ])@endcomponent
+    ]); ?><?php echo $__env->renderComponent(); ?>
 
-@endsection
-@section('script')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
     <script>
         $(document).ready(function() {
             var editUserModal = new bootstrap.Modal(document.getElementById('user-modal'), {
@@ -268,4 +271,6 @@
             initializeTables();
         })
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\GodesQ\MFC_Portal_V2\resources\views/pages/users/index.blade.php ENDPATH**/ ?>
