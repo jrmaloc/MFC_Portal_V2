@@ -3,6 +3,6 @@
 namespace App\Enum;
 
 enum PaymentType {
-    case TITHE = "tithe";
-    case EVENT_REGISTRATION = "event_registration";
+    const TITHE = "tithe";
+    const EVENT_REGISTRATION = "event_registration";
 }
